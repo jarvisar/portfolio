@@ -5,8 +5,9 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Portfolio Details - Personal Bootstrap Template</title>
-  <meta content="" name="description">
+  <title>Backrooms Simulator - Adam Jarvis</title>
+  <meta content="Endless procedurally generated maze built with Three.js, inspired by The Backrooms." name="description">
+  <link rel="canonical" href="https://jarvisar.com/backrooms-details.html">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
@@ -54,7 +55,7 @@
                 </div>
 
                 <div class="swiper-slide">
-                  <img class="img-fluid" src="assets/img/portfolio/backrooms-corridor.jpg" alt="Flashlight illuminating a yellow corridor in Backrooms Simulator" width="1600" height="900" decoding="async">
+                  <img class="img-fluid" src="assets/img/portfolio/backrooms-corridor.jpg" alt="Flashlight illuminating a yellow corridor on Level 0" width="1600" height="900" decoding="async">
                 </div>
 
                 <div class="swiper-slide">
@@ -62,15 +63,27 @@
                 </div>
 
                 <div class="swiper-slide">
-                  <img class="img-fluid" src="assets/img/portfolio/backrooms-level-fun-room.jpg" alt="Level Fun in progress: party room with a welcome banner, streamers, balloons, and a disco ball, lit by the flashlight" width="1600" height="900" decoding="async">
+                  <img class="img-fluid" src="assets/img/portfolio/backrooms-level-1.jpg" alt="Two cars parked in the underground car park on Level 1" width="1600" height="900" decoding="async">
                 </div>
 
                 <div class="swiper-slide">
-                  <img class="img-fluid" src="assets/img/portfolio/backrooms-level-fun-cake.jpg" alt="Level Fun in progress: flashlight illuminating a birthday cake, balloons, and presents" width="1600" height="900" decoding="async">
+                  <img class="img-fluid" src="assets/img/portfolio/backrooms-level-2.jpg" alt="Service tunnel lined with pipes on Level 2" width="1600" height="900" decoding="async" loading="lazy">
                 </div>
 
                 <div class="swiper-slide">
-                  <img class="img-fluid" src="assets/img/portfolio/backrooms-level-fun-corridor.jpg" alt="Level Fun in progress: colorful corridors with confetti, balloons, and the flashlight on" width="1600" height="900" decoding="async">
+                  <img class="img-fluid" src="assets/img/portfolio/backrooms-level-4.jpg" alt="Light well and a column on a dark office floor on Level 4" width="1600" height="900" decoding="async" loading="lazy">
+                </div>
+
+                <div class="swiper-slide">
+                  <img class="img-fluid" src="assets/img/portfolio/backrooms-level-5.jpg" alt="Hotel corridor with a hanging lantern and numbered doors on Level 5" width="1600" height="900" decoding="async" loading="lazy">
+                </div>
+
+                <div class="swiper-slide">
+                  <img class="img-fluid" src="assets/img/portfolio/backrooms-level-37.jpg" alt="Tiled pool hall with arches and a skylight on Level 37" width="1600" height="900" decoding="async" loading="lazy">
+                </div>
+
+                <div class="swiper-slide">
+                  <img class="img-fluid" src="assets/img/portfolio/backrooms-level-fun-room.jpg" alt="Party room with balloons, streamers and a disco ball in Level Fun" width="1600" height="900" decoding="async" loading="lazy">
                 </div>
 
               </div>
@@ -84,17 +97,20 @@
               <ul>
                 <li><strong>Name</strong>: Backrooms Simulator: Three.js Procedurally Generated Maze </li>
                 <li><strong>Category</strong>: Three.js Web App</li>
-                <li><strong>URL</strong>: <a href="https://github.com/jarvisar/threejs-maze" target="_blank">https://github.com/jarvisar/threejs-maze</a></li>
-                <li><strong>Latest Deployment</strong>: <a href="https://threejs-maze.jarvisar.com/" target="_blank">https://threejs-maze.jarvisar.com/</a></li>
+                <li><strong>GitHub Repo</strong>: <a href="https://github.com/jarvisar/threejs-maze" target="_blank" rel="noopener noreferrer">github.com/jarvisar/threejs-maze</a></li>
+                <li><strong>Latest Deployment</strong>: <a href="https://threejs-maze.jarvisar.com/" target="_blank" rel="noopener noreferrer">threejs-maze.jarvisar.com</a></li>
               </ul>
             </div>
             <div class="portfolio-description">
               <h2>About</h2>
               <p>
-                This project is inspired by the creepypasta "The Backrooms", which describes a world that is a seemingly endless maze of yellow rooms. To recreate this, I used Three.js to create a procedurally generated maze of eerily empty rooms using primarily <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Iterative_randomized_Prim's_algorithm_(without_stack,_without_sets)" target="_blank">Prim's algorithm</a>.
+                This project is inspired by the creepypasta "The Backrooms", which describes a world that is a seemingly endless maze of yellow rooms. To recreate this, I used Three.js to create a procedurally generated maze of eerily empty rooms. It started in 2023 as a simple maze using <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Iterative_randomized_Prim's_algorithm_(without_stack,_without_sets)" target="_blank">Prim's algorithm</a> and has grown a lot since then.
                 <br>
                 <br>
-                The player can move using WASD keys. As the player moves through the maze, it will continue to generate new additions to the maze as the player moves close to the edge. Infinite procedural generation is achieved by using a system of offset corrdinates and 2D array of mazes, which themselves are 2D arrays of rooms. This can be performance intensive, so the program includes generative optimizations and several configurable settings to adjust the maze generation and rendering to improve performance.
+                There are two game modes. In Found Footage, you collect eight notes and find the exit while something follows you, and each exit takes you down to the next level. Explore lets you walk around any level with no goal, and has an edit mode for changing walls, lights, and furniture. The levels so far are Level 0, Level 1, Level 2 (Pipe Dreams), Level 4 (the Abandoned Office), Level 5 (the Terror Hotel), and Level 37 (the Poolrooms).
+                <br>
+                <br>
+                As the player moves through the maze, it will continue to generate new parts of the maze as the player gets close to the edge. This can be performance intensive, so there are several settings to adjust the lighting, effects, and resolution. Works with keyboard and mouse, controllers, touch screens, and VR.
                 <br>
                 <br>
                 To create a retro effect and feel of being lost in a maze, I also implemented several GLSL shaders that add a CRT effect, vignette, and RGB color shifting. These shaders were primarily created by <a href="https://github.com/felixturner/" target="_blank">@felixturner</a> on GitHub.
