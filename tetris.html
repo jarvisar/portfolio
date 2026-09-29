@@ -47,6 +47,16 @@
   p { margin: 10px 0 0; color: #a8b8ce; font-size: 11px; }
   #status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   </style>
+  <!-- Cloudflare Web Analytics. Only on the live site, so local dev aren't counted -->
+  <script>
+    if (location.hostname === 'jarvisar.com') {
+      const beacon = document.createElement('script');
+      beacon.type = 'module';
+      beacon.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+      beacon.dataset.cfBeacon = '{"token": "a52a84e110ba48c0868dd4ae87e235b7"}';
+      document.head.appendChild(beacon);
+    }
+  </script>
 </head>
 <body>
 <main aria-label="Tetris game">
