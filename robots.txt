@@ -1,4 +1,3 @@
+# The pages have a noindex tag. The resume PDF and other files in assets can't, so crawlers stay out of there.
 User-agent: *
-Allow: /
-
-Sitemap: https://jarvisar.com/sitemap.xml
+Disallow: /assets/
