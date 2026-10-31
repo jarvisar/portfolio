@@ -5,49 +5,93 @@
   <meta charset="UTF-8">
   <meta name="robots" content="noindex">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
   <style>
+  /* Same toolbar and button look as the portfolio */
   * { box-sizing: border-box; }
   html, body { min-height: 100%; margin: 0; }
   body {
-    background: #111827;
-    color: #e5edf8;
-    font: 14px/1.4 system-ui, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 16px;
+    padding: 12px;
+    background: #d9dbde;
+    color: #2d3034;
+    font: 13px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
-  main { width: 320px; max-width: 100%; text-align: center; }
-  header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-  h1 { margin: 0; font-size: 20px; letter-spacing: .08em; }
+  main {
+    width: 320px;
+    max-width: 100%;
+    overflow: hidden;
+    border: 1px solid #b7bbc0;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.14);
+    text-align: center;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    padding: 0 8px 0 12px;
+    border-bottom: 1px solid #000;
+    background: linear-gradient(#46494f, #292b2f);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1);
+  }
+  h1 { margin: 0; color: #fff; font-size: 15px; text-shadow: 0 -1px 0 #000; }
   button {
-    border: 1px solid #40516b;
-    border-radius: 6px;
-    padding: 6px 12px;
-    background: #1e293b;
-    color: inherit;
-    font: inherit;
+    height: 26px;
+    padding: 0 10px;
+    border: 1px solid #16171a;
+    border-radius: 4px;
+    background: linear-gradient(#56595f, #3b3d42);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12);
+    color: #e6e6e6;
+    font: bold 12px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-shadow: 0 -1px 0 #000;
     cursor: pointer;
   }
-  button:hover { background: #334155; }
-  button:focus-visible { outline: 2px solid #7dd3fc; outline-offset: 3px; }
-  dl { display: flex; gap: 8px; margin: 0 0 12px; }
-  dl div { flex: 1; padding: 7px; border-radius: 6px; background: #1e293b; }
-  dt { color: #a8b8ce; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
-  dd { margin: 2px 0 0; font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  button:hover { background: linear-gradient(#62656b, #45474d); color: #fff; }
+  button:active { background: #222326; box-shadow: inset 0 2px 5px rgb(0 0 0 / 0.6); }
+  button:focus-visible { outline: 2px solid #2b7bd6; outline-offset: 1px; }
+  dl { display: flex; margin: 0; border-bottom: 1px solid #c7cacf; }
+  dl div {
+    flex: 1;
+    padding: 5px 4px;
+    background: linear-gradient(#fcfcfc, #e7e8ea);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8);
+  }
+  dl div + div { border-left: 1px solid #c7cacf; }
+  dt { color: #686d74; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+  dd { margin: 0; font-size: 18px; font-weight: bold; font-variant-numeric: tabular-nums; text-shadow: 0 1px 0 #fff; }
   canvas {
     display: block;
-    margin: auto;
-    border: 1px solid #40516b;
-    border-radius: 4px;
-    background: #080f1d;
-    width: min(100%, max(80px, calc((100vh - 190px) / 2)));
+    margin: 12px auto 0;
+    border: 1px solid #16171a;
+    border-radius: 2px;
+    background: #1c1d20;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
+    width: min(calc(100% - 24px), max(80px, calc((100vh - 170px) / 2)));
     height: auto;
   }
-  p { margin: 10px 0 0; color: #a8b8ce; font-size: 11px; }
+  p { margin: 8px 0 10px; color: #50555c; font-size: 11px; }
   #status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  /* In the portfolio's viewer the page behind shows through */
+  html.framed body { background: transparent; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #18191b; color: #e2e2e2; }
+    main { border-color: #111214; background: #2a2b2e; }
+    dl { border-color: #1b1c1e; }
+    dl div { background: linear-gradient(#3b3c40, #313236); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06); }
+    dl div + div { border-color: #1b1c1e; }
+    dt { color: #9b9b9b; }
+    dd { text-shadow: 0 -1px 0 rgb(0 0 0 / 0.6); }
+    p { color: #bdbdbd; }
+  }
   </style>
+  <script>if (window.self !== window.top) document.documentElement.classList.add('framed');</script>
   <!-- Cloudflare Web Analytics. Only on the live site, so local dev aren't counted -->
   <script>
     if (location.hostname === 'portfolio.jarvisar.com') {
@@ -61,14 +105,14 @@
 </head>
 <body>
 <main aria-label="Tetris game">
-  <header><h1>TETRIS</h1><button id="restart" type="button">Restart</button></header>
+  <header><h1>Tetris</h1><button id="restart" type="button">Restart</button></header>
   <dl aria-label="Game statistics">
     <div><dt>Score</dt><dd id="score">0</dd></div>
     <div><dt>Lines</dt><dd id="lines">0</dd></div>
     <div><dt>Level</dt><dd id="level">1</dd></div>
   </dl>
   <canvas width="320" height="640" id="game" aria-label="Tetris board. Use left and right arrows to move, up to rotate, and down to drop.">Tetris requires a browser with canvas support.</canvas>
-  <p>← → Move · ↑ Rotate · ↓ Drop</p>
+  <p>Left and Right: move. Up: rotate. Down: drop.</p>
   <span id="status" role="status"></span>
 </main>
 <script>

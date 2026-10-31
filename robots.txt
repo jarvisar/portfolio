@@ -1,3 +1,5 @@
 # The pages have a noindex tag. The resume PDF and other files in assets can't, so crawlers stay out of there.
+# The link preview image is allowed so LinkedIn and others can show it.
 User-agent: *
+Allow: /assets/img/site/og-image.jpg
 Disallow: /assets/

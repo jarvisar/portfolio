@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Not Found | Adam Jarvis</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/img/site/favicon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/site/favicon.png">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#36383d">
+  <!-- Pages from the old portfolio moved. GitHub Pages serves this page for any missing path, so send those on. -->
+  <script>
+    (function () {
+      const moved = {
+        'citymodel-details.html': 'projects/citymodel.html',
+        'svgmap-details.html': 'projects/svgmap.html',
+        'citydriver-details.html': 'projects/citydriver.html',
+        'coastline-details.html': 'projects/coastline.html',
+        '4dvr-details.html': 'projects/4dvr.html',
+        'backrooms-details.html': 'projects/backrooms.html',
+        'solar-system.html': 'projects/orrery.html',
+        'interpreter-details.html': 'projects/jarlang.html',
+        'geometric-details.html': 'projects/geometric.html',
+        'sorter.html': 'projects/sorting.html',
+        'exoplant-search-details.html': 'projects/exoplanet-search.html',
+        'cs5124-details.html': 'projects/datavis.html',
+        'cs5153-details.html': 'projects/network-security.html',
+        'dj-app.html': 'projects/partyline.html',
+        'cors-proxy-details.html': 'projects/cors-proxy.html',
+        'mini-cities-details.html': '#maps',
+        'theta-chi-details.html': '#activities',
+        'acm-details.html': '#activities',
+        'm25-details.html': '#activities',
+        'mission-addiction-details.html': '#activities',
+        'sophies-angel-run-details.html': '#activities',
+        'index_backup.html': ''
+      };
+      const name = location.pathname.split('/').pop();
+      if (Object.prototype.hasOwnProperty.call(moved, name)) location.replace('/' + moved[name]);
+    })();
+  </script>
+  <link rel="stylesheet" href="/assets/css/site.css">
+</head>
+
+<body>
+  <header class="toolbar">
+    <div class="toolbar-inner">
+      <a class="brand" href="/">
+        <img src="/assets/img/site/favicon.svg" width="22" height="22" alt="">
+        Adam Jarvis
+      </a>
+      <nav class="toolbar-links" aria-label="Links">
+        <a class="tb-btn has-label" href="/assets/AdamJarvisResume.pdf" title="Resume (PDF)">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3.5 1.5h6l3 3v10h-9zM9.5 1.5v3h3M5.5 8h5M5.5 10.5h5M5.5 13h3"/></svg>
+          <span class="tb-label">Resume</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <section class="box not-found">
+      <h1 class="bar">Page Not Found</h1>
+      <div class="body">
+        <p>There's nothing at this address. The page may have moved when the portfolio was rebuilt.</p>
+        <p><a class="btn btn-primary" href="/">Go to the portfolio</a> <a class="btn" href="/#projects">Projects</a></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

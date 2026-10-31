@@ -1,51 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="robots" content="noindex">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Adam Jarvis | Software Engineer</title>
-  <meta content="Software engineering portfolio of Adam Jarvis, a full-stack developer focused on web applications, APIs, real-time systems, and Three.js games." name="description">
-  <meta content="Adam Jarvis, Software Engineer, Full-Stack Developer, Backend Developer, Three.js, Game Development" name="keywords">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adam Jarvis | Software Developer</title>
+  <meta name="description" content="Resume and portfolio of Adam Jarvis, a software developer in Cincinnati working on web apps, real-time systems, mapping tools, and Three.js games.">
   <link rel="canonical" href="https://portfolio.jarvisar.com/">
-  
-  <meta name="google-site-verification" content="tHWkMppvvijkoZIKM4owMs08YnOzCgNQFQS9is0ZBts" />
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img//apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img//favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/img//favicon-16x16.png">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
-
-	<script  type="importmap">{
-		"imports": {
-			"three": "./assets/vendor/three/three-r140.module.js"
-		}
-	}</script>
-
-  <!-- =======================================================
-  * Template Name: MyResume - v4.10.0
-  * Template URL: https://bootstrapmade.com/free-html-bootstrap-template-my-resume/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/site/favicon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/img/site/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/site/apple-touch-icon.png">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#36383d">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Adam Jarvis">
+  <meta property="og:title" content="Adam Jarvis | Software Developer">
+  <meta property="og:description" content="Resume and portfolio: experience, web apps, mapping tools, games, and 3D printed maps.">
+  <meta property="og:url" content="https://portfolio.jarvisar.com/">
+  <meta property="og:image" content="https://portfolio.jarvisar.com/assets/img/site/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="assets/css/site.css">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -54,7 +30,7 @@
       "url": "https://portfolio.jarvisar.com/"
     }
   </script>
-  <!-- Cloudflare Web Analytics. Only on the live site, so local dev aren't counted -->
+  <!-- Cloudflare Web Analytics. Only on the live site, so local visits aren't counted -->
   <script>
     if (location.hostname === 'portfolio.jarvisar.com') {
       const beacon = document.createElement('script');
@@ -64,801 +40,664 @@
       document.head.appendChild(beacon);
     }
   </script>
+  <script src="assets/js/site.js" defer></script>
 </head>
 
 <body>
-
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- ======= Mobile nav toggle button ======= -->
-  <button type="button" class="mobile-nav-toggle d-lg-none" aria-label="Toggle navigation" aria-controls="header" aria-expanded="false"><i class="bi bi-list" aria-hidden="true"></i></button>
-  <!-- ======= Header ======= -->
-  <header id="header" class="d-flex flex-column justify-content-center">
-
-    <nav id="navbar" class="navbar nav-menu" aria-label="Main">
-      <ul>
-        <li><a href="#hero" class="nav-link scrollto active" aria-label="Home"><i class="bx bx-home" aria-hidden="true"></i> <span>Home</span></a></li>
-        <li><a href="#about" class="nav-link scrollto" aria-label="About"><i class="bx bx-user" aria-hidden="true"></i> <span>About</span></a></li>
-        <li><a href="#skills" class="nav-link scrollto" aria-label="Skills"><i class="bx bx-cog" aria-hidden="true"></i> <span>Skills</span></a></li>
-        <li><a href="#resume" class="nav-link scrollto" aria-label="Resume"><i class="bx bx-file" aria-hidden="true"></i> <span>Resume</span></a></li>
-        <li><a href="#projects" class="nav-link scrollto" aria-label="Projects"><i class="bx bx-code-alt" aria-hidden="true"></i> <span>Projects</span></a></li>
-        <li><a href="#portfolio" class="nav-link scrollto" aria-label="Portfolio"><i class="bx bx-book-content" aria-hidden="true"></i> <span>Portfolio</span></a></li>
-        <li><a href="#involvement" class="nav-link scrollto" aria-label="Community &amp; Involvement"><i class="bx bx-group" aria-hidden="true"></i> <span>Community &amp; Involvement</span></a></li>
-        <li><a href="#contact" class="nav-link scrollto" aria-label="Contact"><i class="bx bx-envelope" aria-hidden="true"></i> <span>Contact</span></a></li>
-      </ul>
-    </nav><!-- .nav-menu -->
-
-  </header><!-- End Header -->
-
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex flex-column justify-content-center">
-    <div class="container" data-aos="zoom-out-right" data-aos-delay="50" >
-      <h1>Adam Jarvis</h1>
-      <p>I'm a <span class="visually-hidden">software engineer and full-stack developer</span><span class="typed" aria-hidden="true" data-typed-items="Software Engineer, Full-Stack Developer, Backend Developer, Game Developer, Mapping Tools Developer, 3D Modeler, Creative Technologist, Tool Builder, Problem Solver"></span></p>
-      <div class="social-links">
-        <a href="./assets/AdamJarvisResume.pdf" target="_blank" rel="noreferrer" title="Resume" aria-label="Resume (PDF)"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" style="margin-right: 8px" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M4.998 9V1H19.5L23 4.5V23h-7m2-22v5h5M8 11a3 3 0 1 0 0 6a3 3 0 0 0 0-6ZM3 23v-1c0-4 3-5 5-5s5 1 5 5v1z"/></svg></a>
-        <a href="https://github.com/jarvisar" class="google-github" title="GitHub" aria-label="GitHub"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" style="margin-bottom: 1px" viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59c.4.07.55-.17.55-.38c0-.19-.01-.82-.01-1.49c-2.01.37-2.53-.49-2.69-.94c-.09-.23-.48-.94-.82-1.13c-.28-.15-.68-.52-.01-.53c.63-.01 1.08.58 1.23.82c.72 1.21 1.87.87 2.33.66c.07-.52.28-.87.51-1.07c-1.78-.2-3.64-.89-3.64-3.95c0-.87.31-1.59.82-2.15c-.08-.2-.36-1.02.08-2.12c0 0 .67-.21 2.2.82c.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82c.44 1.1.16 1.92.08 2.12c.51.56.82 1.27.82 2.15c0 3.07-1.87 3.75-3.65 3.95c.29.25.54.73.54 1.48c0 1.07-.01 1.93-.01 2.2c0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg></a>
-        <a href="https://www.linkedin.com/in/jarvisar/" class="linkedin" title="LinkedIn" aria-label="LinkedIn"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" style="margin-bottom: 3px" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 5a2 2 0 1 1-4-.002a2 2 0 0 1 4 .002M7 8.48H3V21h4zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91z"/></svg></a>
-        <a href="https://makerworld.com/en/@jarvizar" target="_blank" rel="noreferrer" title="3D Models" aria-label="3D models on MakerWorld"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" ><path fill="currentColor" d="M12.662 24V8.959l8.535 3.369V24zm-9.859-.003v-7.521l8.534-3.371l-.001 10.892zM2.803 0h8.533l.001 11.672l-8.534 3.369zm9.859 0h8.535v10.892l-8.535-3.371z"/></svg></a>
-        <a href="mailto:adamjarvis04@gmail.com" class="email" title="Email" aria-label="Email"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" viewBox="0 0 24 24"><path fill="currentColor" d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0l-8 5l-8-5zm0 12H4V8l8 5l8-5z"/></svg></a>
-        
-      </div>
+  <header class="toolbar">
+    <div class="toolbar-inner">
+      <a class="brand" href="./">
+        <img src="assets/img/site/favicon.svg" width="22" height="22" alt="">
+        Adam Jarvis
+      </a>
+      <nav class="toolbar-links" aria-label="Links">
+        <a class="tb-btn tb-icon" href="https://github.com/jarvisar" title="GitHub" aria-label="GitHub">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </a>
+        <a class="tb-btn tb-icon" href="https://www.linkedin.com/in/jarvisar/" title="LinkedIn" aria-label="LinkedIn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002M7 8.48H3V21h4zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91z"/></svg>
+        </a>
+        <a class="tb-btn has-label" href="assets/AdamJarvisResume.pdf" title="Resume (PDF)">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3.5 1.5h6l3 3v10h-9zM9.5 1.5v3h3M5.5 8h5M5.5 10.5h5M5.5 13h3"/></svg>
+          <span class="tb-label">Resume</span>
+        </a>
+        <span class="tb-sep menu-btn" aria-hidden="true"></span>
+        <button class="tb-btn menu-btn has-label" type="button" aria-expanded="false" aria-controls="menu">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1 3h14v2H1zM1 7h14v2H1zM1 11h14v2H1z"/></svg>
+          <span class="tb-label">Menu</span>
+        </button>
+      </nav>
     </div>
+    <nav class="menu" id="menu" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#maps">Maps &amp; Prints</a>
+      <a href="#education">Education</a>
+      <a href="#activities">Activities &amp; Volunteering</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-    <!-- Div for 3d glb -->
-    <!-- <div id="three-container" style="width: 40%; position: absolute; top: 50%; right: 13%; transform: translate(-00%, -50%); background: transparent;" class="container" data-aos="zoom-in" data-aos-delay="100"></div> -->
-    <div id="scroll-prompt" class="scroll-prompt" style="opacity: 1;" aria-hidden="true">
-      <div class="scroll-prompt-arrow-container">
-          <div class="scroll-prompt-arrow"><div></div></div>
-          <div class="scroll-prompt-arrow"><div></div></div>
-      </div>
-  </div>
-    <canvas class="hero-canvas" aria-hidden="true"></canvas>
-  </section><!-- End Hero -->
+  <div class="wrap">
+    <section class="cover" aria-label="Map of Cincinnati">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="assets/img/site/cincinnati-dark-1000.webp 1000w, assets/img/site/cincinnati-dark-2000.webp 2000w" sizes="(max-width: 1000px) 100vw, 980px">
+        <img src="assets/img/site/cincinnati-light-1000.webp" srcset="assets/img/site/cincinnati-light-1000.webp 1000w, assets/img/site/cincinnati-light-2000.webp 2000w" sizes="(max-width: 1000px) 100vw, 980px" width="1000" height="275" alt="Map of downtown Cincinnati, Covington, and Newport along the Ohio River">
+      </picture>
+      <p class="cover-caption">Cincinnati and the Ohio River, drawn with <a href="projects/svgmap.html">SVGmap</a></p>
+    </section>
 
-  <main id="main" class="home-sections">
+    <div class="layout">
+      <aside class="sidebar">
+        <section class="box vcard" aria-label="Profile">
+          <div class="body">
+            <div class="intro">
+              <h1>Adam Jarvis</h1>
+              <p class="role">Software Developer at London Computer Systems</p>
+              <p class="place">
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0a5.5 5.5 0 0 0-5.5 5.5C2.5 9.4 8 16 8 16s5.5-6.6 5.5-10.5A5.5 5.5 0 0 0 8 0zm0 7.6a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2z"/></svg>
+                Cincinnati, Ohio
+              </p>
+              <div class="actions">
+                <a class="btn btn-primary" href="assets/AdamJarvisResume.pdf">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M7 1h2v7.2l2.6-2.6L13 7l-5 5-5-5 1.4-1.4L7 8.2zM2 13.5h12V15H2z"/></svg>
+                  Resume
+                </a>
+                <a class="btn" href="mailto:adamjarvis04@gmail.com">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M1 3h14v10H1zm1.6 1.5L8 8.3l5.4-3.8zm10.9 1.6L8 10 2.5 6.1v5.4h11z"/></svg>
+                  Email
+                </a>
+              </div>
+            </div>
+            <dl class="facts">
+              <div><dt>Now</dt><dd>Net Dial Tone, a VoIP platform at London Computer Systems</dd></div>
+              <div><dt>Before</dt><dd>ERP and CRM integrations at Martin &amp; Associates</dd></div>
+              <div><dt>Degree</dt><dd>B.S. Computer Science, University of Cincinnati, 2023</dd></div>
+              <div><dt>Experience</dt><dd>5+ years in software development</dd></div>
+            </dl>
+            <ul class="elsewhere">
+              <li>
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M1 3h14v10H1zm1.6 1.5L8 8.3l5.4-3.8zm10.9 1.6L8 10 2.5 6.1v5.4h11z"/></svg>
+                <a href="mailto:adamjarvis04@gmail.com">adamjarvis04@gmail.com</a>
+              </li>
+              <li>
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                <a href="https://github.com/jarvisar">github.com/jarvisar</a>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002M7 8.48H3V21h4zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91z"/></svg>
+                <a href="https://www.linkedin.com/in/jarvisar/">linkedin.com/in/jarvisar</a>
+              </li>
+              <li>
+                <img src="assets/img/site/favicon.svg" width="16" height="16" alt="">
+                <a href="https://jarvisar.com/">jarvisar.com</a>
+              </li>
+              <li>
+                <img src="assets/img/icons/makerworld.png" width="16" height="16" alt="">
+                <a href="https://makerworld.com/en/@jarvizar">makerworld.com/@jarvizar</a>
+              </li>
+            </ul>
+          </div>
+        </section>
 
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>About</h2>
-          <p>I'm a software engineer based in Cincinnati with 5+ years of professional software development experience.</p>
+        <div class="sticky">
+          <nav class="box" aria-label="On this page">
+            <h2 class="bar">On This Page</h2>
+            <ul class="nav-list">
+              <li><a href="#about">About</a></li>
+              <li><a href="#experience">Experience</a></li>
+              <li><a href="#skills">Skills</a></li>
+              <li><a href="#projects">Projects</a></li>
+              <li><a href="#maps">Maps &amp; Prints</a></li>
+              <li><a href="#education">Education</a></li>
+              <li><a href="#activities">Activities &amp; Volunteering</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+          <p class="side-note">Hint: Try the Konami Code.</p>
         </div>
+      </aside>
 
-        <div class="row">
-          <div class="col-lg-12 content">
-            <h3>Software Engineer &amp; Developer</h3>
-            <p class="fst-italic">
-              I enjoy building practical software across full-stack web applications, APIs, real-time systems, automation, and browser-based 3D games.
-            </p>
-            <div class="row">
-              <div class="col-lg-6">
+      <main class="main" id="main">
+
+        <section class="box" id="about" aria-labelledby="about-title">
+          <div class="bar">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="8" cy="4.5" r="3"/><path d="M2 15c0-3.4 2.7-5.5 6-5.5s6 2.1 6 5.5z"/></svg>
+            <h2 id="about-title">About</h2>
+          </div>
+          <div class="body">
+            <p class="lead">I'm a software developer in Cincinnati. At London Computer Systems I work on Net Dial Tone, a VoIP phone platform, across the Angular front end, the Node.js and C# .NET services, and the Asterisk call flows underneath them.</p>
+            <p>Before that I built ERP and CRM integrations at Martin &amp; Associates during my co-op years at the University of Cincinnati, where I earned a B.S. in Computer Science in 2023.</p>
+            <p>Outside of work I build mapping tools and Three.js games. <a href="projects/citymodel.html">City Model</a> and <a href="projects/svgmap.html">SVGmap</a> turn map data into files for 3D printing and laser engraving, and the games include <a href="projects/citydriver.html">Citydriver 2</a> and <a href="projects/coastline.html">Coastline</a>.</p>
+          </div>
+        </section>
+
+        <section class="box" id="experience" aria-labelledby="experience-title">
+          <div class="bar">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M6 1.5h4A1.5 1.5 0 0 1 11.5 3v1H14a1 1 0 0 1 1 1v8.5a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h2.5V3A1.5 1.5 0 0 1 6 1.5zM6 3v1h4V3z"/></svg>
+            <h2 id="experience-title">Experience</h2>
+            <span class="aside"><a href="assets/AdamJarvisResume.pdf">Resume (PDF)</a> | <a href="assets/AdamJarvisResume.docx">DOCX</a></span>
+          </div>
+          <ol class="entries timeline">
+            <li class="entry">
+              <img class="logo" src="assets/img/logos/london-computer-systems.png" width="48" height="48" alt="">
+              <div>
+                <div class="entry-head">
+                  <h3>Software Developer</h3>
+                  <span class="when">May 2023 - Present</span>
+                </div>
+                <p class="org">London Computer Systems, Mason, OH</p>
                 <ul>
-                  <li><i class="bi bi-chevron-right" aria-hidden="true"></i> <strong>Email:</strong> <span>adamjarvis04@gmail.com</span></li>
-                  <li><i class="bi bi-chevron-right" aria-hidden="true"></i> <strong>City:</strong> <span>Cincinnati, OH</span></li>
+                  <li>Develop and maintain Net Dial Tone (NDT), a VoIP telephone platform built with Asterisk, OpenSIPS, Node.js/TypeScript, C# .NET, Angular, and Kubernetes.</li>
+                  <li>Designed and developed a configurable state machine for building complex Asterisk ARI call flows and dialplans.</li>
+                  <li>Built and refined front-end features for call routing, queues, voicemail, and other phone system settings, including interactive visualizations of complex call flows.</li>
+                  <li>Added backend API endpoints and business logic, implemented real-time WebSocket communication, and wrote integration and unit tests.</li>
+                </ul>
+                <ul class="labels" aria-label="Technologies">
+                  <li class="label">Angular</li><li class="label">TypeScript</li><li class="label">Node.js</li><li class="label">C#&nbsp;.NET</li><li class="label">Asterisk ARI/AMI</li><li class="label">OpenSIPS</li><li class="label">WebSockets</li><li class="label">Kubernetes</li>
                 </ul>
               </div>
-              <div class="col-lg-6">
+            </li>
+            <li class="entry">
+              <img class="logo" src="assets/img/logos/uc.png" width="48" height="48" alt="">
+              <div>
+                <div class="entry-head">
+                  <h3>IT Help Desk Technician (Student Worker)</h3>
+                  <span class="when">Jan. 2022 - May 2023</span>
+                </div>
+                <p class="org">University of Cincinnati, Carl H. Lindner College of Business</p>
                 <ul>
-                  <li><i class="bi bi-chevron-right" aria-hidden="true"></i> <strong>Experience:</strong> <span>5+ years in software development</span></li>
-                  <li><i class="bi bi-chevron-right" aria-hidden="true"></i> <strong>Education:</strong> <span>B.S. Computer Science, University of Cincinnati</span></li>
+                  <li>Assisted with software installation, network troubleshooting, and hardware, AV, and classroom equipment repairs.</li>
                 </ul>
               </div>
-            </div>
-            <br>
-            <p>
-              At London Computer Systems (LCS), I develop and maintain Net Dial Tone (NDT), a VoIP platform built with Asterisk, OpenSIPS, Node.js/TypeScript, C# .NET, Angular, and Kubernetes. My work spans front-end features, backend APIs and business logic, real-time WebSocket communication, automated tests, and complex Asterisk ARI/AMI call flows.
-              <br>
-              <br>
-              Earlier in my career, I built ERP and CRM integrations at Martin &amp; Associates, working directly with clients and developing services with C# .NET, REST APIs, Quartz.NET, and ProvideX.
-              <br>
-              <br>
-              Outside of work, I build Three.js games like <a href="https://citydriver2.jarvisar.com/" target="_blank">Citydriver</a> and <a href="https://coastline.jarvisar.com/" target="_blank">Coastline</a>, where the city and landscape is generated in code. I also design and publish 3D-printable miniature maps under the <a href="https://makerworld.com/@jarvizar" target="_blank">Jarvizar</a> name.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section><!-- End About Section -->
+            </li>
+            <li class="entry">
+              <img class="logo" src="assets/img/logos/martin-associates.png" width="48" height="48" alt="">
+              <div>
+                <div class="entry-head">
+                  <h3>Software Developer (Co-op)</h3>
+                  <span class="when">Aug. 2019 - Dec. 2021</span>
+                </div>
+                <p class="org">Martin &amp; Associates, Cincinnati, OH</p>
+                <ul>
+                  <li>Led the development of integration services connecting the ERP and CRM software used by clients.</li>
+                  <li>Built integrations with C# .NET, REST APIs, Quartz.NET, and ProvideX.</li>
+                  <li>Worked directly with clients to implement requested features, resolve integration issues, and provide technical support with BeyondTrust/Bomgar.</li>
+                  <li>Earned Acumatica ERP and Creatio CRM certifications within 60 days.</li>
+                </ul>
+                <ul class="labels" aria-label="Technologies">
+                  <li class="label">C#&nbsp;.NET</li><li class="label">REST APIs</li><li class="label">Quartz.NET</li><li class="label">ProvideX</li><li class="label">Acumatica</li><li class="label">Creatio</li>
+                </ul>
+              </div>
+            </li>
+            <li class="entry">
+              <img class="logo" src="assets/img/logos/phototype.png" width="48" height="48" alt="">
+              <div>
+                <div class="entry-head">
+                  <h3>Application Development Intern</h3>
+                  <span class="when">May 2018 - Aug. 2019</span>
+                </div>
+                <p class="org">Phototype, Cincinnati, OH</p>
+                <ul>
+                  <li>Helped improve internal business tools by designing reports, organizing documentation, restructuring sales data, refining the CRM platform, and assisting with QA testing.</li>
+                </ul>
+              </div>
+            </li>
+          </ol>
+        </section>
 
-    <!-- ======= Skills Section ======= -->
-    <section id="skills" class="skills">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Skills</h2>
-          <p>My experience spans production software development, real-time communications, integrations, automation, and 3D web development.</p>
-        </div>
-        <div class="row skills-content">
-          <div class="col-lg-4 col-md-6">
-            <div class="skill-card">
-              <div class="skill-icon">
-                <i class="fas fa-code" aria-hidden="true"></i>
-              </div>
-              <div class="skill-info">
-                <h3>Full-Stack Development</h3>
-                <p>Angular, TypeScript, JavaScript, C# .NET, Node.js</p>
-              </div>
-            </div>
+        <section class="box" id="skills" aria-labelledby="skills-title">
+          <div class="bar">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1 2.5h9v2H1zM12 2h3v3h-3zM1 7h3v2H1zM6 6.5h3v3H6zM11 7h4v2h-4zM1 11.5h7v2H1zM10 11h3v3h-3z"/></svg>
+            <h2 id="skills-title">Skills</h2>
           </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="skill-card">
-              <div class="skill-icon">
-                <i class="fas fa-server" aria-hidden="true"></i>
-              </div>
-              <div class="skill-info">
-                <h3>APIs &amp; Real-Time Systems</h3>
-                <p>REST APIs, WebSockets, backend services, business logic</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="skill-card">
-              <div class="skill-icon">
-                <i class="fas fa-desktop" aria-hidden="true"></i>
-              </div>
-              <div class="skill-info">
-                <h3>VoIP &amp; Telephony</h3>
-                <p>Asterisk ARI/AMI, OpenSIPS, call routing, dialplans</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="skill-card">
-              <div class="skill-icon">
-                <i class="fab fa-python" aria-hidden="true"></i>
-              </div>
-              <div class="skill-info">
-                <h3>Python &amp; Automation</h3>
-                <p>Python, Blender scripting, data processing, workflow automation</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="skill-card">
-              <div class="skill-icon">
-                <i class="fas fa-database" aria-hidden="true"></i>
-              </div>
-              <div class="skill-info">
-                <h3>Data &amp; Integrations</h3>
-                <p>ERP/CRM integrations, SQLite, Quartz.NET, ProvideX</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="skill-card">
-              <div class="skill-icon">
-                <i class="fas fa-microchip" aria-hidden="true"></i>
-              </div>
-              <div class="skill-info">
-                <h3>Testing &amp; Troubleshooting</h3>
-                <p>Integration tests, unit tests, QA, cross-stack debugging</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="skill-card">
-              <div class="skill-icon">
-                <i class="fas fa-gamepad" aria-hidden="true"></i>
-              </div>
-              <div class="skill-info">
-                <h3>3D Web &amp; Games</h3>
-                <p>Three.js, WebGL, GLSL shaders, procedural generation</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="skill-card">
-              <div class="skill-icon">
-                <i class="fas fa-tools" aria-hidden="true"></i>
-              </div>
-              <div class="skill-info">
-                <h3>DevOps &amp; Infrastructure</h3>
-                <p>Docker, Kubernetes, Rancher, CI/CD workflows</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div class="skill-card">
-              <div class="skill-icon">
-                <i class="fas fa-cube" aria-hidden="true"></i>
-              </div>
-              <div class="skill-info">
-                <h3>3D Modeling &amp; Mapping</h3>
-                <p>Blender, SolidWorks, QGIS, OpenStreetMap, 3D printing</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>           
+          <table class="spec">
+            <tr><th scope="row">Languages</th><td>TypeScript, JavaScript, C#, Python, SQL, C, GLSL, HTML/CSS</td></tr>
+            <tr><th scope="row">Front End</th><td>Angular, React, Three.js, WebXR, D3.js, MapLibre, Vite, Electron</td></tr>
+            <tr><th scope="row">Back End</th><td>Node.js, .NET, REST APIs, WebSockets, Express, Flask, SQLite</td></tr>
+            <tr><th scope="row">Telephony</th><td>Asterisk ARI/AMI, OpenSIPS, call routing, dialplans</td></tr>
+            <tr><th scope="row">Infrastructure</th><td>Docker, Kubernetes, Rancher, Helm, CI/CD, Cloudflare</td></tr>
+            <tr><th scope="row">Testing</th><td>Integration and unit tests, Vitest, Playwright, QA</td></tr>
+            <tr><th scope="row">3D &amp; Mapping</th><td>Blender (Python add-ons), QGIS, SolidWorks, Inkscape, OpenStreetMap, Overture Maps, LiDAR</td></tr>
+            <tr><th scope="row">Fabrication</th><td>3D printing, laser engraving, pen plotting</td></tr>
+          </table>
+        </section>
 
-    <!-- ======= Resume Section ======= -->
-    <section id="resume" class="resume">
-      <div class="container" data-aos="fade-up">
+        <section class="box" id="projects" aria-labelledby="projects-title">
+          <div class="bar">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1 1h6v6H1zM9 1h6v6H9zM1 9h6v6H1zM9 9h6v6H9z"/></svg>
+            <h2 id="projects-title">Projects</h2>
+            <span class="aside"><a href="https://jarvisar.com/">All apps on jarvisar.com</a></span>
+          </div>
+          <div class="thumbs">
+            <article class="thumb">
+              <a class="shot" href="projects/citymodel.html" tabindex="-1" aria-hidden="true"><img src="assets/img/thumbs/citymodel.webp" width="640" height="360" alt="" loading="lazy"></a>
+              <div class="caption">
+                <div class="title"><h3><img src="assets/img/icons/citymodel.png" width="20" height="20" alt=""><a href="projects/citymodel.html">City Model</a></h3><span class="when">2026</span></div>
+                <p>Turns any area of the map into a multicolor 3D printable model, with terrain, buildings, roads, and water from Overture Maps and LiDAR surveys.</p>
+                <p class="tech">TypeScript, React, Three.js, MapLibre</p>
+                <p class="links"><a class="btn btn-small btn-primary" href="https://citymodel.jarvisar.com/">Open app</a><a href="projects/citymodel.html">Details</a></p>
+              </div>
+            </article>
+            <article class="thumb">
+              <a class="shot" href="projects/svgmap.html" tabindex="-1" aria-hidden="true"><img src="assets/img/thumbs/svgmap.webp" width="640" height="360" alt="" loading="lazy"></a>
+              <div class="caption">
+                <div class="title"><h3><img src="assets/img/icons/svgmap.png" width="20" height="20" alt=""><a href="projects/svgmap.html">SVGmap</a></h3><span class="when">2026</span></div>
+                <p>Makes SVG maps of any city, state, or country from OpenStreetMap data, set up for laser engravers, pen plotters, and print.</p>
+                <p class="tech">TypeScript, React, MapLibre, Web Workers</p>
+                <p class="links"><a class="btn btn-small btn-primary" href="https://svgmap.jarvisar.com/">Open app</a><a href="projects/svgmap.html">Details</a></p>
+              </div>
+            </article>
+            <article class="thumb">
+              <a class="shot" href="projects/citydriver.html" tabindex="-1" aria-hidden="true"><img src="assets/img/thumbs/citydriver.webp" width="640" height="360" alt="" loading="lazy"></a>
+              <div class="caption">
+                <div class="title"><h3><img src="assets/img/icons/citydriver.png" width="20" height="20" alt=""><a href="projects/citydriver.html">Citydriver 2</a></h3><span class="when">2025 - 2026</span></div>
+                <p>Taxi game in a procedurally generated island city, with traffic, pedestrians, weather, and a fare system.</p>
+                <p class="tech">JavaScript, Three.js, WebXR, Electron</p>
+                <p class="links"><a class="btn btn-small btn-primary" href="https://citydriver2.jarvisar.com/">Play</a><a href="projects/citydriver.html">Details</a></p>
+              </div>
+            </article>
+            <article class="thumb">
+              <a class="shot" href="projects/coastline.html" tabindex="-1" aria-hidden="true"><img src="assets/img/thumbs/coastline.webp" width="640" height="360" alt="" loading="lazy"></a>
+              <div class="caption">
+                <div class="title"><h3><img src="assets/img/icons/coastline.png" width="20" height="20" alt=""><a href="projects/coastline.html">Coastline</a></h3><span class="when">2025 - 2026</span></div>
+                <p>Endless driving game across nine routes. All the terrain, models, and audio are generated in code.</p>
+                <p class="tech">JavaScript, Three.js, Web Audio, Electron</p>
+                <p class="links"><a class="btn btn-small btn-primary" href="https://coastline.jarvisar.com/">Play</a><a href="projects/coastline.html">Details</a></p>
+              </div>
+            </article>
+            <article class="thumb">
+              <a class="shot" href="projects/4dvr.html" tabindex="-1" aria-hidden="true"><img src="assets/img/thumbs/4dvr.webp" width="640" height="360" alt="" loading="lazy"></a>
+              <div class="caption">
+                <div class="title"><h3><img src="assets/img/icons/4dvr.png" width="20" height="20" alt=""><a href="projects/4dvr.html">4D VR</a></h3><span class="when">2026</span></div>
+                <p>WebXR app for handling 4D objects and walking through hyperbolic and spherical space on a Meta Quest or in a desktop browser.</p>
+                <p class="tech">JavaScript, Three.js, WebXR, GLSL</p>
+                <p class="links"><a class="btn btn-small btn-primary" href="https://4dvr.jarvisar.com/">Open app</a><a href="projects/4dvr.html">Details</a></p>
+              </div>
+            </article>
+            <article class="thumb">
+              <a class="shot" href="projects/backrooms.html" tabindex="-1" aria-hidden="true"><img src="assets/img/thumbs/backrooms.webp" width="640" height="360" alt="" loading="lazy"></a>
+              <div class="caption">
+                <div class="title"><h3><img src="assets/img/icons/backrooms.png" width="20" height="20" alt=""><a href="projects/backrooms.html">Backrooms Simulator</a></h3><span class="when">2023 - 2026</span></div>
+                <p>Endless procedurally generated maze with six levels, a found footage mode, and an editor for walls, lights, and furniture.</p>
+                <p class="tech">JavaScript, Three.js, GLSL, WebXR</p>
+                <p class="links"><a class="btn btn-small btn-primary" href="https://backrooms.jarvisar.com/">Play</a><a href="projects/backrooms.html">Details</a></p>
+              </div>
+            </article>
+          </div>
 
-        <div class="section-title">
-          <h2>Resume</h2>
-          <p>A condensed overview of my experience is below. My current resume is available to download at the bottom of this section.</p>
-        </div>
-        <div class="row">
-          <div class="col-lg-6">
-            <h3 class="resume-title">Summary</h3>
-            <div class="resume-item pb-0">
-              <h4>Adam Jarvis</h4>
-              <p><em>Software engineer with 5+ years of professional development experience across full-stack applications, APIs, integrations, real-time systems, and automation.</em></p>
-              <ul>
-                <li>Cincinnati, OH, USA</li>
-                <li><a href="mailto:adamjarvis04@gmail.com">adamjarvis04@gmail.com</a></li>
-                <li><a href="https://www.linkedin.com/in/jarvisar/" target="_blank">https://linkedin.com/in/jarvisar/</a></li>
-                <li><a href="https://github.com/jarvisar/" target="_blank">https://github.com/jarvisar/</a></li>
+          <div class="bar sub-bar"><h3>More Projects</h3> <span class="count">5</span></div>
+          <ul class="rows">
+            <li>
+              <a class="row" href="projects/spacegame.html">
+                <img src="assets/img/icons/spacegame.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Space Game <span class="badge">Beta</span></span>
+                  <span class="desc">Space exploration game with procedural planets to land on and 24,000 star systems.</span>
+                </span>
+                <span class="meta"><span>Three.js</span> <span>2026</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="projects/orrery.html">
+                <img src="assets/img/icons/orrery.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Solar System Viewer</span>
+                  <span class="desc">3D model of the solar system with a flight mode and star systems from the NASA Exoplanet Archive.</span>
+                </span>
+                <span class="meta"><span>Three.js</span> <span>2023 - 2026</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="projects/jarlang.html">
+                <img src="assets/img/icons/jarlang.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">JarLang</span>
+                  <span class="desc">A small programming language with an interpreter, x86-64 code generation, and a browser playground.</span>
+                </span>
+                <span class="meta"><span>Python</span> <span>2023 - 2026</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="projects/geometric.html">
+                <img src="assets/img/icons/geometric.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Plotter Geometry</span>
+                  <span class="desc">Generative line art for pen plotters, exported as SVG with a layer for each pen.</span>
+                </span>
+                <span class="meta"><span>JavaScript</span> <span>2025 - 2026</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="projects/sorting.html">
+                <img src="assets/img/icons/sorting.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Sorting Algorithm Visualizer</span>
+                  <span class="desc">24 sorting algorithms animated in real time, with a tone for each bar.</span>
+                </span>
+                <span class="meta"><span>Angular</span> <span>2023</span></span>
+              </a>
+            </li>
+          </ul>
+
+          <div class="bar sub-bar"><h3>School &amp; Early Projects</h3> <span class="count">6</span></div>
+          <ul class="rows">
+            <li>
+              <a class="row" href="projects/exoplanet-search.html">
+                <img src="assets/img/icons/exoplanet.webp" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">NASA Exoplanet Archive Search</span>
+                  <span class="desc">Senior design capstone with William Leithauser. An Angular web app for searching NASA's Exoplanet Archive.</span>
+                </span>
+                <span class="meta"><span>Angular</span> <span>2022 - 2023</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="projects/datavis.html">
+                <img src="assets/img/icons/datavis.webp" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Visual Interfaces for Data (CS 5124)</span>
+                  <span class="desc">Three D3.js dashboards: exoplanets, Cincinnati 311 calls, and The Simpsons transcripts.</span>
+                </span>
+                <span class="meta"><span>D3.js</span> <span>2023</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="projects/network-security.html">
+                <img src="assets/img/icons/network-security.svg" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Network Security (CS 5153)</span>
+                  <span class="desc">AES encryption, buffer overflow, TCP attack, DNS cache poisoning, and Meltdown labs.</span>
+                </span>
+                <span class="meta"><span>C, Python</span> <span>2023</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="projects/partyline.html">
+                <img src="assets/img/icons/partyline.webp" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">PartyLine</span>
+                  <span class="desc">Shared song queue for parties, with a Flask API, Socket.IO, and Spotify search.</span>
+                </span>
+                <span class="meta"><span>Angular, Flask</span> <span>2023</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="projects/cors-proxy.html">
+                <img src="assets/img/icons/cors-proxy.svg" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">CORS Proxy</span>
+                  <span class="desc">Express.js server that adds CORS headers, used by the Exoplanet Archive Search.</span>
+                </span>
+                <span class="meta"><span>Node.js</span> <span>2022</span></span>
+              </a>
+            </li>
+            <li>
+              <div class="row">
+                <img src="assets/img/icons/coursework.svg" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Other Coursework</span>
+                  <span class="row-links"><a href="https://github.com/jarvisar/Parallel-Computing">Parallel Computing (CUDA)</a> <a href="https://github.com/jarvisar/exoplanet-classifier">Exoplanet Classifier (PyTorch)</a> <a href="https://github.com/jarvisar/text-editor">Text Editor (C# WinForms)</a></span>
+                </span>
+                <span class="meta"><span>GitHub</span></span>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="box" id="maps" aria-labelledby="maps-title">
+          <div class="bar">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.5 1L1 2.8v12.2l4.5-1.8 5 1.8 4.5-1.8V1l-4.5 1.8zm.5 1.6v10.2l4 1.4V4z"/></svg>
+            <h2 id="maps-title">Maps &amp; Prints</h2>
+            <span class="aside"><a href="https://makerworld.com/en/@jarvizar">Jarvizar on MakerWorld</a></span>
+          </div>
+          <div class="body">
+            <p class="lead">I design 3D printable miniature maps and publish them as Jarvizar on <a href="https://makerworld.com/en/@jarvizar">MakerWorld</a>, <a href="https://www.printables.com/@jarvizar">Printables</a>, and <a href="https://www.thingiverse.com/Jarvizar/">Thingiverse</a>, where they have more than 30,000 followers and 175,000 downloads.</p>
+            <p>Each model is made by hand: preparing the map data in QGIS, modeling and cleaning up the geometry in Blender and SolidWorks, and setting it up to print. Doing that for every city is what led to the map tools.</p>
+            <ol class="steps">
+              <li><b>Jarvizar Models</b> <span class="when">Since 2023</span><span>Designed by hand in QGIS, Blender, and SolidWorks</span></li>
+              <li><b>Blender Add-ons</b> <span class="when">2026</span><span>3D Map Creator and laserSVG automate the modeling in Python</span></li>
+              <li><b>Web Apps</b> <span class="when">2026</span><span><a href="projects/citymodel.html">City Model</a> and <a href="projects/svgmap.html">SVGmap</a> run in the browser</span></li>
+            </ol>
+
+            <div class="gallery-head">
+              <div class="seg" role="tablist" aria-label="Photo sets">
+                <button type="button" role="tab" id="tab-jarvizar" aria-controls="panel-jarvizar" aria-selected="true">Jarvizar Models<span>19</span></button>
+                <button type="button" role="tab" id="tab-citymodel" aria-controls="panel-citymodel" aria-selected="false" tabindex="-1">City Model<span>9</span></button>
+                <button type="button" role="tab" id="tab-svgmap" aria-controls="panel-svgmap" aria-selected="false" tabindex="-1">SVGmap<span>9</span></button>
+              </div>
+              <p>Photos of finished pieces. Select one to enlarge.</p>
+            </div>
+
+            <div class="tab-panel" id="panel-jarvizar" role="tabpanel" aria-labelledby="tab-jarvizar">
+              <ul class="gallery">
+                <li><a href="assets/img/prints/jarvizar-cincinnati.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-cincinnati-t.webp" width="480" height="360" alt="Cincinnati model with the Ohio River, stadiums, and bridges" loading="lazy"><span>Cincinnati</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-chicago.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-chicago-t.webp" width="480" height="360" alt="Chicago model with the river and the Loop" loading="lazy"><span>Chicago</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-new-york.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-new-york-t.webp" width="480" height="360" alt="Lower Manhattan and Brooklyn model with the East River bridges" loading="lazy"><span>Lower Manhattan</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-tokyo.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-tokyo-t.webp" width="480" height="360" alt="Tokyo model in a black frame" loading="lazy"><span>Tokyo</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-singapore.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-singapore-t.webp" width="480" height="360" alt="Singapore model with Marina Bay Sands" loading="lazy"><span>Singapore</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-monaco.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-monaco-t.webp" width="480" height="360" alt="Monaco model with the harbor and hillside terrain" loading="lazy"><span>Monaco</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-manhattan.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-manhattan-t.webp" width="480" height="360" alt="Manhattan model with a Manhattan NYC plate" loading="lazy"><span>Manhattan</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-boston.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-boston-t.webp" width="480" height="360" alt="Boston model with a Boston MA plate" loading="lazy"><span>Boston</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-edmonton.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-edmonton-t.webp" width="480" height="360" alt="Edmonton model with the river valley" loading="lazy"><span>Edmonton</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-surfers-paradise.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-surfers-paradise-t.webp" width="480" height="360" alt="Surfers Paradise model with canals and islands" loading="lazy"><span>Surfers Paradise</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-walt-disney-world.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-walt-disney-world-t.webp" width="480" height="360" alt="Walt Disney World model with Seven Seas Lagoon" loading="lazy"><span>Walt Disney World</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-disneyland.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-disneyland-t.webp" width="480" height="360" alt="Disneyland model" loading="lazy"><span>Disneyland</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-everest.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-everest-t.webp" width="480" height="360" alt="Terrain model of Mount Everest" loading="lazy"><span>Mount Everest</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-monza.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-monza-t.webp" width="480" height="360" alt="Monza Circuit model with the track in copper" loading="lazy"><span>Monza Circuit</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-shanghai.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-shanghai-t.webp" width="480" height="360" alt="Shanghai International Circuit model with the track in copper" loading="lazy"><span>Shanghai Circuit</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-red-bull-ring.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-red-bull-ring-t.webp" width="480" height="360" alt="Red Bull Ring model with the track in orange" loading="lazy"><span>Red Bull Ring</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-boston-color.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-boston-color-t.webp" width="480" height="360" alt="Multicolor Boston model with orange buildings and green parks" loading="lazy"><span>Boston, multicolor</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-singapore-color.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-singapore-color-t.webp" width="480" height="360" alt="Multicolor Singapore model" loading="lazy"><span>Singapore, multicolor</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-vancouver-color.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-vancouver-color-t.webp" width="480" height="360" alt="Multicolor Vancouver model" loading="lazy"><span>Vancouver, multicolor</span></a></li>
               </ul>
             </div>
 
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>University of Cincinnati</h4>
-              <h5>Graduated May 2023</h5>
-              <p><em>College of Engineering and Applied Science</em></p>
-              <p><em>Bachelor of Science, Computer Science</em></p>
-              <p><b>GPA:</b> 3.5 / 4.0</p>
-              <p><b>Awards:</b> Cincinnatus Scholarship, Dean's List</p>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <h3 class="resume-title">Professional Experience</h3>
-            <div class="resume-item">
-              <h4>Software Developer</h4>
-              <h5>London Computer Systems, Mason, OH</h5>
-              <p><em>May 2023 - Present</em></p>
-              <ul>
-                <li>Develop and maintain Net Dial Tone (NDT), a VoIP telephone platform built using Asterisk, OpenSIPS, Node.js/TypeScript, C# .NET, Angular, and Kubernetes.</li>
-                <li>Designed and developed a configurable state machine for creating complex Asterisk ARI call flows and dialplans.</li>
-                <li>Built and refined front-end features for call routing, queues, voicemail, and other telephone-system configuration, including interactive visualizations for complex call flows.</li>
-                <li>Added backend API endpoints and business logic, implemented real-time WebSocket communication, and wrote integration and unit tests.</li>
+            <div class="tab-panel" id="panel-citymodel" role="tabpanel" aria-labelledby="tab-citymodel" hidden>
+              <ul class="gallery">
+                <li><a href="assets/img/prints/citymodel-lower-manhattan.webp" data-gallery="citymodel" data-caption="Lower Manhattan, with towers over 150 m in their own color."><img src="assets/img/prints/citymodel-lower-manhattan-t.webp" width="480" height="360" alt="Framed print of Lower Manhattan in white with blue water and the tallest towers in gold" loading="lazy"><span>Lower Manhattan</span></a></li>
+                <li><a href="assets/img/prints/citymodel-amsterdam.webp" data-gallery="citymodel" data-caption="Amsterdam in its frame."><img src="assets/img/prints/citymodel-amsterdam-t.webp" width="480" height="360" alt="Framed print of the Amsterdam canals with red-brown buildings and blue water" loading="lazy"><span>Amsterdam</span></a></li>
+                <li><a href="assets/img/prints/citymodel-arc-de-triomphe.webp" data-gallery="citymodel" data-caption="Paris around the Arc de Triomphe, with the avenues in gold."><img src="assets/img/prints/citymodel-arc-de-triomphe-t.webp" width="480" height="360" alt="Circular print of Paris around the Arc de Triomphe" loading="lazy"><span>Arc de Triomphe</span></a></li>
+                <li><a href="assets/img/prints/citymodel-naarden.webp" data-gallery="citymodel" data-caption="The Naarden star fort as a hexagon."><img src="assets/img/prints/citymodel-naarden-t.webp" width="480" height="360" alt="Hexagonal print of the Naarden star fort with moats, trees, and the old town" loading="lazy"><span>Naarden</span></a></li>
+                <li><a href="assets/img/prints/citymodel-midtown-lidar.webp" data-gallery="citymodel" data-caption="Midtown Manhattan, built from a LiDAR survey alone."><img src="assets/img/prints/citymodel-midtown-lidar-t.webp" width="480" height="360" alt="White print of Midtown Manhattan built from a LiDAR survey" loading="lazy"><span>Midtown, from LiDAR</span></a></li>
+                <li><a href="assets/img/prints/citymodel-grand-canyon.webp" data-gallery="citymodel" data-caption="The Grand Canyon, with the terrain colored by height."><img src="assets/img/prints/citymodel-grand-canyon-t.webp" width="480" height="360" alt="Grand Canyon terrain print colored in bands by height" loading="lazy"><span>Grand Canyon</span></a></li>
+                <li><a href="assets/img/prints/citymodel-kauai.webp" data-gallery="citymodel" data-caption="Kauai, printed as six plates and fitted together."><img src="assets/img/prints/citymodel-kauai-t.webp" width="480" height="360" alt="Circular terrain print of Kauai made from six plates" loading="lazy"><span>Kauai</span></a></li>
+                <li><a href="assets/img/prints/citymodel-spa.webp" data-gallery="citymodel" data-caption="A lap of Spa-Francorchamps as a route in its own color."><img src="assets/img/prints/citymodel-spa-t.webp" width="480" height="360" alt="Framed print of Spa-Francorchamps with the circuit in red" loading="lazy"><span>Spa-Francorchamps</span></a></li>
+                <li><a href="assets/img/prints/citymodel-prints.webp" data-gallery="citymodel" data-caption="Prints made with City Model."><img src="assets/img/prints/citymodel-prints-t.webp" width="480" height="360" alt="A table of framed and unframed city, terrain, and racetrack prints" loading="lazy"><span>All prints</span></a></li>
               </ul>
             </div>
-            <div class="resume-item">
-              <h4>IT Help Desk Technician (Student Worker)</h4>
-              <h5>University of Cincinnati Carl H. Lindner College of Business, Cincinnati, OH</h5>
-              <p><em>Jan. 2022 - May 2023</em></p>
-              <ul>
-                <li>Assisted with software installation, network troubleshooting, and hardware, AV, and classroom equipment repairs.</li>
-              </ul>
-            </div>
-            <div class="resume-item">
-              <h4>Software Developer (Co-op)</h4>
-              <h5>Martin &amp; Associates, Cincinnati, OH</h5>
-              <p><em>Aug. 2019 - Dec. 2021</em></p>
-              <ul>
-                <li>Led the development of integration services connecting ERP and CRM software used by clients.</li>
-                <li>Built integrations using C# .NET, REST APIs, Quartz.NET, and ProvideX.</li>
-                <li>Worked directly with clients to implement requested product features, resolve integration issues, and provide technical support using BeyondTrust/Bomgar.</li>
-                <li>Earned Acumatica ERP and Creatio CRM certifications within 60 days.</li>
-              </ul>
-            </div>
-            <div class="resume-item">
-              <h4>Application Development Intern</h4>
-              <h5>Phototype, Cincinnati, OH</h5>
-              <p><em>May 2018 - Aug. 2019</em></p>
-              <ul>
-                <li>Helped improve internal business tools by designing reports, organizing documentation, restructuring sales data, refining the CRM platform, and assisting with QA testing.</li>
+
+            <div class="tab-panel" id="panel-svgmap" role="tabpanel" aria-labelledby="tab-svgmap" hidden>
+              <ul class="gallery">
+                <li><a href="assets/img/prints/svgmap-cincinnati.webp" data-gallery="svgmap" data-caption="Cincinnati, printed."><img src="assets/img/prints/svgmap-cincinnati-t.webp" width="480" height="360" alt="Printed Cincinnati map with the Ohio River, buildings, and parks" loading="lazy"><span>Cincinnati</span></a></li>
+                <li><a href="assets/img/prints/svgmap-washington-dc.webp" data-gallery="svgmap" data-caption="Washington, D.C., laser engraved on wood."><img src="assets/img/prints/svgmap-washington-dc-t.webp" width="480" height="360" alt="Washington, D.C. map laser engraved on wood in a black frame" loading="lazy"><span>Washington, D.C.</span></a></li>
+                <li><a href="assets/img/prints/svgmap-paris.webp" data-gallery="svgmap" data-caption="Paris as a 200 mm circle for a pen plotter."><img src="assets/img/prints/svgmap-paris-t.webp" width="480" height="360" alt="Circular Paris map on a gray wall" loading="lazy"><span>Paris</span></a></li>
+                <li><a href="assets/img/prints/svgmap-san-francisco.webp" data-gallery="svgmap" data-caption="San Francisco with an elevation line every 5 m."><img src="assets/img/prints/svgmap-san-francisco-t.webp" width="480" height="360" alt="Printed San Francisco elevation map with colored contour lines" loading="lazy"><span>San Francisco</span></a></li>
+                <li><a href="assets/img/prints/svgmap-texas.webp" data-gallery="svgmap" data-caption="Texas, engraved and cut along the state line."><img src="assets/img/prints/svgmap-texas-t.webp" width="480" height="360" alt="Wooden Texas map engraved with roads and cities and cut along the state line" loading="lazy"><span>Texas</span></a></li>
+                <li><a href="assets/img/prints/svgmap-lower-manhattan.webp" data-gallery="svgmap" data-caption="Lower Manhattan, printed."><img src="assets/img/prints/svgmap-lower-manhattan-t.webp" width="480" height="360" alt="Printed Lower Manhattan map with orange buildings and blue water" loading="lazy"><span>Lower Manhattan</span></a></li>
+                <li><a href="assets/img/prints/svgmap-ohare.webp" data-gallery="svgmap" data-caption="O'Hare airport, with runways and their numbers."><img src="assets/img/prints/svgmap-ohare-t.webp" width="480" height="360" alt="Printed map of O'Hare airport" loading="lazy"><span>O'Hare</span></a></li>
+                <li><a href="assets/img/prints/svgmap-brooklyn-bridge.webp" data-gallery="svgmap" data-caption="The Brooklyn Bridge Loop, with the route in orange."><img src="assets/img/prints/svgmap-brooklyn-bridge-t.webp" width="480" height="360" alt="Printed Brooklyn Bridge Loop map with the route in orange" loading="lazy"><span>Brooklyn Bridge Loop</span></a></li>
+                <li><a href="assets/img/prints/svgmap-italy.webp" data-gallery="svgmap" data-caption="Detail of an Italy atlas print."><img src="assets/img/prints/svgmap-italy-t.webp" width="480" height="360" alt="Detail of a printed Italy atlas map with roads, towns, and seas" loading="lazy"><span>Italy</span></a></li>
               </ul>
             </div>
           </div>
-        </div>
-          <div class="php-email-form">
-            <div class="text-center resume-download">
-              <div class="dropdown">
-                <a class="dropbtn" href='./assets/AdamJarvisResume.pdf' target="_blank" rel="noreferrer">Download Resume</a>
-                <div class="dropdown-content">
-                  <a href='./assets/AdamJarvisResume.pdf' target="_blank">.PDF Format</a>
-                  <a href='./assets/AdamJarvisResume.docx'>.DOCX Format</a>
-                </div>
-              </div>
-            </div>
+        </section>
+
+        <section class="box" id="education" aria-labelledby="education-title">
+          <div class="bar">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 2L0 6l8 4 6.2-3.1V11h1.3V6.2zM3 8.6V12c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5V8.6L8 11.1z"/></svg>
+            <h2 id="education-title">Education</h2>
           </div>
-      </div>
-    </section><!-- End Resume Section -->
-
-    <!-- ======= Projects Section ======= -->
-    <section id="projects" class="portfolio">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Projects</h2>
-          <p>Games, tools, and interactive visualizations you can try in your browser.</p>
-        </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/citymodel-cover.jpg" class="img-fluid" alt="City Model cover featuring a framed 3D print of Lower Manhattan" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>City Model</h4>
-                <p>Web App / 3D Printing</p>
-                <div class="portfolio-links">
-                  <a href="citymodel-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="City Model details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a href="https://citymodel.jarvisar.com/" target="_blank" rel="noopener noreferrer" title="Access Latest Deployment" class="stretched-link" aria-label="Open City Model"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
+          <ol class="entries">
+            <li class="entry">
+              <img class="logo" src="assets/img/logos/uc.png" width="48" height="48" alt="">
+              <div>
+                <div class="entry-head">
+                  <h3>University of Cincinnati</h3>
+                  <span class="when">2018 - May 2023</span>
                 </div>
+                <p class="org">Bachelor of Science, Computer Science. College of Engineering and Applied Science.</p>
+                <ul>
+                  <li>GPA 3.5/4.0. Cincinnatus Scholarship and Dean's List.</li>
+                  <li>Senior design: <a href="projects/exoplanet-search.html">NASA Exoplanet Archive Search</a>.</li>
+                  <li>Coursework with projects on this page: <a href="projects/datavis.html">Visual Interfaces for Data</a>, <a href="projects/network-security.html">Network Security</a>, and Parallel Computing.</li>
+                  <li>Theta Chi, ACM@UC, UC Esports Club, and Student Government.</li>
+                </ul>
               </div>
-            </div>
+            </li>
+            <li class="entry">
+              <img class="logo" src="assets/img/logos/elder-high-school.png" width="48" height="48" alt="">
+              <div>
+                <div class="entry-head">
+                  <h3>Elder High School</h3>
+                  <span class="when">2014 - 2018</span>
+                </div>
+                <p class="org">Cincinnati, OH</p>
+                <ul>
+                  <li>Co-founded the Engineering Club and the Cryptocurrency Club.</li>
+                  <li>Yearbook Club, INTERalliance, and Ping-Pong Club.</li>
+                </ul>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <section class="box" id="activities" aria-labelledby="activities-title">
+          <div class="bar">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><circle cx="5.5" cy="4.5" r="2.5"/><circle cx="11.5" cy="5" r="2"/><path d="M0 14c0-2.9 2.4-4.6 5.5-4.6S11 11.1 11 14zM12.2 14c0-1.7-.6-3-1.6-3.9.3-.1.6-.1.9-.1 2.6 0 4.5 1.4 4.5 4z"/></svg>
+            <h2 id="activities-title">Activities &amp; Volunteering</h2>
+            <span class="count">7</span>
           </div>
+          <ul class="rows">
+            <li>
+              <a class="row" href="https://ucthetachi.com/">
+                <img src="assets/img/logos/theta-chi.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Theta Chi Fraternity</span>
+                  <span class="desc">Member of the UC chapter, with weekly chapter meetings and philanthropy events.</span>
+                </span>
+                <span class="meta"><span>Joined Spring 2020</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="https://acmatuc.org/">
+                <img src="assets/img/logos/acm-uc.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">ACM@UC</span>
+                  <span class="desc">UC's student chapter of the Association for Computing Machinery. Bi-weekly meetings and the RevolutionUC hackathon.</span>
+                </span>
+                <span class="meta"><span>Joined Fall 2018</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="https://campuslink.uc.edu/organization/esports">
+                <img src="assets/img/logos/uc-esports.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">UC Esports Club</span>
+                  <span class="desc">Student organization for competitive and casual gaming at UC.</span>
+                </span>
+                <span class="meta"><span>Member</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="https://m25m.org/">
+                <img src="assets/img/logos/matthew-25.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Matthew 25: Ministries</span>
+                  <span class="desc">Sorted donated clothing and plastics for recycling, ran the cardboard baler, and separated and blended liquid soaps.</span>
+                </span>
+                <span class="meta"><span>75+ hours</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="https://sophiesangelrun.org/">
+                <img src="assets/img/logos/sophies-angel-run.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Sophie's Angel Run</span>
+                  <span class="desc">Helped with race preparation, directed traffic on race day, and cleaned up afterward, every year before the pandemic.</span>
+                </span>
+                <span class="meta"><span>Set-up volunteer</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="https://www.mission-addiction.org/">
+                <img src="assets/img/logos/mission-addiction.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Mission Addiction</span>
+                  <span class="desc">Volunteer marketing to raise awareness of the agency at UC and other college campuses.</span>
+                </span>
+                <span class="meta"><span>Campus ambassador</span></span>
+              </a>
+            </li>
+            <li>
+              <a class="row" href="https://mission22.com/">
+                <img src="assets/img/logos/mission-22.png" width="40" height="40" alt="">
+                <span class="text">
+                  <span class="name">Mission 22</span>
+                  <span class="desc">Nonprofit supporting veterans and their families.</span>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <div class="bar sub-bar"><h3>Photos</h3></div>
+          <ul class="photo-strip" aria-label="Photos">
+            <li><a href="assets/img/activities/theta-chi.webp" data-gallery="activities" data-caption="Theta Chi at the University of Cincinnati."><img src="assets/img/activities/theta-chi-t.webp" width="480" height="360" alt="Theta Chi chapter members in suits" loading="lazy"></a></li>
+            <li><a href="assets/img/activities/sophies-angel-run-start.webp" data-gallery="activities" data-caption="The start line at Sophie's Angel Run."><img src="assets/img/activities/sophies-angel-run-start-t.webp" width="480" height="360" alt="Runners at the start line of Sophie's Angel Run" loading="lazy"></a></li>
+            <li><a href="assets/img/activities/sophies-angel-run-sign.webp" data-gallery="activities" data-caption="The 13th annual Sophie's Angel Run."><img src="assets/img/activities/sophies-angel-run-sign-t.webp" width="480" height="360" alt="Sign for the 13th annual Sophie's Angel Run" loading="lazy"></a></li>
+            <li><a href="assets/img/activities/mission-addiction.webp" data-gallery="activities" data-caption="Mission Addiction volunteers."><img src="assets/img/activities/mission-addiction-t.webp" width="480" height="360" alt="Collage of Mission Addiction volunteers" loading="lazy"></a></li>
+          </ul>
+        </section>
 
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/citydriver-cover.jpg" class="img-fluid" alt="Citydriver downtown and a yellow taxi on a river bridge" width="1200" height="675">
-              <div class="portfolio-info">
-                <h4>Citydriver</h4>
-                <p>Three.js Taxi Game</p>
-                <div class="portfolio-links">
-                  <a href="citydriver-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="Citydriver details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a href="https://github.com/jarvisar/citydriver2/" target="_blank" rel="noopener noreferrer" title="Source Code" aria-label="Citydriver source code"><i class="bx bxl-github" aria-hidden="true"></i></a>
-                  <a href="https://citydriver2.jarvisar.com/" target="_blank" rel="noopener noreferrer" title="Access Latest Deployment" aria-label="Play Citydriver" class="stretched-link"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
+        <section class="box" id="contact" aria-labelledby="contact-title">
+          <div class="bar">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M1 3h14v10H1zm1.6 1.5L8 8.3l5.4-3.8zm10.9 1.6L8 10 2.5 6.1v5.4h11z"/></svg>
+            <h2 id="contact-title">Contact</h2>
           </div>
-
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/svgmap-cover.jpg" class="img-fluid" alt="SVGmap cover featuring laser, plotter, and print maps of Chicago, Paris, and Spa-Francorchamps" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>SVGmap</h4>
-                <p>Web App / Laser, Plotter &amp; Print</p>
-                <div class="portfolio-links">
-                  <a href="svgmap-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="SVGmap details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a href="https://svgmap.jarvisar.com/" target="_blank" rel="noopener noreferrer" title="Access Latest Deployment" class="stretched-link" aria-label="Open SVGmap"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
+          <div class="body contact">
+            <form action="https://formspree.io/f/mbjegwlv" method="POST" id="contact-form">
+              <div class="form-row">
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" name="name" autocomplete="name" required>
+                </div>
+                <div class="field">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" autocomplete="email" required>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/solar-system-cover.jpg" class="img-fluid" alt="Three.js Solar System with planets and the Three.js logo" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>Three.js Solar System</h4>
-                <p>Interactive 3D Web Project</p>
-                <div class="portfolio-links">
-                  <a href="solar-system.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="View Three.js Solar System details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="Three.js Solar System source code" href="https://github.com/jarvisar/orrery/" target="_blank" title="Source Code"><i class="bx bxl-github" aria-hidden="true"></i></a>
-                  <a aria-label="Open Three.js Solar System" href="./orrery/" target="_blank" title="Access Latest Deployment" rel="noopener noreferrer" class="stretched-link"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
-                </div>
+              <div class="field">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject">
               </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/geometric-cover.jpg" class="img-fluid" alt="Geometric Patterns SVG generator, with an intricate blue and terracotta guilloché rosette" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>Geometric Pattern SVG Generator</h4>
-                <p>Generative Art / Pen Plotting</p>
-                <div class="portfolio-links">
-                  <a href="geometric-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="View Geometric Pattern SVG Generator details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a href="https://github.com/jarvisar/geometric/" target="_blank" rel="noopener noreferrer" title="Source Code" aria-label="Geometric Pattern SVG Generator source code"><i class="bx bxl-github" aria-hidden="true"></i></a>
-                  <a href="https://geometric.jarvisar.com/" target="_blank" rel="noopener noreferrer" title="Open Generator" aria-label="Open Geometric Pattern SVG Generator" class="stretched-link"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
-                </div>
+              <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
               </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/coastline-cover.jpg" class="img-fluid" alt="Coastline driving game with slices of all nine routes" width="1200" height="675">
-              <div class="portfolio-info">
-                <h4>Coastline</h4>
-                <p>Three.js Driving Game</p>
-                <div class="portfolio-links">
-                  <a href="coastline-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="Coastline details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a href="https://github.com/jarvisar/coastline/" target="_blank" rel="noopener noreferrer" title="Source Code" aria-label="Coastline source code"><i class="bx bxl-github" aria-hidden="true"></i></a>
-                  <a href="https://coastline.jarvisar.com/" target="_blank" rel="noopener noreferrer" title="Access Latest Deployment" aria-label="Play Coastline" class="stretched-link"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/backrooms-cover.jpg" class="img-fluid" alt="Backrooms Simulator showing the in-game corridors" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>Backrooms Simulator</h4>
-                <p>Interactive Three.js Project</p>
-                <div class="portfolio-links">
-                  <a href="backrooms-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="View Backrooms Simulator details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="Backrooms Simulator source code" href="https://github.com/jarvisar/threejs-maze/" target="_blank" title="Source Code"><i class="bx bx-link" aria-hidden="true"></i></a>
-                  <a aria-label="Open Backrooms Simulator" href="./threejs-maze/" target="_blank" title="Access Latest Deployment" rel="noopener noreferrer" class="stretched-link"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/interpreter-cover.jpg" class="img-fluid" alt="JarLang interpreter with x86-64 assembly and Python" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>Interpreter & Custom Programming Language</h4>
-                <p>Language / Interpreter Project</p>
-                <div class="portfolio-links">
-                  <a href="interpreter-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="View Interpreter &amp; Custom Programming Language details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="Interpreter source code" href="https://github.com/jarvisar/jarlang/" target="_blank" title="Source Code"><i class="bx bxl-github" aria-hidden="true"></i></a>
-                  <a aria-label="Open Interpreter" href="./jarlang/" target="_blank" title="Access Latest Deployment" rel="noopener noreferrer" class="stretched-link"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/sorting-visualizer-cover.jpg" class="img-fluid" alt="Sorting Algorithm Visualizer with descending bars" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>Sorting Algorithm Visualizer</h4>
-                <p>Algorithm Visualization</p>
-                <div class="portfolio-links">
-                  <a href="sorter.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="View Sorting Algorithm Visualizer details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="Sorting Algorithm Visualizer source code" href="https://github.com/jarvisar/sorting-algos/" target="_blank" title="Source Code"><i class="bx bxl-github" aria-hidden="true"></i></a>
-                  <a aria-label="Open Sorting Algorithm Visualizer" href="./sorting-algos/" target="_blank" title="Access Latest Deployment" rel="noopener noreferrer" class="stretched-link"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/4dvr-cover.jpg" class="img-fluid" alt="4D VR scenes including 4D objects, the 120-cell, Hopf fibers, and hyperbolic and spherical space" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>4D VR</h4>
-                <p>WebXR / 4D Geometry</p>
-                <div class="portfolio-links">
-                  <a href="4dvr-details.html" class="portfolio-details-lightbox" data-glightbox="type: external" title="Additional Details" aria-label="View 4D VR details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a href="https://github.com/jarvisar/4dvr/" target="_blank" rel="noopener noreferrer" title="Source Code" aria-label="4D VR source code"><i class="bx bxl-github" aria-hidden="true"></i></a>
-                  <a href="https://4dvr.jarvisar.com/" target="_blank" rel="noopener noreferrer" title="Access Latest Deployment" aria-label="Open 4D VR" class="stretched-link"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section><!-- End Projects Section -->
-
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Portfolio</h2>
-          <p>A selection of software, mapping, fabrication, and university work.</p>
-        </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/mini-cities-cover.jpg" class="img-fluid" alt="3D printable miniature city models" width="1200" height="1200" decoding="async">
-              <div class="portfolio-info">
-                <h4>3D Printed Miniature Cities</h4>
-                <p>Manual 3D Design / Mapping</p>
-                <div class="portfolio-links">
-                  <a href="mini-cities-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View 3D Printed Miniature Cities details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="Jarvizar on MakerWorld" href="https://makerworld.com/en/@jarvizar" target="_blank" title="MakerWorld Profile"><i class="bx bx-link" aria-hidden="true"></i></a>
-                  <a aria-label="Jarvizar on Printables" href="https://www.printables.com/@jarvizar" target="_blank" title="Printables Profile"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/exoplanet-cover.jpg" class="img-fluid" alt="NASA Exoplanet Search with a magnifying glass and planet" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>NASA Exoplanet Archive Search</h4>
-                <p>Capstone / Data Visualization</p>
-                <div class="portfolio-links">
-                  <a href="exoplant-search-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View NASA Exoplanet Archive Search details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="NASA Exoplanet Archive Search source code" href="https://github.com/jarvisar/senior-design/" target="_blank" title="Source Code"><i class="bx bxl-github" aria-hidden="true"></i></a>
-                  <a aria-label="Open NASA Exoplanet Archive Search" href="./senior-design" target="_blank" title="Access Latest Deployment" rel="noopener noreferrer"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/cors-proxy-cover.jpg" class="img-fluid" alt="CORS Proxy and Access-Control-Allow-Origin" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>CORS Proxy</h4>
-                <p>Web / API Utility</p>
-                <div class="portfolio-links">
-                  <a href="cors-proxy-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View CORS Proxy details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="CORS Proxy source code" href="https://github.com/jarvisar/cors-proxy/" target="_blank" title="Source Code"><i class="bx bxl-github" aria-hidden="true"></i></a>
-                  <a aria-label="Open CORS Proxy" href="https://cors-proxy-jarvisar.vercel.app/" target="_blank" title="Access Latest Deployment"><i class="bx bx-arrow-to-right" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/network-security-cover.jpg" class="img-fluid" alt="CS 5153 Network Security Projects with a shield and padlock" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>Projects for CS 5153</h4>
-                <p>Network Security Projects</p>
-                <div class="portfolio-links">
-                  <a href="cs5153-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Projects for CS 5153 details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                    <a aria-label="CS 5153 projects on GitHub" href="https://github.com/jarvisar/NetworkSecurity/" target="_blank" title="GitHub Repo"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/data-visualization-cover.jpg" class="img-fluid" alt="CS 5124 Visual Interfaces for Data with the D3 logo" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>Projects for CS 5124</h4>
-                <p>Data Visualization Projects</p>
-                <div class="portfolio-links">
-                  <a href="cs5124-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Projects for CS 5124 details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="CS 5124 D3 portfolio" href="https://sites.google.com/view/adam-jarvis/" target="_blank" title="View D3 Portfolio"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/partyline-cover.jpg" class="img-fluid" alt="PartyLine DJ App" width="1200" height="675" decoding="async">
-              <div class="portfolio-info">
-                <h4>PartyLine: DJ App</h4>
-                <p>Full-Stack Web Application</p>
-                <div class="portfolio-links">
-                  <a href="dj-app.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View PartyLine: DJ App details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="PartyLine source code" href="https://github.com/jarvisar/dj-app" target="_blank" title="Source Code"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section><!-- End Portfolio Section -->
-
-    <!-- ======= Volunteer & Involvement Section ======= -->
-    <section id="involvement" class="portfolio">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Community &amp; Involvement</h2>
-            <p>
-              A selection of organizations, community activities, and volunteer work I've been involved with over the years.
-            </p>
-        </div>
-
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-greek">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Theta Chi Fraternity</h4>
-                <p>College Involvement</p>
-                <div class="portfolio-links">
-                  <a href="theta-chi-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Theta Chi Fraternity details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="Theta Chi Fraternity website" href="https://ucthetachi.com/" target="_blank"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-volunteer">
-            <div class="portfolio-wrap" >
-              <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Mission Addiction Family Service</h4>
-                <p>Volunteering</p>
-                <div class="portfolio-links">
-                  <a href="mission-addiction-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Mission Addiction Family Service details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="Mission Addiction Family Service website" href="https://www.mission-addiction.org/" target="_blank"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-volunteer">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Sophie's Angel Run</h4>
-                <p>Volunteering</p>
-                <div class="portfolio-links">
-                  <a href="sophies-angel-run-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Sophie&#x27;s Angel Run details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                    <a aria-label="Sophie<a href=#x27;s Angel Run website" href="https://sophiesangelrun.org/" target="_blank"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-involvement">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>ACM@UC</h4>
-                <p>Student Organization</p>
-                <div class="portfolio-links">
-                  <a href="acm-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View ACM@UC details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="ACM@UC website" href="https://acmatuc.org/" target="_blank"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-involvement">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Mission 22</h4>
-                <p>Involvement</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox stretched-link" title="Mission 22" aria-label="View Mission 22 details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="Mission 22 website" href="https://mission22.com/" target="_blank"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-involvement">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-17.webp" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>UC Esports Club</h4>
-                <p>Student Organization</p>
-                <div class="portfolio-links">
-                  <a href="assets/img/portfolio/portfolio-17.webp" data-gallery="portfolioGallery" class="portfolio-lightbox stretched-link" title="UC Esports Club" aria-label="View UC Esports Club details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="UC Esports Club website" href="https://www.uc.edu/campaigns/esports.html" target="_blank"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-volunteer">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-              <div class="portfolio-info">
-                <h4>Matthew 25: Ministries</h4>
-                <p>Volunteering</p>
-                <div class="portfolio-links">
-                  <a href="m25-details.html" class="portfolio-details-lightbox stretched-link" data-glightbox="type: external" title="Additional Details" aria-label="View Matthew 25: Ministries details"><i class="bx bx-plus" aria-hidden="true"></i></a>
-                  <a aria-label="Matthew 25: Ministries website" href="https://m25m.org/" target="_blank"><i class="bx bx-link" aria-hidden="true"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section><!-- End Volunteer/Involvement Section -->
-
-
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Contact</h2>
-          <p>Want to connect about software engineering, one of my projects, or another opportunity? Feel free to reach out.</p>
-        </div>
-
-        <div class="row mt-1">
-
-          <div class="col-lg-4">
-            <div class="info">
-              <div class="address">
-                <i class="bi bi-geo-alt" aria-hidden="true"></i>
-                <h4>Location:</h4>
-                <p>Cincinnati, OH, USA</p>
-              </div>
-
-              <div class="email">
-                <a tabindex="-1" aria-hidden="true" href="mailto:adamjarvis04@gmail.com"><i class="bi bi-envelope" aria-hidden="true"></i></a>
-                <h4>Email:</h4>
-                <p><a href="mailto:adamjarvis04@gmail.com">adamjarvis04@gmail.com</a></p>
-              </div>
-
-              <div class="phone">
-                <a tabindex="-1" aria-hidden="true" href="https://www.linkedin.com/in/jarvisar" target="_blank"><i>
-                  <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 14 14"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M3.574 1.767a1.316 1.316 0 0 1-1.287 1.326A1.346 1.346 0 0 1 .99 1.767A1.326 1.326 0 0 1 2.287.5a1.316 1.316 0 0 1 1.287 1.267M1.129 5.449c0-.762.485-.643 1.158-.643c.673 0 1.148-.119 1.148.643v7.424c0 .772-.485.614-1.148.614c-.663 0-1.158.158-1.158-.614zm4.306.001c0-.426.158-.585.405-.634c.248-.05 1.099 0 1.396 0c.297 0 .416.485.406.851a2.485 2.485 0 0 1 2.217-.99a2.97 2.97 0 0 1 3.148 3.098v5.068c0 .772-.475.614-1.149.614c-.673 0-1.148.158-1.148-.614V8.884A1.425 1.425 0 0 0 9.206 7.34A1.435 1.435 0 0 0 7.74 8.914v3.959c0 .772-.485.614-1.158.614c-.673 0-1.148.158-1.148-.614V5.449Z"/></svg>
-                </i></a>
-                <h4>LinkedIn:</h4>
-                <p><a href="https://www.linkedin.com/in/jarvisar" target="_blank">linkedin.com/in/jarvisar</a></p>
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-8 mt-5 mt-lg-0">
-
-            <form action="https://formspree.io/f/mbjegwlv" id="email-form" method="POST" role="form" class="php-email-form">
-              <div class="row gx-3">
-                <div class="col-md-6 form-group">
-                  <label for="name" class="visually-hidden">Your Name</label>
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" autocomplete="name" required data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
-                  <div class="validate"></div>
-                </div>
-                <div class="col-md-6 form-group">
-                  <label for="email" class="visually-hidden">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" autocomplete="email" required data-rule="email" data-msg="Please enter a valid email" />
-                  <div class="validate"></div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="subject" class="visually-hidden">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
-                <div class="validate"></div>
-              </div>
-              <div class="form-group">
-                <label for="message" class="visually-hidden">Message</label>
-                <textarea class="form-control" name="message" id="message" rows="5" required data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                <div class="validate"></div>
-              </div>
-              <div class="text-center">
-                <button type="submit" id="email-form-button">Send Message</button>
-                <p id="email-form-status" role="status" aria-live="polite"></p>
+              <div class="form-actions">
+                <button class="btn btn-primary" type="submit">Send Message</button>
+                <p class="form-status" role="status" aria-live="polite"></p>
               </div>
             </form>
-
+            <ul class="contact-info">
+              <li><b>Email</b><a href="mailto:adamjarvis04@gmail.com">adamjarvis04@gmail.com</a></li>
+              <li><b>LinkedIn</b><a href="https://www.linkedin.com/in/jarvisar/">linkedin.com/in/jarvisar</a></li>
+              <li><b>GitHub</b><a href="https://github.com/jarvisar">github.com/jarvisar</a></li>
+              <li><b>Location</b>Cincinnati, Ohio</li>
+            </ul>
           </div>
+        </section>
 
-        </div>
-
-      </div>
-    </section><!-- End Contact Section -->
-
-  </main><!-- End #main -->
-
-  <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="container">
-      <h3>Adam Jarvis</h3>
-      <div class="social-links">
-        <a href="https://github.com/jarvisar" class="google-github" target="_blank" rel="noreferrer" title="GitHub" aria-label="GitHub"><i class="bx bxl-github" aria-hidden="true"></i></a>
-        <a href="https://www.linkedin.com/in/jarvisar/" class="linkedin" target="_blank" rel="noreferrer" title="LinkedIn" aria-label="LinkedIn"><i class="bx bxl-linkedin" aria-hidden="true"></i></a>
-        <a href="https://makerworld.com/en/@jarvizar" target="_blank" rel="noreferrer" title="MakerWorld 3D Models" aria-label="3D models on MakerWorld"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12.662 24V8.959l8.535 3.369V24zm-9.859-.003v-7.521l8.534-3.371l-.001 10.892zM2.803 0h8.533l.001 11.672l-8.534 3.369zm9.859 0h8.535v10.892l-8.535-3.371z"/></svg></a>
-        <a href="https://www.printables.com/@jarvizar" target="_blank" rel="noreferrer" title="Printables 3D Models" aria-label="3D models on Printables"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M3.678 4.8L12 9.6v9.6l8.322-4.8V4.8L12 0ZM12 19.2l-8.322-4.8V24Z"/></svg></a>
-        <a href="mailto:adamjarvis04@gmail.com" class="email" title="Email" aria-label="Email"><i class="bx bx-envelope" aria-hidden="true"></i></a>
-        <a href="./assets/AdamJarvisResume.pdf" class="resume" target="_blank" rel="noreferrer" title="Resume" aria-label="Resume (PDF)"><i class="bx bx-file" aria-hidden="true"></i></a>
-      </div>
-      <div class="credits" style="display: block; margin-top: -15px;">
-        Built with <a href="https://getbootstrap.com/">Bootstrap</a> &amp; <a href="https://threejs.org/">Three.js</a>
-      </div>
-      <div class="credits" style="display: block; margin-top: 15px;">
-        HINT: Enter the Konami Code to play some Tetris!
-      </div>
+      </main>
     </div>
-  </footer><!-- End Footer -->
+  </div>
 
-  <div id="preloader"></div>
-  <a href="#" aria-label="Back to top" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short" aria-hidden="true"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/email-form/email-form.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-  <script type="module" src="assets/js/computer.js"></script>
-  <script type="module" src="assets/js/profile.js"></script>
-  <script type="module" src="assets/js/hero.js"></script>
-
+  <footer class="footer">
+    <p>Adam Jarvis, Cincinnati, Ohio</p>
+    <p>All of my web apps and games are listed on <a href="https://jarvisar.com/">jarvisar.com</a>.</p>
+  </footer>
 </body>
-
 </html>

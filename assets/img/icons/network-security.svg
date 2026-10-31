@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3c7894"/><stop offset="1" stop-color="#173847"/></linearGradient>
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".24"/><stop offset="1" stop-color="#fff" stop-opacity=".04"/></linearGradient>
+  </defs>
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="url(#bg)" stroke="#0d2129" stroke-width="2"/>
+  <path d="M2 30V14A12 12 0 0 1 14 2h36a12 12 0 0 1 12 12v16C44 35 20 35 2 30z" fill="url(#gloss)"/>
+  <g transform="translate(0 1.2)" opacity=".45"><path d="M22 29v-5a10 10 0 0 1 20 0v5" fill="none" stroke="#000" stroke-width="5"/><rect x="17" y="29" width="30" height="21" rx="3" fill="#000"/><circle cx="32" cy="38" r="3.4" fill="#2a5568"/><rect x="30.6" y="39" width="2.8" height="6" fill="#2a5568"/></g>
+  <g><path d="M22 29v-5a10 10 0 0 1 20 0v5" fill="none" stroke="#f4f4f4" stroke-width="5"/><rect x="17" y="29" width="30" height="21" rx="3" fill="#f4f4f4"/><circle cx="32" cy="38" r="3.4" fill="#2a5568"/><rect x="30.6" y="39" width="2.8" height="6" fill="#2a5568"/></g>
+</svg>
