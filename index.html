@@ -41,6 +41,7 @@
     }
   </script>
   <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/map.js" defer></script>
 </head>
 
 <body>
@@ -83,12 +84,60 @@
   </header>
 
   <div class="wrap">
-    <section class="cover" aria-label="Map of Cincinnati">
+    <section class="cover" aria-label="Map" data-map>
       <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="assets/img/site/cincinnati-dark-1000.webp 1000w, assets/img/site/cincinnati-dark-2000.webp 2000w" sizes="(max-width: 1000px) 100vw, 980px">
-        <img src="assets/img/site/cincinnati-light-1000.webp" srcset="assets/img/site/cincinnati-light-1000.webp 1000w, assets/img/site/cincinnati-light-2000.webp 2000w" sizes="(max-width: 1000px) 100vw, 980px" width="1000" height="275" alt="Map of downtown Cincinnati, Covington, and Newport along the Ohio River">
+        <source media="(prefers-color-scheme: dark)" srcset="assets/img/site/cincinnati-dark.webp">
+        <img src="assets/img/site/cincinnati-light.webp" width="978" height="248" alt="Map of downtown Cincinnati, Covington, and Newport along the Ohio River">
       </picture>
-      <p class="cover-caption">Cincinnati and the Ohio River, drawn with <a href="projects/svgmap.html">SVGmap</a></p>
+      <canvas class="map-canvas" tabindex="0" role="application" aria-roledescription="map" aria-label="Map of Cincinnati and the Ohio River" aria-describedby="map-help"></canvas>
+      <p class="visually-hidden" id="map-help">Drag or use the arrow keys to move the map. Double-click, use the plus and minus keys, or hold Ctrl and scroll to zoom.</p>
+      <span class="map-pen" hidden></span>
+      <div class="map-zoom">
+        <button type="button" class="map-btn" data-zoom="in" title="Zoom in" aria-label="Zoom in">
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M5 1h2v4h4v2H7v4H5V7H1V5h4z" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="map-btn" data-zoom="out" title="Zoom out" aria-label="Zoom out">
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 5h10v2H1z" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="map-btn" data-zoom="reset" title="Reset view" aria-label="Reset view">
+          <svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5L1 7.6l1.1 1.2L3 8v6.5h4v-4h2v4h4V8l.9.8L15 7.6z" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="map-picks">
+        <label class="visually-hidden" for="map-city">City</label>
+        <select class="map-select" id="map-city">
+          <option value="cincinnati" selected>Cincinnati</option>
+          <option value="chicago">Chicago</option>
+          <option value="manhattan">Lower Manhattan</option>
+          <option value="boston">Boston</option>
+          <option value="washington">Washington, D.C.</option>
+          <option value="paris">Paris</option>
+          <option value="san-francisco">San Francisco</option>
+          <option value="venice">Venice</option>
+        </select>
+        <label class="visually-hidden" for="map-style">Style</label>
+        <select class="map-select" id="map-style">
+          <optgroup label="Print">
+            <option value="classic">Classic</option>
+            <option value="midnight">Midnight</option>
+            <option value="blueprint">Blueprint</option>
+            <option value="nolli">Figure-ground</option>
+            <option value="terracotta">Terracotta</option>
+            <option value="riso">Riso</option>
+            <option value="noir">Noir</option>
+            <option value="minimal">Minimal</option>
+          </optgroup>
+          <optgroup label="Laser">
+            <option value="laser">Birch plywood</option>
+          </optgroup>
+          <optgroup label="Plotter">
+            <option value="plotter">Pen plot</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="map-scale" aria-hidden="true"><span class="metric"></span><span class="imperial"></span></div>
+      <p class="map-status" role="status" hidden></p>
+      <p class="cover-caption">Styles from <a href="projects/svgmap.html">SVGmap</a>. Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a></p>
     </section>
 
     <div class="layout">
@@ -456,28 +505,29 @@
             <span class="aside"><a href="https://makerworld.com/en/@jarvizar">Jarvizar on MakerWorld</a></span>
           </div>
           <div class="body">
-            <p class="lead">I design 3D printable miniature maps and publish them as Jarvizar on <a href="https://makerworld.com/en/@jarvizar">MakerWorld</a>, <a href="https://www.printables.com/@jarvizar">Printables</a>, and <a href="https://www.thingiverse.com/Jarvizar/">Thingiverse</a>, where they have more than 30,000 followers and 175,000 downloads.</p>
-            <p>Each model is made by hand: preparing the map data in QGIS, modeling and cleaning up the geometry in Blender and SolidWorks, and setting it up to print. Doing that for every city is what led to the map tools.</p>
+            <p class="lead">I design 3D printable miniature maps and publish them as Jarvizar. They have more than 30,000 followers and 175,000 downloads on <a href="https://makerworld.com/en/@jarvizar">MakerWorld</a>, <a href="https://www.printables.com/@jarvizar">Printables</a>, and <a href="https://www.thingiverse.com/Jarvizar/">Thingiverse</a>.</p>
+            <p>Modeling each map by hand takes a long time, so I automated it:</p>
             <ol class="steps">
-              <li><b>Jarvizar Models</b> <span class="when">Since 2023</span><span>Designed by hand in QGIS, Blender, and SolidWorks</span></li>
-              <li><b>Blender Add-ons</b> <span class="when">2026</span><span>3D Map Creator and laserSVG automate the modeling in Python</span></li>
-              <li><b>Web Apps</b> <span class="when">2026</span><span><a href="projects/citymodel.html">City Model</a> and <a href="projects/svgmap.html">SVGmap</a> run in the browser</span></li>
+              <li><b>Jarvizar Models</b><span class="when">Since 2023</span><span>Each map modeled by hand in QGIS, Blender, and SolidWorks</span></li>
+              <li><b>Blender Add-ons</b><span class="when">Early 2026</span><span>3D Map Creator and laserSVG automate the modeling</span></li>
+              <li><b><a href="projects/citymodel.html">City Model</a> and <a href="projects/svgmap.html">SVGmap</a></b><span class="when">Since Fall 2026</span><span>The add-ons rebuilt as web apps, with nothing to install</span></li>
             </ol>
+          </div>
 
-            <div class="gallery-head">
-              <div class="seg" role="tablist" aria-label="Photo sets">
-                <button type="button" role="tab" id="tab-jarvizar" aria-controls="panel-jarvizar" aria-selected="true">Jarvizar Models<span>19</span></button>
-                <button type="button" role="tab" id="tab-citymodel" aria-controls="panel-citymodel" aria-selected="false" tabindex="-1">City Model<span>9</span></button>
-                <button type="button" role="tab" id="tab-svgmap" aria-controls="panel-svgmap" aria-selected="false" tabindex="-1">SVGmap<span>9</span></button>
-              </div>
-              <p>Photos of finished pieces. Select one to enlarge.</p>
+          <div class="bar sub-bar photos-bar"><h3>Photos</h3></div>
+          <div class="body photos">
+            <div class="seg" role="tablist" aria-label="Photo sets">
+              <button type="button" role="tab" id="tab-jarvizar" aria-controls="panel-jarvizar" aria-selected="true">Jarvizar Models</button>
+              <button type="button" role="tab" id="tab-citymodel" aria-controls="panel-citymodel" aria-selected="false" tabindex="-1">City Model Prints</button>
+              <button type="button" role="tab" id="tab-svgmap" aria-controls="panel-svgmap" aria-selected="false" tabindex="-1">SVGmap Prints</button>
             </div>
 
             <div class="tab-panel" id="panel-jarvizar" role="tabpanel" aria-labelledby="tab-jarvizar">
+              <p class="panel-note">19 models designed by hand. Select a photo to enlarge it.</p>
               <ul class="gallery">
                 <li><a href="assets/img/prints/jarvizar-cincinnati.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-cincinnati-t.webp" width="480" height="360" alt="Cincinnati model with the Ohio River, stadiums, and bridges" loading="lazy"><span>Cincinnati</span></a></li>
                 <li><a href="assets/img/prints/jarvizar-chicago.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-chicago-t.webp" width="480" height="360" alt="Chicago model with the river and the Loop" loading="lazy"><span>Chicago</span></a></li>
-                <li><a href="assets/img/prints/jarvizar-new-york.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-new-york-t.webp" width="480" height="360" alt="Lower Manhattan and Brooklyn model with the East River bridges" loading="lazy"><span>Lower Manhattan</span></a></li>
+                <li><a href="assets/img/prints/jarvizar-new-york.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-new-york-t.webp" width="480" height="360" alt="Lower Manhattan and Brooklyn model with the East River bridges" loading="lazy"><span>New York City</span></a></li>
                 <li><a href="assets/img/prints/jarvizar-tokyo.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-tokyo-t.webp" width="480" height="360" alt="Tokyo model in a black frame" loading="lazy"><span>Tokyo</span></a></li>
                 <li><a href="assets/img/prints/jarvizar-singapore.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-singapore-t.webp" width="480" height="360" alt="Singapore model with Marina Bay Sands" loading="lazy"><span>Singapore</span></a></li>
                 <li><a href="assets/img/prints/jarvizar-monaco.webp" data-gallery="jarvizar"><img src="assets/img/prints/jarvizar-monaco-t.webp" width="480" height="360" alt="Monaco model with the harbor and hillside terrain" loading="lazy"><span>Monaco</span></a></li>
@@ -498,20 +548,37 @@
             </div>
 
             <div class="tab-panel" id="panel-citymodel" role="tabpanel" aria-labelledby="tab-citymodel" hidden>
+              <p class="panel-note">24 prints made with <a href="projects/citymodel.html">City Model</a>, including cities and stadiums built from LiDAR.</p>
               <ul class="gallery">
                 <li><a href="assets/img/prints/citymodel-lower-manhattan.webp" data-gallery="citymodel" data-caption="Lower Manhattan, with towers over 150 m in their own color."><img src="assets/img/prints/citymodel-lower-manhattan-t.webp" width="480" height="360" alt="Framed print of Lower Manhattan in white with blue water and the tallest towers in gold" loading="lazy"><span>Lower Manhattan</span></a></li>
-                <li><a href="assets/img/prints/citymodel-amsterdam.webp" data-gallery="citymodel" data-caption="Amsterdam in its frame."><img src="assets/img/prints/citymodel-amsterdam-t.webp" width="480" height="360" alt="Framed print of the Amsterdam canals with red-brown buildings and blue water" loading="lazy"><span>Amsterdam</span></a></li>
-                <li><a href="assets/img/prints/citymodel-arc-de-triomphe.webp" data-gallery="citymodel" data-caption="Paris around the Arc de Triomphe, with the avenues in gold."><img src="assets/img/prints/citymodel-arc-de-triomphe-t.webp" width="480" height="360" alt="Circular print of Paris around the Arc de Triomphe" loading="lazy"><span>Arc de Triomphe</span></a></li>
-                <li><a href="assets/img/prints/citymodel-naarden.webp" data-gallery="citymodel" data-caption="The Naarden star fort as a hexagon."><img src="assets/img/prints/citymodel-naarden-t.webp" width="480" height="360" alt="Hexagonal print of the Naarden star fort with moats, trees, and the old town" loading="lazy"><span>Naarden</span></a></li>
-                <li><a href="assets/img/prints/citymodel-midtown-lidar.webp" data-gallery="citymodel" data-caption="Midtown Manhattan, built from a LiDAR survey alone."><img src="assets/img/prints/citymodel-midtown-lidar-t.webp" width="480" height="360" alt="White print of Midtown Manhattan built from a LiDAR survey" loading="lazy"><span>Midtown, from LiDAR</span></a></li>
+                <li><a href="assets/img/prints/citymodel-cincinnati.webp" data-gallery="citymodel" data-caption="Downtown Cincinnati and the Ohio River, made with LiDAR."><img src="assets/img/prints/citymodel-cincinnati-t.webp" width="480" height="360" alt="White print of downtown Cincinnati with both stadiums and the Ohio River" loading="lazy"><span>Cincinnati</span></a></li>
                 <li><a href="assets/img/prints/citymodel-grand-canyon.webp" data-gallery="citymodel" data-caption="The Grand Canyon, with the terrain colored by height."><img src="assets/img/prints/citymodel-grand-canyon-t.webp" width="480" height="360" alt="Grand Canyon terrain print colored in bands by height" loading="lazy"><span>Grand Canyon</span></a></li>
+                <li><a href="assets/img/prints/citymodel-naarden.webp" data-gallery="citymodel" data-caption="The Naarden star fort as a hexagon."><img src="assets/img/prints/citymodel-naarden-t.webp" width="480" height="360" alt="Hexagonal print of the Naarden star fort with moats, trees, and the old town" loading="lazy"><span>Naarden</span></a></li>
+                <li><a href="assets/img/prints/citymodel-lumen-field.webp" data-gallery="citymodel" data-caption="Lumen Field and T-Mobile Park in Seattle, made with LiDAR."><img src="assets/img/prints/citymodel-lumen-field-t.webp" width="480" height="360" alt="White print of Lumen Field and T-Mobile Park in Seattle in a black frame" loading="lazy"><span>Lumen Field, Seattle</span></a></li>
                 <li><a href="assets/img/prints/citymodel-kauai.webp" data-gallery="citymodel" data-caption="Kauai, printed as six plates and fitted together."><img src="assets/img/prints/citymodel-kauai-t.webp" width="480" height="360" alt="Circular terrain print of Kauai made from six plates" loading="lazy"><span>Kauai</span></a></li>
+                <li><a href="assets/img/prints/citymodel-nyc-marathon.webp" data-gallery="citymodel" data-caption="The New York City Marathon route in its own color."><img src="assets/img/prints/citymodel-nyc-marathon-t.webp" width="480" height="360" alt="Framed print of New York City with the marathon route in red" loading="lazy"><span>NYC Marathon</span></a></li>
+                <li><a href="assets/img/prints/citymodel-arc-de-triomphe.webp" data-gallery="citymodel" data-caption="Paris around the Arc de Triomphe, with the avenues in gold."><img src="assets/img/prints/citymodel-arc-de-triomphe-t.webp" width="480" height="360" alt="Circular print of Paris around the Arc de Triomphe" loading="lazy"><span>Arc de Triomphe</span></a></li>
+                <li><a href="assets/img/prints/citymodel-chicago-plates.webp" data-gallery="citymodel" data-caption="Chicago, printed as six plates and fitted together."><img src="assets/img/prints/citymodel-chicago-plates-t.webp" width="480" height="360" alt="Chicago model printed as six plates fitted together on a table" loading="lazy"><span>Chicago, 6 plates</span></a></li>
+                <li><a href="assets/img/prints/citymodel-midtown-lidar.webp" data-gallery="citymodel" data-caption="Midtown Manhattan, built from a LiDAR survey alone."><img src="assets/img/prints/citymodel-midtown-lidar-t.webp" width="480" height="360" alt="White print of Midtown Manhattan built from a LiDAR survey" loading="lazy"><span>Midtown, from LiDAR</span></a></li>
                 <li><a href="assets/img/prints/citymodel-spa.webp" data-gallery="citymodel" data-caption="A lap of Spa-Francorchamps as a route in its own color."><img src="assets/img/prints/citymodel-spa-t.webp" width="480" height="360" alt="Framed print of Spa-Francorchamps with the circuit in red" loading="lazy"><span>Spa-Francorchamps</span></a></li>
-                <li><a href="assets/img/prints/citymodel-prints.webp" data-gallery="citymodel" data-caption="Prints made with City Model."><img src="assets/img/prints/citymodel-prints-t.webp" width="480" height="360" alt="A table of framed and unframed city, terrain, and racetrack prints" loading="lazy"><span>All prints</span></a></li>
+                <li><a href="assets/img/prints/citymodel-dubai.webp" data-gallery="citymodel" data-caption="Dubai."><img src="assets/img/prints/citymodel-dubai-t.webp" width="480" height="360" alt="Framed multicolor print of Dubai with white towers and blue water" loading="lazy"><span>Dubai</span></a></li>
+                <li><a href="assets/img/prints/citymodel-madring.webp" data-gallery="citymodel" data-caption="The Madring circuit in Madrid, with the track in gold."><img src="assets/img/prints/citymodel-madring-t.webp" width="480" height="360" alt="Dark framed print of the Madring circuit in Madrid with the track in gold" loading="lazy"><span>Madring, Madrid</span></a></li>
+                <li><a href="assets/img/prints/citymodel-marseille.webp" data-gallery="citymodel" data-caption="The Stade Vélodrome in Marseille, made with LiDAR."><img src="assets/img/prints/citymodel-marseille-t.webp" width="480" height="360" alt="White print of the Stade Vélodrome in Marseille" loading="lazy"><span>Stade Vélodrome</span></a></li>
+                <li><a href="assets/img/prints/citymodel-soldier-field.webp" data-gallery="citymodel" data-caption="Soldier Field in Chicago, as a circle."><img src="assets/img/prints/citymodel-soldier-field-t.webp" width="480" height="360" alt="Round white print of Soldier Field in Chicago" loading="lazy"><span>Soldier Field</span></a></li>
+                <li><a href="assets/img/prints/citymodel-milwaukee.webp" data-gallery="citymodel" data-caption="American Family Field in Milwaukee."><img src="assets/img/prints/citymodel-milwaukee-t.webp" width="480" height="360" alt="White print of American Family Field in Milwaukee with its fan-shaped roof" loading="lazy"><span>American Family Field</span></a></li>
+                <li><a href="assets/img/prints/citymodel-chicago-lidar.webp" data-gallery="citymodel" data-caption="The Chicago Loop, built from a LiDAR survey alone."><img src="assets/img/prints/citymodel-chicago-lidar-t.webp" width="480" height="360" alt="White print of the Chicago Loop built from LiDAR alone" loading="lazy"><span>Chicago, LiDAR only</span></a></li>
+                <li><a href="assets/img/prints/citymodel-houston-lidar.webp" data-gallery="citymodel" data-caption="Downtown Houston, built from a LiDAR survey alone."><img src="assets/img/prints/citymodel-houston-lidar-t.webp" width="480" height="360" alt="Framed white print of downtown Houston built from LiDAR alone" loading="lazy"><span>Houston, LiDAR only</span></a></li>
+                <li><a href="assets/img/prints/citymodel-paris-lidar.webp" data-gallery="citymodel" data-caption="Paris along the Seine, built from a LiDAR survey alone."><img src="assets/img/prints/citymodel-paris-lidar-t.webp" width="480" height="360" alt="White print of Paris along the Seine built from LiDAR alone" loading="lazy"><span>Paris, LiDAR only</span></a></li>
+                <li><a href="assets/img/prints/citymodel-amsterdam.webp" data-gallery="citymodel" data-caption="Amsterdam in its frame."><img src="assets/img/prints/citymodel-amsterdam-t.webp" width="480" height="360" alt="Framed print of the Amsterdam canals with red-brown buildings and blue water" loading="lazy"><span>Amsterdam</span></a></li>
+                <li><a href="assets/img/prints/citymodel-chicago-route.webp" data-gallery="citymodel" data-caption="Chicago, with a route in gold."><img src="assets/img/prints/citymodel-chicago-route-t.webp" width="480" height="360" alt="Dark framed print of Chicago with a route in gold along the river and lakefront" loading="lazy"><span>Chicago, with a route</span></a></li>
+                <li><a href="assets/img/prints/citymodel-lombard.webp" data-gallery="citymodel" data-caption="A run past Lombard Street and Coit Tower in San Francisco."><img src="assets/img/prints/citymodel-lombard-t.webp" width="480" height="360" alt="Framed white print of San Francisco with a running route in red" loading="lazy"><span>Lombard Street run</span></a></li>
+                <li><a href="assets/img/prints/citymodel-screen-and-print.webp" data-gallery="citymodel" data-caption="Lower Manhattan in the app&#x27;s 3D view, and the print."><img src="assets/img/prints/citymodel-screen-and-print-t.webp" width="480" height="360" alt="Lower Manhattan in the app&#x27;s 3D view on a laptop, above the finished print" loading="lazy"><span>On screen and printed</span></a></li>
+                <li><a href="assets/img/prints/citymodel-products.webp" data-gallery="citymodel" data-caption="Prints made with City Model."><img src="assets/img/prints/citymodel-products-t.webp" width="480" height="360" alt="Framed and unframed prints made with City Model on a wooden table" loading="lazy"><span>Prints on a table</span></a></li>
               </ul>
             </div>
 
             <div class="tab-panel" id="panel-svgmap" role="tabpanel" aria-labelledby="tab-svgmap" hidden>
+              <p class="panel-note">8 prints, pen plots, and laser engravings made with <a href="projects/svgmap.html">SVGmap</a>.</p>
               <ul class="gallery">
                 <li><a href="assets/img/prints/svgmap-cincinnati.webp" data-gallery="svgmap" data-caption="Cincinnati, printed."><img src="assets/img/prints/svgmap-cincinnati-t.webp" width="480" height="360" alt="Printed Cincinnati map with the Ohio River, buildings, and parks" loading="lazy"><span>Cincinnati</span></a></li>
                 <li><a href="assets/img/prints/svgmap-washington-dc.webp" data-gallery="svgmap" data-caption="Washington, D.C., laser engraved on wood."><img src="assets/img/prints/svgmap-washington-dc-t.webp" width="480" height="360" alt="Washington, D.C. map laser engraved on wood in a black frame" loading="lazy"><span>Washington, D.C.</span></a></li>
@@ -521,7 +588,6 @@
                 <li><a href="assets/img/prints/svgmap-lower-manhattan.webp" data-gallery="svgmap" data-caption="Lower Manhattan, printed."><img src="assets/img/prints/svgmap-lower-manhattan-t.webp" width="480" height="360" alt="Printed Lower Manhattan map with orange buildings and blue water" loading="lazy"><span>Lower Manhattan</span></a></li>
                 <li><a href="assets/img/prints/svgmap-ohare.webp" data-gallery="svgmap" data-caption="O'Hare airport, with runways and their numbers."><img src="assets/img/prints/svgmap-ohare-t.webp" width="480" height="360" alt="Printed map of O'Hare airport" loading="lazy"><span>O'Hare</span></a></li>
                 <li><a href="assets/img/prints/svgmap-brooklyn-bridge.webp" data-gallery="svgmap" data-caption="The Brooklyn Bridge Loop, with the route in orange."><img src="assets/img/prints/svgmap-brooklyn-bridge-t.webp" width="480" height="360" alt="Printed Brooklyn Bridge Loop map with the route in orange" loading="lazy"><span>Brooklyn Bridge Loop</span></a></li>
-                <li><a href="assets/img/prints/svgmap-italy.webp" data-gallery="svgmap" data-caption="Detail of an Italy atlas print."><img src="assets/img/prints/svgmap-italy-t.webp" width="480" height="360" alt="Detail of a printed Italy atlas map with roads, towns, and seas" loading="lazy"><span>Italy</span></a></li>
               </ul>
             </div>
           </div>
@@ -643,7 +709,7 @@
               </a>
             </li>
           </ul>
-          <div class="bar sub-bar"><h3>Photos</h3></div>
+          <div class="bar sub-bar photos-bar"><h3>Photos</h3></div>
           <ul class="photo-strip" aria-label="Photos">
             <li><a href="assets/img/activities/theta-chi.webp" data-gallery="activities" data-caption="Theta Chi at the University of Cincinnati."><img src="assets/img/activities/theta-chi-t.webp" width="480" height="360" alt="Theta Chi chapter members in suits" loading="lazy"></a></li>
             <li><a href="assets/img/activities/sophies-angel-run-start.webp" data-gallery="activities" data-caption="The start line at Sophie's Angel Run."><img src="assets/img/activities/sophies-angel-run-start-t.webp" width="480" height="360" alt="Runners at the start line of Sophie's Angel Run" loading="lazy"></a></li>
