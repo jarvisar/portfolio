@@ -92,8 +92,12 @@
     { city: 'washington', style: 'laser' },
     { city: 'hong-kong', style: 'model' },
     { city: 'venice', style: 'terracotta', dark: 'blueprint' },
+    { city: 'rio', style: 'classic', dark: 'midnight' },
     { city: 'naarden', style: 'plotter' },
+    { city: 'melbourne', style: 'model' },
     { city: 'london', style: 'blueprint' },
+    { city: 'istanbul', style: 'nolli', dark: 'noir' },
+    { city: 'auckland', style: 'riso', dark: 'blueprint' },
     { city: 'chicago', style: 'model' },
     { city: 'sydney', style: 'classic', dark: 'midnight' },
     { city: 'monaco', style: 'laser' },
@@ -1699,8 +1703,9 @@
   };
   if (darkScheme.addEventListener) darkScheme.addEventListener('change', followScheme);
 
-  /* Tour. It waits while the pointer or focus is on the map, while the map
-     is off screen, and until each entrance is done. */
+  /* Tour. It waits while keyboard focus is on the map, while the map is off
+     screen, and until each entrance is done. Hovering doesn't hold it, since
+     the pointer often rests on the banner when the page loads. */
 
   const tour = { on: false, at: 0, shown: 0, last: 0, timer: 0, holds: new Set() };
 
@@ -1763,12 +1768,6 @@
     });
   }
 
-  cover.addEventListener('pointerenter', function (event) {
-    if (event.pointerType === 'mouse') hold('pointer', true);
-  });
-  cover.addEventListener('pointerleave', function () {
-    hold('pointer', false);
-  });
   // Only keyboard focus. A clicked button keeps focus after the pointer leaves.
   cover.addEventListener('focusin', function (event) {
     let keyboard = true;

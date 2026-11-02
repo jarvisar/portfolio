@@ -15,11 +15,11 @@ Live site: [portfolio.jarvisar.com](https://portfolio.jarvisar.com/)
 
 ## Cover Map
 
-The map is drawn on a canvas from vector data in `assets/maps/`, one file per city, so it stays sharp at any screen density and zoom. It can be dragged, zoomed with the buttons, a double-click, Ctrl and scroll, or a pinch, and switched between 20 cities and 11 styles. The print styles use the theme colors from [SVGmap](https://svgmap.jarvisar.com/). City model raises the buildings to their OpenStreetMap heights in the colors of a [City Model](https://citymodel.jarvisar.com/) print. Until a style is picked, the map uses Classic in light mode and Midnight in dark mode.
+The map is drawn on a canvas from vector data in `assets/maps/`, one file per city, so it stays sharp at any screen density and zoom. It can be dragged, zoomed with the buttons, a double-click, Ctrl and scroll, or a pinch, and switched between 24 cities and 11 styles. The print styles use the theme colors from [SVGmap](https://svgmap.jarvisar.com/). City model raises the buildings to their OpenStreetMap heights in the colors of a [City Model](https://citymodel.jarvisar.com/) print. Until a style is picked, the map uses Classic in light mode and Midnight in dark mode.
 
 Pen plot draws the map one pen at a time, Birch plywood engraves it a row at a time, and City model builds it up a layer at a time. Reset view plays these again.
 
-Until the map is moved or a city or style is picked, it plays a tour of other cities and styles, set by `TOUR` in `assets/js/map.js`. The tour waits while the pointer or keyboard focus is on the map and while the map is mostly off screen. It doesn't start on its own when the system is set to reduce motion or Data Saver is on. The button next to the City menu pauses and plays it.
+Until the map is moved or a city or style is picked, it plays a tour of other cities and styles, set by `TOUR` in `assets/js/map.js`. The tour waits while keyboard focus is on the map and while the map is mostly off screen. It doesn't start on its own when the system is set to reduce motion or Data Saver is on. The button next to the City menu pauses and plays it.
 
 The data is OpenStreetMap, from OpenFreeMap's vector tiles, the same source SVGmap uses. To rebuild it or add a city, edit the list at the top of `tools/build-maps.mjs`, run it with Node 22 or later, and add the city to the City menu in `index.html`:
 

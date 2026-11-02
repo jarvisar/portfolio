@@ -24,16 +24,20 @@ const CITIES = [
   { id: 'venice', name: 'Venice', about: 'Venice and the Grand Canal', lat: 45.4375, lon: 12.3330, mpp: 3.6 },
   { id: 'seattle', name: 'Seattle', about: 'Downtown Seattle and Elliott Bay', lat: 47.6050, lon: -122.3385, mpp: 5.5 },
   { id: 'vancouver', name: 'Vancouver', about: 'Downtown Vancouver, False Creek, and Stanley Park', lat: 49.2860, lon: -123.1240, mpp: 7 },
+  { id: 'rio', name: 'Rio de Janeiro', about: 'Botafogo, Urca, and Sugarloaf Mountain', lat: -22.9490, lon: -43.1660, mpp: 6 },
   { id: 'london', name: 'London', about: 'Westminster, the City of London, and the Thames', lat: 51.5060, lon: -0.1000, mpp: 5.2 },
   { id: 'amsterdam', name: 'Amsterdam', about: 'The Amsterdam canal ring', lat: 52.3700, lon: 4.8900, mpp: 4.5 },
   { id: 'naarden', name: 'Naarden', about: 'The fortified town of Naarden', lat: 52.2955, lon: 5.1625, mpp: 4.8 },
   { id: 'barcelona', name: 'Barcelona', about: 'The Eixample and the old town of Barcelona', lat: 41.3890, lon: 2.1680, mpp: 4 },
   { id: 'monaco', name: 'Monaco', about: 'Monaco and Port Hercule', lat: 43.7348, lon: 7.4232, mpp: 3.5 },
+  { id: 'istanbul', name: 'Istanbul', about: 'The old city of Istanbul and the Golden Horn', lat: 41.0150, lon: 28.9780, mpp: 5 },
   { id: 'dubai', name: 'Dubai Marina', about: 'Dubai Marina and Jumeirah Beach', lat: 25.0800, lon: 55.1400, mpp: 4 },
   { id: 'tokyo', name: 'Tokyo', about: 'Marunouchi, Ginza, and the Imperial Palace', lat: 35.6800, lon: 139.7620, mpp: 5 },
   { id: 'hong-kong', name: 'Hong Kong', about: 'Central, Wan Chai, and Victoria Harbour', lat: 22.2815, lon: 114.1640, mpp: 4.5 },
   { id: 'singapore', name: 'Singapore', about: 'Marina Bay and the Singapore River', lat: 1.2850, lon: 103.8560, mpp: 4.5 },
   { id: 'sydney', name: 'Sydney', about: 'Sydney Harbour and the Opera House', lat: -33.8600, lon: 151.2110, mpp: 5.5 },
+  { id: 'melbourne', name: 'Melbourne', about: 'The Melbourne CBD, the Yarra River, and the MCG', lat: -37.8180, lon: 144.9680, mpp: 5 },
+  { id: 'auckland', name: 'Auckland', about: 'Auckland and the Waitematā Harbour', lat: -36.8445, lon: 174.7580, mpp: 6.5 },
 ];
 
 const REGION = [1300, 400];
