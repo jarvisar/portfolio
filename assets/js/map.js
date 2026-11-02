@@ -113,7 +113,7 @@
     { city: 'san-francisco', style: 'midnight' },
     { city: 'auckland', style: 'riso', dark: 'blueprint' }
   ];
-  const DWELL = 5000;
+  const DWELL = 3500;
 
   /* Data */
 
