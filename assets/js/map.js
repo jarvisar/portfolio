@@ -9,19 +9,22 @@
   const ctx = canvas.getContext('2d', { alpha: false });
   const citySelect = document.getElementById('map-city');
   const styleSelect = document.getElementById('map-style');
+  const tourButton = cover.querySelector('[data-tour]');
   const status = cover.querySelector('.map-status');
   const scaleBar = cover.querySelector('.map-scale');
   const penTip = cover.querySelector('.map-pen');
+  const title = cover.querySelector('.map-title');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
   // The banner on a wide screen, which the starting zoom is set for.
   const DESIGN_WIDTH = 978;
-  const DESIGN_HEIGHT = 248;
+  const DESIGN_HEIGHT = 298;
   const MAX_ZOOM = 4;
   const TILE = 512;
 
-  /* Styles. The print themes are SVGmap's. */
+  /* Styles. The print themes are SVGmap's. `ink` is for the title block,
+     where the roads color doesn't suit. */
 
   const STYLES = {
     classic: { paper: '#F5F0E6', greens: '#CADDB4', water: '#A7C7E0', buildings: '#C9BDAE', roads: '#3A3A3A', paths: '#8A8A8A', rail: '#8C6E5B' },
@@ -31,10 +34,11 @@
     terracotta: { paper: '#F4E6D6', greens: '#D9D3B2', water: '#BFD3D6', buildings: '#DE9A7D', roads: '#5A3528', paths: '#A0776A', rail: '#5A3528' },
     riso: { paper: '#F3EEE4', greens: '#C4B8D3', water: '#86B9D3', buildings: '#F7BCD4', roads: '#0078BF', paths: '#6DADD0', rail: '#FD61B8', waterways: '#499BCA' },
     midnight: { paper: '#14233D', greens: '#192C46', water: '#091220', buildings: '#22395B', roads: '#D4AF6A', paths: '#8E7A55', rail: '#A8916A' },
-    nolli: { paper: '#F7F5F0', greens: '#E3E6DA', water: '#C9D3DA', buildings: '#1C1C1C', roads: '#B5B5B5', paths: '#CFCFCF', rail: '#9A9A9A' },
+    nolli: { paper: '#F7F5F0', greens: '#E3E6DA', water: '#C9D3DA', buildings: '#1C1C1C', roads: '#B5B5B5', paths: '#CFCFCF', rail: '#9A9A9A', ink: '#1C1C1C' },
     // Outlines only, one pen per color, in the order a plotter would draw them.
     plotter: {
       paper: '#FBFAF6',
+      ink: '#24272B',
       plot: true,
       pens: [
         { layers: ['greens'], color: '#4E8A4A', width: 0.5 },
@@ -46,7 +50,14 @@
     },
     // Engraved and scored into birch plywood. The colors multiply the wood,
     // so the grain shows through the burn.
-    laser: { paper: '#E9D3AF', laser: true, greens: '#EDE3D2', water: '#7E5E44', buildings: '#D2B898', roads: '#5A3B26', paths: '#8E6E52', rail: '#6E4C34' }
+    laser: { paper: '#E9D3AF', laser: true, greens: '#EDE3D2', water: '#7E5E44', buildings: '#D2B898', roads: '#5A3B26', paths: '#8E6E52', rail: '#6E4C34' },
+    // A City Model print: white PLA on a blue water plate, with the tallest
+    // buildings in orange. `shore` is the side of the land plate.
+    model: {
+      paper: '#E6E1D6', model: true, ink: '#4A4339', greens: '#A3CDA0', water: '#3E9ED6', shore: '#B9B0A0',
+      roads: '#FBFAF6', paths: '#F2EFE8', rail: '#B4AB9B',
+      white: [248, 246, 241], orange: [236, 148, 66], tall: 120, shadow: '#423424', shadowAlpha: 0.24
+    }
   };
 
   // Line widths in CSS pixels at the starting zoom, relative to a street.
@@ -60,6 +71,38 @@
   ];
   const STREET_WIDTH = 0.72;
 
+  // The 3D view looks north-northeast, so a roof sits up and to the right of
+  // its footprint. Light comes from the west-northwest and shadows fall the
+  // other way. LIFT exaggerates heights a little, as the prints do.
+  const UP = [0.34, -0.94];
+  const LIFT = 0.9;
+  const SUN = [0.86, 0.51];
+  const SHADOW = 0.45;
+  const LAYERS = 14;
+
+  /* Tour: other cities and styles, one after another, until the map is used.
+     `dark` replaces a light paper style in dark mode. */
+
+  const TOUR = [
+    { city: 'cincinnati' },
+    { city: 'manhattan', style: 'model' },
+    { city: 'amsterdam', style: 'riso', dark: 'noir' },
+    { city: 'paris', style: 'plotter' },
+    { city: 'barcelona', style: 'nolli', dark: 'midnight' },
+    { city: 'washington', style: 'laser' },
+    { city: 'hong-kong', style: 'model' },
+    { city: 'venice', style: 'terracotta', dark: 'blueprint' },
+    { city: 'naarden', style: 'plotter' },
+    { city: 'london', style: 'blueprint' },
+    { city: 'chicago', style: 'model' },
+    { city: 'sydney', style: 'classic', dark: 'midnight' },
+    { city: 'monaco', style: 'laser' },
+    { city: 'tokyo', style: 'minimal', dark: 'noir' },
+    { city: 'dubai', style: 'model' },
+    { city: 'san-francisco', style: 'midnight' }
+  ];
+  const DWELL = 5000;
+
   /* Data */
 
   const DIGITS = new Uint8Array(128);
@@ -68,14 +111,9 @@
   });
   const CHUNK = 160;
 
-  function decodeLayer(layer) {
-    const text = layer.data;
-    const fill = layer.type === 'fill';
+  function reader(text) {
     let pos = 0;
-    let x = 0;
-    let y = 0;
-
-    function read() {
+    return function () {
       let n = 0;
       let scale = 1;
       let c;
@@ -85,7 +123,14 @@
         scale *= 32;
       } while (c & 32);
       return n;
-    }
+    };
+  }
+
+  function decodeLayer(layer) {
+    const fill = layer.type === 'fill';
+    const read = reader(layer.data);
+    let x = 0;
+    let y = 0;
 
     function signed() {
       const n = read();
@@ -138,20 +183,45 @@
     return { fill: fill, features: features, chunks: chunks };
   }
 
+  // Heights in meters, one number per building: the height times four, plus
+  // 1 when a bottom height follows and 2 for outlines drawn as parts instead.
+  function decodeHeights(layer, text) {
+    const n = layer.features.length;
+    layer.top = new Float32Array(n);
+    layer.bottom = new Float32Array(n);
+    layer.hide = new Uint8Array(n);
+    layer.maxTop = 0;
+    if (!text) return;
+    const read = reader(text);
+    for (let f = 0; f < n; f++) {
+      const v = read();
+      layer.top[f] = Math.floor(v / 4);
+      if (v & 1) layer.bottom[f] = read();
+      if (v & 2) layer.hide[f] = 1;
+      else layer.maxTop = Math.max(layer.maxTop, layer.top[f]);
+    }
+  }
+
   function prepare(json) {
     const layers = {};
     Object.keys(json.layers).forEach(function (name) {
       layers[name] = decodeLayer(json.layers[name]);
     });
+    decodeHeights(layers.buildings, json.layers.buildings.heights);
     json.layers = layers;
     return json;
   }
 
-  const loads = {};
+  // Each city takes several megabytes once decoded, so only the last few are kept.
+  const loads = new Map();
+  const KEEP = 3;
 
   function load(id) {
-    if (!loads[id]) {
-      loads[id] = fetch(new URL('assets/maps/' + id + '.json', root))
+    let promise = loads.get(id);
+    if (promise) {
+      loads.delete(id);
+    } else {
+      promise = fetch(new URL('assets/maps/' + id + '.json', root))
         .then(function (response) {
           if (!response.ok) throw new Error(String(response.status));
           return response.json();
@@ -160,22 +230,31 @@
           json.id = id;
           return prepare(json);
         });
-      loads[id].catch(function () {
-        delete loads[id];
+      promise.catch(function () {
+        if (loads.get(id) === promise) loads.delete(id);
       });
     }
-    return loads[id];
+    loads.set(id, promise);
+    for (const key of loads.keys()) {
+      if (loads.size <= KEEP) break;
+      if (key !== id && (!state.map || key !== state.map.id)) loads.delete(key);
+    }
+    return promise;
   }
 
   // Fills were cut along the tile grid and the edges of the area. Those edges
-  // aren't part of the outline, so the plotter leaves them out.
-  function outlinesOf(map, feature) {
+  // aren't part of the outline, so the plotter and the 3D walls leave them out.
+  function cutTest(map) {
     const grid = map.grid;
     const margin = map.margin;
     const b = map.bounds;
-    function cut(v, axis) {
+    return function (v, axis) {
       return v === b[axis] || v === b[axis + 2] || (v + margin) % grid === 0 || (v - margin) % grid === 0;
-    }
+    };
+  }
+
+  function outlinesOf(map, feature) {
+    const cut = map.cut || (map.cut = cutTest(map));
     const lines = [];
     for (const ring of feature.parts) {
       const n = ring.length / 2;
@@ -223,6 +302,27 @@
     return chunk.outline;
   }
 
+  // Lengths in the data are map units. The data is at one zoom, so the
+  // Mercator math only needs its origin.
+  function lonLatAt(map, x, y) {
+    const world = Math.pow(2, map.zoom || 14) * map.grid;
+    if (!map.origin) {
+      const lat = (map.lat * Math.PI) / 180;
+      map.origin = [
+        ((map.lon + 180) / 360) * world - map.center[0],
+        ((1 - Math.log(Math.tan(lat) + 1 / Math.cos(lat)) / Math.PI) / 2) * world - map.center[1]
+      ];
+    }
+    const lon = ((x + map.origin[0]) / world) * 360 - 180;
+    const lat = (Math.atan(Math.sinh(Math.PI * (1 - (2 * (y + map.origin[1])) / world))) * 180) / Math.PI;
+    return [lon, lat];
+  }
+
+  function formatLonLat(lon, lat) {
+    return Math.abs(lat).toFixed(4) + '° ' + (lat < 0 ? 'S' : 'N') + ', ' +
+      Math.abs(lon).toFixed(4) + '° ' + (lon < 0 ? 'W' : 'E');
+  }
+
   /* Drawing */
 
   function hits(a, b) {
@@ -257,6 +357,12 @@
       return;
     }
 
+    if (style.model) {
+      drawGround(c, map, style, scale, ratio, box);
+      drawBuildings(c, map, style, scale, ratio, box, 1);
+      return;
+    }
+
     if (style.laser) {
       c.fillStyle = woodPattern(map, scale);
       c.fillRect(box[0], box[1], box[2] - box[0], box[3] - box[1]);
@@ -264,13 +370,19 @@
     }
     fillLayer(c, map.layers.greens, style.greens, box);
     fillLayer(c, map.layers.water, style.water, box);
-    strokeLayer(c, map.layers.waterways, style.waterways || style.water, Math.max(0.9 * px, unit), reach);
+    drawLines(c, map, style, px, unit, reach, true);
     fillLayer(c, map.layers.buildings, style.buildings, box);
-    for (const line of LINES) {
-      if (line.layer === 'waterways') continue;
-      strokeLayer(c, map.layers[line.layer], style[line.color], Math.max(line.width * px, unit * 0.8), reach);
-    }
+    drawLines(c, map, style, px, unit, reach, false);
     c.globalCompositeOperation = 'source-over';
+  }
+
+  // Waterways go under the buildings and everything else over them.
+  function drawLines(c, map, style, px, unit, reach, water) {
+    for (const line of LINES) {
+      if ((line.layer === 'waterways') !== water) continue;
+      const color = style[line.color] || style.water;
+      strokeLayer(c, map.layers[line.layer], color, Math.max(line.width * px, unit * (water ? 1 : 0.8)), reach);
+    }
   }
 
   /* Birch grain: rings warped by noise that repeats every 512 pixels, so the
@@ -344,13 +456,18 @@
   }
 
   // All the chunks in one path, so pieces cut at a tile edge fill without a seam.
-  function fillLayer(c, layer, color, box) {
+  function layerPath(layer, box) {
     let path = null;
     for (const chunk of layer.chunks) {
       if (!hits(chunk.box, box)) continue;
       if (!path) path = new Path2D();
       path.addPath(chunk.path);
     }
+    return path;
+  }
+
+  function fillLayer(c, layer, color, box) {
+    const path = layerPath(layer, box);
     if (path) {
       c.fillStyle = color;
       c.fill(path);
@@ -363,6 +480,231 @@
     for (const chunk of layer.chunks) {
       if (hits(chunk.box, box)) c.stroke(chunk.path);
     }
+  }
+
+  /* City model */
+
+  // The land is a plate a little above the water. Its thickness in units,
+  // growing slower than the map, like the lines.
+  function plateOf(map, scale) {
+    return 2.4 * Math.pow(scale / map.scale, 0.5) / scale;
+  }
+
+  function drawGround(c, map, style, scale, ratio, box) {
+    const unit = 1 / (scale * ratio);
+    const px = lineScale(map, scale) / scale;
+    const lift = plateOf(map, scale);
+    const lx = UP[0] * lift;
+    const ly = UP[1] * lift;
+    const reach = [box[0] - 4 * px - lx, box[1] - 4 * px, box[2] + 4 * px, box[3] + 4 * px - ly];
+    c.lineCap = 'round';
+    c.lineJoin = 'round';
+
+    // Water shows through holes in the raised land, and the side of the
+    // land shows where the hole has moved off the water.
+    const water = layerPath(map.layers.water, reach);
+    if (water) {
+      c.save();
+      c.translate(lx, ly);
+      c.clip(water);
+      c.translate(-lx, -ly);
+      c.fillStyle = style.shore;
+      c.fillRect(reach[0], reach[1], reach[2] - reach[0], reach[3] - reach[1]);
+      c.fillStyle = style.water;
+      c.fill(water);
+      c.restore();
+    }
+
+    c.save();
+    c.translate(lx, ly);
+    fillLayer(c, map.layers.greens, style.greens, reach);
+    drawLines(c, map, style, px, unit, reach, true);
+    drawLines(c, map, style, px, unit, reach, false);
+    c.restore();
+  }
+
+  // Meters of height per unit of lift. Maps that start zoomed out further
+  // than about 6 meters to the pixel get taller buildings, or most of them
+  // would be a pixel high.
+  function heightUnit(map) {
+    const mpp = map.unit / map.scale;
+    return map.unit / Math.max(1, Math.pow(mpp / 6, 0.75));
+  }
+
+  // Wall colors from dark to light, for each color of plastic.
+  function materials(style) {
+    if (style.materials) return style.materials;
+    const make = function (rgb) {
+      const walls = [];
+      for (let i = 0; i < 8; i++) {
+        const k = 0.6 + (0.33 * i) / 7;
+        walls.push('rgb(' + rgb.map(function (v) { return Math.round(v * k); }).join(',') + ')');
+      }
+      return {
+        roof: 'rgb(' + rgb.join(',') + ')',
+        edge: 'rgb(' + rgb.map(function (v) { return Math.round(v * 0.86); }).join(',') + ')',
+        walls: walls
+      };
+    };
+    style.materials = { white: make(style.white), orange: make(style.orange) };
+    return style.materials;
+  }
+
+  // Shadows go on a layer of their own at full strength, which is then laid
+  // over the ground, so where two overlap the ground is only darkened once.
+  // One path for all of them would do the same but is far slower to fill.
+  let shadowCanvas = null;
+
+  function drawShadows(c, map, style, list, shade, unit) {
+    if (!c.getTransform) return;
+    const W = c.canvas.width;
+    const H = c.canvas.height;
+    if (!shadowCanvas) shadowCanvas = document.createElement('canvas');
+    if (shadowCanvas.width !== W || shadowCanvas.height !== H) {
+      shadowCanvas.width = W;
+      shadowCanvas.height = H;
+    }
+    const s2 = shadowCanvas.getContext('2d');
+    s2.setTransform(1, 0, 0, 1, 0, 0);
+    s2.clearRect(0, 0, W, H);
+    s2.setTransform(c.getTransform());
+    s2.fillStyle = style.shadow;
+    const layer = map.layers.buildings;
+    for (const f of list) {
+      const s = layer.top[f] * shade;
+      if (s < unit) continue;
+      const sx = SUN[0] * s;
+      const sy = SUN[1] * s;
+      const ring = layer.features[f].parts[0];
+      const n = ring.length / 2;
+      // Each edge swept along the shadow, and the far end. All are wound
+      // the same way, so they add up instead of cutting holes.
+      s2.beginPath();
+      s2.moveTo(ring[0] + sx, ring[1] + sy);
+      for (let k = 2; k < ring.length; k += 2) s2.lineTo(ring[k] + sx, ring[k + 1] + sy);
+      s2.closePath();
+      for (let i = 0; i < n; i++) {
+        const j = i + 1 < n ? i + 1 : 0;
+        const ax = ring[2 * i], ay = ring[2 * i + 1], bx = ring[2 * j], by = ring[2 * j + 1];
+        if ((bx - ax) * sy - (by - ay) * sx >= 0) {
+          s2.moveTo(ax, ay);
+          s2.lineTo(bx, by);
+          s2.lineTo(bx + sx, by + sy);
+          s2.lineTo(ax + sx, ay + sy);
+        } else {
+          s2.moveTo(ax, ay);
+          s2.lineTo(ax + sx, ay + sy);
+          s2.lineTo(bx + sx, by + sy);
+          s2.lineTo(bx, by);
+        }
+        s2.closePath();
+      }
+      s2.fill();
+    }
+    c.save();
+    c.setTransform(1, 0, 0, 1, 0, 0);
+    c.globalAlpha = style.shadowAlpha;
+    c.drawImage(shadowCanvas, 0, 0);
+    c.restore();
+  }
+
+  // The buildings in `box`, back to front, with heights scaled by `rise`.
+  function modelList(map, box, rise) {
+    const layer = map.layers.buildings;
+    const per = (LIFT * rise) / heightUnit(map);
+    const shade = (SHADOW * rise) / heightUnit(map);
+    const maxLift = layer.maxTop * per;
+    const maxShade = layer.maxTop * shade;
+    const reach = [
+      box[0] - UP[0] * maxLift - SUN[0] * maxShade,
+      box[1] - SUN[1] * maxShade,
+      box[2],
+      box[3] - UP[1] * maxLift
+    ];
+    const list = [];
+    for (const chunk of layer.chunks) {
+      if (!hits(chunk.box, reach)) continue;
+      for (let f = chunk.start; f < chunk.end; f++) {
+        if (layer.hide[f]) continue;
+        const b = layer.features[f].box;
+        const up = layer.top[f] * per;
+        const down = layer.top[f] * shade;
+        if (b[0] > box[2] || b[2] + Math.max(UP[0] * up, SUN[0] * down) < box[0] ||
+            b[1] + UP[1] * up > box[3] || b[3] + SUN[1] * down < box[1]) continue;
+        list.push(f);
+      }
+    }
+    // By the corner nearest the viewer.
+    if (!layer.keys) {
+      layer.keys = new Float32Array(layer.features.length);
+      layer.features.forEach(function (feature, f) {
+        layer.keys[f] = -UP[0] * feature.box[0] - UP[1] * feature.box[3];
+      });
+    }
+    const keys = layer.keys;
+    list.sort(function (a, b) { return keys[a] - keys[b]; });
+    return list;
+  }
+
+  function drawBuildings(c, map, style, scale, ratio, box, rise) {
+    const layer = map.layers.buildings;
+    const features = layer.features;
+    const unit = 1 / (scale * ratio);
+    const lift = plateOf(map, scale);
+    const per = (LIFT * rise) / heightUnit(map);
+    const shade = (SHADOW * rise) / heightUnit(map);
+    const cut = map.cut || (map.cut = cutTest(map));
+    const mats = materials(style);
+    const list = modelList(map, [box[0] - UP[0] * lift, box[1], box[2], box[3] - UP[1] * lift], rise);
+
+    c.save();
+    c.translate(UP[0] * lift, UP[1] * lift);
+
+    if (rise > 0) drawShadows(c, map, style, list, shade, unit);
+
+    c.lineJoin = 'round';
+    c.lineWidth = Math.max(0.35 * Math.pow(scale / map.scale, 0.4) / scale, unit * 0.6);
+    for (const f of list) {
+      const feature = features[f];
+      const top = layer.top[f] * per;
+      const bottom = layer.bottom[f] * per;
+      const mat = layer.top[f] >= style.tall ? mats.orange : mats.white;
+      const tx = UP[0] * top, ty = UP[1] * top;
+      const bx = UP[0] * bottom, by = UP[1] * bottom;
+      if (top - bottom > unit * 0.5) {
+        for (const ring of feature.parts) {
+          const n = ring.length / 2;
+          for (let i = 0; i < n; i++) {
+            const j = i + 1 < n ? i + 1 : 0;
+            const ax = ring[2 * i], ay = ring[2 * i + 1], cx = ring[2 * j], cy = ring[2 * j + 1];
+            const dx = cx - ax, dy = cy - ay;
+            // The outward normal is (dy, -dx). Walls facing away are behind the roof.
+            if (dx * UP[1] - dy * UP[0] <= 0) continue;
+            if ((dx === 0 && cut(ax, 0)) || (dy === 0 && cut(ay, 1))) continue;
+            const light = (-dy * SUN[0] + dx * SUN[1]) / Math.hypot(dx, dy);
+            c.fillStyle = mat.walls[Math.round((light * 0.5 + 0.5) * 7)];
+            c.beginPath();
+            c.moveTo(ax + bx, ay + by);
+            c.lineTo(cx + bx, cy + by);
+            c.lineTo(cx + tx, cy + ty);
+            c.lineTo(ax + tx, ay + ty);
+            c.closePath();
+            c.fill();
+          }
+        }
+      }
+      c.beginPath();
+      for (const ring of feature.parts) {
+        c.moveTo(ring[0] + tx, ring[1] + ty);
+        for (let k = 2; k < ring.length; k += 2) c.lineTo(ring[k] + tx, ring[k + 1] + ty);
+        c.closePath();
+      }
+      c.fillStyle = mat.roof;
+      c.fill();
+      c.strokeStyle = mat.edge;
+      c.stroke();
+    }
+    c.restore();
   }
 
   /* Tiles: TILE device pixels square, rendered at the exact scale shown, so
@@ -488,6 +830,7 @@
   let frameId = 0;
   let fade = null;
   let plot = null;
+  let build = null;
   let motion = null;
   const pointers = new Map();
   let drag = null;
@@ -507,15 +850,17 @@
 
     if (motion) busy = motion(now) || busy;
     if (plot) busy = plotStep(now) || busy;
+    if (build) busy = buildStep(now) || busy;
 
-    const missing = plot ? [] : neededTiles(state.tileScale, 0);
+    const covered = plot || build;
+    const missing = covered ? [] : neededTiles(state.tileScale, 0);
     renderSome(missing, 10);
     const complete = missing.every(function (t) { return t.done; });
     if (!complete) busy = true;
     else state.oldScale = null;
     // Once the pointer is on the map, the tiles around the view are drawn
     // while it is still, so the first drag doesn't wait for them.
-    if (complete && engaged && !plot && !motion && !pointers.size) {
+    if (complete && engaged && !covered && !motion && !pointers.size) {
       const around = neededTiles(state.tileScale, 1);
       if (around.length) {
         renderSome(around, 6);
@@ -599,31 +944,33 @@
     ctx.imageSmoothingQuality = 'high';
     ctx.fillStyle = style.paper;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    if (plot) {
-      ctx.drawImage(plot.canvas, 0, 0);
-    } else {
+    if (plot) ctx.drawImage(plot.canvas, 0, 0);
+    else if (build) ctx.drawImage(build.canvas, 0, 0);
+    else {
       if (state.oldScale !== null) drawTiles(state.oldScale);
       drawTiles(state.tileScale);
     }
-    if (fade) {
-      // Holds the old picture until the new tiles are all in, then fades it out.
-      if (fade.start === null && (complete || plot)) fade.start = now;
-      const alpha = fade.start === null ? 1 : 1 - (now - fade.start) / fade.duration;
-      if (alpha <= 0) {
-        fade.canvas.width = 0;
-        fade = null;
-      }
-      else {
-        ctx.globalAlpha = alpha;
-        if (fade.view && fade.view.mapId === state.map.id) {
-          const z = state.scale / fade.view.scale;
-          const x = (fade.view.cx - state.cx) * state.scale * state.ratio + canvas.width / 2 - (fade.canvas.width / 2) * z;
-          const y = (fade.view.cy - state.cy) * state.scale * state.ratio + canvas.height / 2 - (fade.canvas.height / 2) * z;
-          ctx.drawImage(fade.canvas, x, y, fade.canvas.width * z, fade.canvas.height * z);
-        } else ctx.drawImage(fade.canvas, 0, 0);
-        ctx.globalAlpha = 1;
-      }
+    if (!fade) return;
+    // Holds the old picture until the new tiles are all in, then takes it away.
+    if (fade.start === null && (complete || plot || build)) fade.start = now;
+    const t = fade.start === null ? 0 : (now - fade.start) / fade.duration;
+    if (t >= 1) {
+      fade.canvas.width = 0;
+      fade = null;
+      return;
     }
+    if (fade.engrave) {
+      engraveOver(t, fade.start !== null);
+      return;
+    }
+    ctx.globalAlpha = 1 - t;
+    if (fade.view && fade.view.mapId === state.map.id) {
+      const z = state.scale / fade.view.scale;
+      const x = (fade.view.cx - state.cx) * state.scale * state.ratio + canvas.width / 2 - (fade.canvas.width / 2) * z;
+      const y = (fade.view.cy - state.cy) * state.scale * state.ratio + canvas.height / 2 - (fade.canvas.height / 2) * z;
+      ctx.drawImage(fade.canvas, x, y, fade.canvas.width * z, fade.canvas.height * z);
+    } else ctx.drawImage(fade.canvas, 0, 0);
+    ctx.globalAlpha = 1;
   }
 
   function snapshot(duration) {
@@ -637,8 +984,32 @@
       canvas: copy,
       start: null,
       duration: reducedMotion.matches ? 1 : duration,
+      engrave: false,
       view: { mapId: state.map.id, cx: state.cx, cy: state.cy, scale: state.scale }
     };
+  }
+
+  /* Entrances: the plotter draws the map, the laser engraves it, and the
+     printer builds it up, each the way the real machine would. */
+
+  function reveal(faded) {
+    const style = STYLES[state.styleId];
+    if (style.plot) startPlot(faded);
+    else if (style.laser) startEngrave(faded);
+    else if (style.model) startBuild(faded);
+    else if (!faded) snapshot(260);
+    redraw();
+  }
+
+  // Ends any entrance at once, for when the map is moved.
+  function finishReveal() {
+    if (plot) finishPlot();
+    if (build) finishBuild();
+    if (fade && fade.engrave) {
+      fade.engrave = false;
+      fade.start = performance.now();
+      fade.duration = 150;
+    }
   }
 
   /* Pen plotter */
@@ -692,7 +1063,6 @@
     };
     if (!faded) snapshot(350);
     if (fade) fade.start = performance.now();
-    redraw();
   }
 
   function plotStep(now) {
@@ -761,18 +1131,137 @@
     return Math.max(p.width * Math.pow(state.scale / state.map.scale, 0.45) / state.scale, 1 / (state.scale * state.ratio));
   }
 
+  // The drawing so far stays on top until the tiles are ready.
   function finishPlot() {
     if (!plot) return;
-    // The drawing so far stays on top until the tiles are ready.
+    handOff(plot.canvas);
+    plot = null;
+    if (penTip) penTip.hidden = true;
+  }
+
+  function handOff(surface) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.fillStyle = STYLES[state.styleId].paper;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(plot.canvas, 0, 0);
-    plot.canvas.width = 0;
-    plot = null;
-    if (penTip) penTip.hidden = true;
+    ctx.drawImage(surface, 0, 0);
+    surface.width = 0;
     snapshot(150);
     redraw();
+  }
+
+  /* Laser: the new map is burned in a row at a time, back and forth, over
+     the old one. */
+
+  const ENGRAVE_ROW = 7;
+
+  function startEngrave(faded) {
+    if (!faded) snapshot(0);
+    if (!fade) return;
+    fade.engrave = true;
+    fade.duration = reducedMotion.matches ? 1 : 2600;
+  }
+
+  function engraveOver(t, burning) {
+    const W = canvas.width;
+    const H = canvas.height;
+    const row = Math.max(1, Math.round(ENGRAVE_ROW * state.ratio));
+    const rows = Math.ceil(H / row);
+    const p = t * rows;
+    const r = Math.floor(p);
+    const y = r * row;
+    const forward = r % 2 === 0;
+    const x = forward ? (p - r) * W : (1 - (p - r)) * W;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, y + row, W, H - y - row);
+    if (forward) ctx.rect(x, y, W - x, row);
+    else ctx.rect(0, y, x, row);
+    ctx.clip();
+    ctx.drawImage(fade.canvas, 0, 0);
+    ctx.restore();
+    if (!burning) return;
+
+    const cy = y + row / 2;
+    const glow = 14 * state.ratio;
+    const trail = ctx.createLinearGradient(x, 0, forward ? x - 60 * state.ratio : x + 60 * state.ratio, 0);
+    trail.addColorStop(0, 'rgba(255, 150, 60, 0.75)');
+    trail.addColorStop(1, 'rgba(255, 110, 30, 0)');
+    ctx.fillStyle = trail;
+    ctx.fillRect(forward ? x - 60 * state.ratio : x, cy - state.ratio, 60 * state.ratio, 2 * state.ratio);
+    const spot = ctx.createRadialGradient(x, cy, 0, x, cy, glow);
+    spot.addColorStop(0, 'rgba(255, 255, 235, 1)');
+    spot.addColorStop(0.18, 'rgba(255, 200, 110, 0.9)');
+    spot.addColorStop(0.5, 'rgba(255, 120, 30, 0.3)');
+    spot.addColorStop(1, 'rgba(255, 100, 20, 0)');
+    ctx.fillStyle = spot;
+    ctx.fillRect(x - glow, cy - glow, glow * 2, glow * 2);
+  }
+
+  /* 3D printer: the buildings go up a layer at a time. The ground is drawn
+     once, and the buildings again for each layer. */
+
+  function startBuild(faded) {
+    if (!canvas.width || !canvas.height) return;
+    const map = state.map;
+    const style = STYLES[state.styleId];
+    const W = canvas.width;
+    const H = canvas.height;
+    const k = state.scale * state.ratio;
+    const ground = document.createElement('canvas');
+    ground.width = W;
+    ground.height = H;
+    const g = ground.getContext('2d', { alpha: false });
+    g.fillStyle = style.paper;
+    g.fillRect(0, 0, W, H);
+    g.setTransform(k, 0, 0, k, W / 2 - state.cx * k, H / 2 - state.cy * k);
+    drawGround(g, map, style, state.scale, state.ratio, viewBox());
+    const surface = document.createElement('canvas');
+    surface.width = W;
+    surface.height = H;
+    build = {
+      ground: ground,
+      canvas: surface,
+      c: surface.getContext('2d', { alpha: false }),
+      layer: -1,
+      started: null,
+      duration: reducedMotion.matches ? 0 : 2200
+    };
+    if (!faded) snapshot(300);
+    if (fade) fade.start = performance.now();
+  }
+
+  function buildStep(now) {
+    if (build.started === null) build.started = now;
+    const t = build.duration ? Math.min(1, (now - build.started) / build.duration) : 1;
+    const layer = Math.ceil((1 - Math.pow(1 - t, 1.5)) * LAYERS);
+    if (layer !== build.layer) {
+      build.layer = layer;
+      const c = build.c;
+      const k = state.scale * state.ratio;
+      c.setTransform(1, 0, 0, 1, 0, 0);
+      c.drawImage(build.ground, 0, 0);
+      c.setTransform(k, 0, 0, k, canvas.width / 2 - state.cx * k, canvas.height / 2 - state.cy * k);
+      drawBuildings(c, state.map, STYLES[state.styleId], state.scale, state.ratio, viewBox(), layer / LAYERS);
+    }
+    if (t >= 1) {
+      finishBuild();
+      return false;
+    }
+    return true;
+  }
+
+  function finishBuild() {
+    if (!build) return;
+    // An unfinished model is drawn whole before it's handed to the tiles.
+    if (build.layer < LAYERS) {
+      build.layer = LAYERS - 1;
+      build.started = -Infinity;
+      buildStep(0);
+      return;
+    }
+    build.ground.width = 0;
+    handOff(build.canvas);
+    build = null;
   }
 
   /* Scale bar, metric over imperial */
@@ -814,6 +1303,26 @@
     i.style.width = Math.round(imperialPx) + 'px';
   }
 
+  /* Title block, in the style's own colors like a print's */
+
+  function updateTitle() {
+    if (!title || !state.map) return;
+    const style = STYLES[state.styleId];
+    title.querySelector('.name').textContent = state.map.name;
+    title.style.setProperty('--ink', style.ink || style.roads);
+    title.style.setProperty('--paper', style.paper);
+    showCoords(null);
+  }
+
+  // The center of the city, or the point under the pointer.
+  function showCoords(p) {
+    if (!title || !state.map) return;
+    const ll = p
+      ? lonLatAt(state.map, state.cx + (p.x - state.width / 2) / state.scale, state.cy + (p.y - state.height / 2) / state.scale)
+      : [state.map.lon, state.map.lat];
+    title.querySelector('.coords').textContent = formatLonLat(ll[0], ll[1]);
+  }
+
   /* Size */
 
   // The device pixel size, where the browser gives it, makes the canvas map
@@ -828,6 +1337,7 @@
     const h = exact ? deviceHeight : Math.round(height * ratio);
     if (w === canvas.width && h === canvas.height && ratio === state.ratio) return;
     const wasHome = state.map && Math.abs(state.scale - homeScale(state.map)) < 1e-9;
+    if (state.map) finishReveal();
     canvas.width = w;
     canvas.height = h;
     state.width = width;
@@ -837,8 +1347,12 @@
       clearTiles();
     }
     maxTiles = Math.max(24, Math.ceil((w / TILE + 2) * (h / TILE + 2) * 2.5));
-    if (plot) finishPlot();
     if (!state.map) return;
+    // The picture to fade from no longer fits.
+    if (fade) {
+      fade.canvas.width = 0;
+      fade = null;
+    }
     if (!state.placed) resetView();
     else if (wasHome) state.scale = homeScale(state.map);
     clampView();
@@ -886,6 +1400,13 @@
     motion = null;
   }
 
+  // Anything that moves the map or changes it by hand ends the tour.
+  function takeOver() {
+    finishReveal();
+    stopMotion();
+    stopTour();
+  }
+
   function panBy(dx, dy) {
     state.cx -= dx / state.scale;
     state.cy -= dy / state.scale;
@@ -904,7 +1425,7 @@
 
   function animateZoom(factor, x, y) {
     if (!state.map) return;
-    cancelPlot();
+    takeOver();
     if (x === undefined) {
       x = state.width / 2;
       y = state.height / 2;
@@ -932,10 +1453,6 @@
     redraw();
   }
 
-  function cancelPlot() {
-    if (plot) finishPlot();
-  }
-
   function engage() {
     if (engaged) return;
     engaged = true;
@@ -950,17 +1467,19 @@
     return { x: event.clientX - rect.left, y: event.clientY - rect.top };
   }
 
+  // A press alone doesn't end the tour, since on a phone it may be the start
+  // of scrolling the page. Moving the map does.
   canvas.addEventListener('pointerdown', function (event) {
     if (!state.map || (event.pointerType === 'mouse' && event.button !== 0)) return;
-    cancelPlot();
     stopMotion();
     canvas.setPointerCapture(event.pointerId);
     pointers.set(event.pointerId, local(event));
     if (pointers.size === 1) {
       const p = local(event);
-      drag = { x: p.x, y: p.y, moves: [{ x: p.x, y: p.y, t: event.timeStamp }] };
+      drag = { x: p.x, y: p.y, x0: p.x, y0: p.y, moved: false, moves: [{ x: p.x, y: p.y, t: event.timeStamp }] };
       canvas.classList.add('dragging');
     } else if (pointers.size === 2) {
+      takeOver();
       drag = null;
       const [a, b] = Array.from(pointers.values());
       pinch = { distance: Math.hypot(a.x - b.x, a.y - b.y) || 1, scale: state.scale, x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
@@ -968,8 +1487,9 @@
   });
 
   canvas.addEventListener('pointermove', function (event) {
-    if (!pointers.has(event.pointerId)) return;
     const p = local(event);
+    if (event.pointerType === 'mouse') showCoords(p);
+    if (!pointers.has(event.pointerId)) return;
     pointers.set(event.pointerId, p);
     if (pinch && pointers.size >= 2) {
       const [a, b] = Array.from(pointers.values());
@@ -981,6 +1501,11 @@
       pinch.y = y;
       redraw();
     } else if (drag) {
+      if (!drag.moved) {
+        if (Math.hypot(p.x - drag.x0, p.y - drag.y0) < 4) return;
+        drag.moved = true;
+        takeOver();
+      }
       panBy(p.x - drag.x, p.y - drag.y);
       drag.x = p.x;
       drag.y = p.y;
@@ -988,6 +1513,10 @@
       if (drag.moves.length > 6) drag.moves.shift();
       redraw();
     }
+  });
+
+  canvas.addEventListener('pointerleave', function (event) {
+    if (event.pointerType === 'mouse') showCoords(null);
   });
 
   function release(event) {
@@ -1005,8 +1534,9 @@
     if (drag) {
       canvas.classList.remove('dragging');
       const moves = drag.moves;
+      const moved = drag.moved;
       drag = null;
-      if (event.type === 'pointercancel' || reducedMotion.matches || moves.length < 2) return;
+      if (!moved || event.type === 'pointercancel' || reducedMotion.matches || moves.length < 2) return;
       const a = moves[0];
       const b = moves[moves.length - 1];
       const dt = b.t - a.t;
@@ -1049,8 +1579,7 @@
   canvas.addEventListener('wheel', function (event) {
     if (!state.map || !(event.ctrlKey || event.metaKey)) return;
     event.preventDefault();
-    cancelPlot();
-    stopMotion();
+    takeOver();
     const p = local(event);
     const delta = event.deltaMode === 1 ? event.deltaY * 33 : event.deltaY;
     zoomAround(state.scale * Math.pow(2, -Math.max(-100, Math.min(100, delta)) / 100), p.x, p.y);
@@ -1063,8 +1592,7 @@
     if (!state.map || event.altKey || event.ctrlKey || event.metaKey) return;
     const move = { ArrowLeft: [80, 0], ArrowRight: [-80, 0], ArrowUp: [0, 80], ArrowDown: [0, -80] }[event.key];
     if (move) {
-      cancelPlot();
-      stopMotion();
+      takeOver();
       panBy(move[0], move[1]);
       redraw();
     } else if (event.key === '+' || event.key === '=') animateZoom(2);
@@ -1083,14 +1611,13 @@
     });
   });
 
-  // In the plotter style this draws the map again.
+  // This also plays the style's entrance again.
   function goHome() {
     if (!state.map) return;
-    cancelPlot();
-    stopMotion();
+    takeOver();
     snapshot(200);
     resetView();
-    if (STYLES[state.styleId].plot) startPlot(true);
+    reveal(true);
   }
 
   /* City and style */
@@ -1103,21 +1630,19 @@
 
   function setStyle(id) {
     if (!STYLES[id] || id === state.styleId) return;
-    cancelPlot();
+    finishReveal();
     stopMotion();
     if (styleSelect.value !== id) styleSelect.value = id;
     state.styleId = id;
     if (!state.map) return;
-    if (STYLES[id].plot) startPlot();
-    else {
-      snapshot(260);
-      redraw();
-    }
+    updateTitle();
+    reveal(false);
   }
 
   let wanted = null;
 
-  function setCity(id) {
+  // `styleId` changes the style along with the city, in one transition.
+  function setCity(id, styleId) {
     wanted = id;
     const slow = setTimeout(function () {
       if (state.map) showStatus('Loading...');
@@ -1126,32 +1651,41 @@
       clearTimeout(slow);
       if (wanted !== id) return;
       showStatus('');
-      cancelPlot();
+      finishReveal();
       stopMotion();
       const first = !state.map;
-      if (!first) snapshot(320);
+      const next = STYLES[styleId] || STYLES[state.styleId];
+      // Slower between tour plates, unless an entrance follows.
+      if (!first) snapshot(styleId && !next.plot && !next.model ? 700 : 320);
       state.map = map;
+      if (styleId && STYLES[styleId]) state.styleId = styleId;
+      citySelect.value = id;
+      styleSelect.value = state.styleId;
       clearTiles();
       canvas.setAttribute('aria-label', 'Map of ' + map.about);
+      updateTitle();
       if (state.width) resetView();
       if (first) {
         cover.classList.add('map-ready');
         frame(performance.now());
-      }
-      if (STYLES[state.styleId].plot && !first) startPlot(true);
+      } else reveal(true);
     }).catch(function () {
       clearTimeout(slow);
       if (wanted !== id || !state.map) return;
+      // The tour goes on from the map still showing.
+      wanted = state.map.id;
       showStatus('The map could not be loaded.');
       citySelect.value = state.map.id;
     });
   }
 
   citySelect.addEventListener('change', function () {
+    stopTour();
     setCity(citySelect.value);
   });
 
   styleSelect.addEventListener('change', function () {
+    stopTour();
     state.picked = true;
     setStyle(styleSelect.value);
   });
@@ -1161,13 +1695,108 @@
   }
 
   const followScheme = function () {
-    if (!state.picked) setStyle(schemeStyle());
+    if (!state.picked && (state.styleId === 'classic' || state.styleId === 'midnight')) setStyle(schemeStyle());
   };
   if (darkScheme.addEventListener) darkScheme.addEventListener('change', followScheme);
+
+  /* Tour. It waits while the pointer or focus is on the map, while the map
+     is off screen, and until each entrance is done. */
+
+  const tour = { on: false, at: 0, shown: 0, last: 0, timer: 0, holds: new Set() };
+
+  function setTourButton() {
+    if (!tourButton) return;
+    const label = tour.on ? 'Pause tour' : 'Play tour';
+    tourButton.title = label;
+    tourButton.setAttribute('aria-label', label);
+    tourButton.classList.toggle('playing', tour.on);
+  }
+
+  function startTour() {
+    if (tour.on) return;
+    tour.on = true;
+    tour.shown = 0;
+    tour.last = performance.now();
+    tour.timer = setInterval(tourTick, 200);
+    setTourButton();
+  }
+
+  function stopTour() {
+    if (!tour.on) return;
+    tour.on = false;
+    clearInterval(tour.timer);
+    setTourButton();
+  }
+
+  function tourTick() {
+    const now = performance.now();
+    const elapsed = now - tour.last;
+    tour.last = now;
+    if (tour.holds.size || !state.map || wanted !== state.map.id || plot || build || fade || motion || pointers.size) return;
+    tour.shown += elapsed;
+    const next = TOUR[(tour.at + 1) % TOUR.length];
+    // Fetched ahead, while nothing is moving.
+    if (tour.shown > DWELL - 2500) load(next.city);
+    if (tour.shown >= DWELL) nextPlate();
+  }
+
+  function nextPlate() {
+    tour.at = (tour.at + 1) % TOUR.length;
+    tour.shown = 0;
+    const plate = TOUR[tour.at];
+    setCity(plate.city, (darkScheme.matches && plate.dark) || plate.style || schemeStyle());
+  }
+
+  function hold(reason, on) {
+    if (on) tour.holds.add(reason);
+    else tour.holds.delete(reason);
+  }
+
+  if (tourButton) {
+    tourButton.addEventListener('click', function () {
+      if (tour.on) {
+        stopTour();
+        return;
+      }
+      startTour();
+      nextPlate();
+    });
+  }
+
+  cover.addEventListener('pointerenter', function (event) {
+    if (event.pointerType === 'mouse') hold('pointer', true);
+  });
+  cover.addEventListener('pointerleave', function () {
+    hold('pointer', false);
+  });
+  // Only keyboard focus. A clicked button keeps focus after the pointer leaves.
+  cover.addEventListener('focusin', function (event) {
+    let keyboard = true;
+    try {
+      keyboard = event.target.matches(':focus-visible');
+    } catch (error) {
+      // Older browsers hold on any focus.
+    }
+    hold('focus', keyboard);
+  });
+  cover.addEventListener('focusout', function (event) {
+    if (!cover.contains(event.relatedTarget)) hold('focus', false);
+  });
+  document.addEventListener('visibilitychange', function () {
+    hold('hidden', document.hidden);
+  });
+  if (window.IntersectionObserver) {
+    new IntersectionObserver(function (entries) {
+      hold('away', entries[entries.length - 1].intersectionRatio < 0.4);
+    }, { threshold: [0, 0.4] }).observe(cover);
+  }
 
   // Browsers can restore a select's value on reload.
   citySelect.value = (citySelect.querySelector('option[selected]') || citySelect.options[0]).value;
   state.styleId = schemeStyle();
   styleSelect.value = state.styleId;
+  setTourButton();
   setCity(citySelect.value);
+  const saveData = navigator.connection && navigator.connection.saveData;
+  if (!reducedMotion.matches && !saveData) startTour();
 })();

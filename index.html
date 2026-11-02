@@ -87,10 +87,10 @@
     <section class="cover" aria-label="Map" data-map>
       <picture>
         <source media="(prefers-color-scheme: dark)" srcset="assets/img/site/cincinnati-dark.webp">
-        <img src="assets/img/site/cincinnati-light.webp" width="978" height="248" alt="Map of downtown Cincinnati, Covington, and Newport along the Ohio River">
+        <img src="assets/img/site/cincinnati-light.webp" width="978" height="298" alt="Map of downtown Cincinnati, Covington, and Newport along the Ohio River">
       </picture>
       <canvas class="map-canvas" tabindex="0" role="application" aria-roledescription="map" aria-label="Map of Cincinnati and the Ohio River" aria-describedby="map-help"></canvas>
-      <p class="visually-hidden" id="map-help">Drag or use the arrow keys to move the map. Double-click, use the plus and minus keys, or hold Ctrl and scroll to zoom.</p>
+      <p class="visually-hidden" id="map-help">Drag or use the arrow keys to move the map. Double-click, use the plus and minus keys, or hold Ctrl and scroll to zoom. Until the map is moved, it shows a tour of other cities and styles, which the Pause tour button stops.</p>
       <span class="map-pen" hidden></span>
       <div class="map-zoom">
         <button type="button" class="map-btn" data-zoom="in" title="Zoom in" aria-label="Zoom in">
@@ -104,16 +104,38 @@
         </button>
       </div>
       <div class="map-picks">
+        <button type="button" class="map-btn map-tour" data-tour title="Play tour" aria-label="Play tour">
+          <svg class="play" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z" fill="currentColor"/></svg>
+          <svg class="pause" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1h2v8H2zM6 1h2v8H6z" fill="currentColor"/></svg>
+        </button>
         <label class="visually-hidden" for="map-city">City</label>
         <select class="map-select" id="map-city">
-          <option value="cincinnati" selected>Cincinnati</option>
-          <option value="chicago">Chicago</option>
-          <option value="manhattan">Lower Manhattan</option>
-          <option value="boston">Boston</option>
-          <option value="washington">Washington, D.C.</option>
-          <option value="paris">Paris</option>
-          <option value="san-francisco">San Francisco</option>
-          <option value="venice">Venice</option>
+          <optgroup label="North America">
+            <option value="cincinnati" selected>Cincinnati</option>
+            <option value="chicago">Chicago</option>
+            <option value="manhattan">Lower Manhattan</option>
+            <option value="boston">Boston</option>
+            <option value="washington">Washington, D.C.</option>
+            <option value="san-francisco">San Francisco</option>
+            <option value="seattle">Seattle</option>
+            <option value="vancouver">Vancouver</option>
+          </optgroup>
+          <optgroup label="Europe">
+            <option value="london">London</option>
+            <option value="paris">Paris</option>
+            <option value="amsterdam">Amsterdam</option>
+            <option value="naarden">Naarden</option>
+            <option value="barcelona">Barcelona</option>
+            <option value="monaco">Monaco</option>
+            <option value="venice">Venice</option>
+          </optgroup>
+          <optgroup label="Asia and Oceania">
+            <option value="dubai">Dubai Marina</option>
+            <option value="tokyo">Tokyo</option>
+            <option value="hong-kong">Hong Kong</option>
+            <option value="singapore">Singapore</option>
+            <option value="sydney">Sydney</option>
+          </optgroup>
         </select>
         <label class="visually-hidden" for="map-style">Style</label>
         <select class="map-select" id="map-style">
@@ -133,11 +155,15 @@
           <optgroup label="Plotter">
             <option value="plotter">Pen plot</option>
           </optgroup>
+          <optgroup label="3D print">
+            <option value="model">City model</option>
+          </optgroup>
         </select>
       </div>
+      <div class="map-title" aria-hidden="true"><span class="name"></span><span class="coords"></span></div>
       <div class="map-scale" aria-hidden="true"><span class="metric"></span><span class="imperial"></span></div>
       <p class="map-status" role="status" hidden></p>
-      <p class="cover-caption">Styles from <a href="projects/svgmap.html">SVGmap</a>. Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a></p>
+      <p class="cover-caption"><span class="long">Drawn by <a href="https://github.com/jarvisar/portfolio/blob/main/assets/js/map.js">map.js</a> in styles from </span><span class="short">Styles from </span><a href="projects/svgmap.html">SVGmap</a> and <a href="projects/citymodel.html">City Model</a>. Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a></p>
     </section>
 
     <div class="layout">

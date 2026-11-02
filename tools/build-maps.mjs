@@ -11,7 +11,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-// mpp is meters per CSS pixel at the starting zoom. The banner is 978 x 248
+// mpp is meters per CSS pixel at the starting zoom. The banner is 978 x 298
 // on a desktop, and the data covers REGION pixels around the center.
 const CITIES = [
   { id: 'cincinnati', name: 'Cincinnati', about: 'Cincinnati and the Ohio River', lat: 39.0977, lon: -84.5124, mpp: 9 },
@@ -22,6 +22,18 @@ const CITIES = [
   { id: 'paris', name: 'Paris', about: 'Paris and the Seine', lat: 48.8560, lon: 2.3420, mpp: 5 },
   { id: 'san-francisco', name: 'San Francisco', about: 'San Francisco and the Bay', lat: 37.8000, lon: -122.4060, mpp: 8 },
   { id: 'venice', name: 'Venice', about: 'Venice and the Grand Canal', lat: 45.4375, lon: 12.3330, mpp: 3.6 },
+  { id: 'seattle', name: 'Seattle', about: 'Downtown Seattle and Elliott Bay', lat: 47.6050, lon: -122.3385, mpp: 5.5 },
+  { id: 'vancouver', name: 'Vancouver', about: 'Downtown Vancouver, False Creek, and Stanley Park', lat: 49.2860, lon: -123.1240, mpp: 7 },
+  { id: 'london', name: 'London', about: 'Westminster, the City of London, and the Thames', lat: 51.5060, lon: -0.1000, mpp: 5.2 },
+  { id: 'amsterdam', name: 'Amsterdam', about: 'The Amsterdam canal ring', lat: 52.3700, lon: 4.8900, mpp: 4.5 },
+  { id: 'naarden', name: 'Naarden', about: 'The fortified town of Naarden', lat: 52.2955, lon: 5.1625, mpp: 4.8 },
+  { id: 'barcelona', name: 'Barcelona', about: 'The Eixample and the old town of Barcelona', lat: 41.3890, lon: 2.1680, mpp: 4 },
+  { id: 'monaco', name: 'Monaco', about: 'Monaco and Port Hercule', lat: 43.7348, lon: 7.4232, mpp: 3.5 },
+  { id: 'dubai', name: 'Dubai Marina', about: 'Dubai Marina and Jumeirah Beach', lat: 25.0800, lon: 55.1400, mpp: 4 },
+  { id: 'tokyo', name: 'Tokyo', about: 'Marunouchi, Ginza, and the Imperial Palace', lat: 35.6800, lon: 139.7620, mpp: 5 },
+  { id: 'hong-kong', name: 'Hong Kong', about: 'Central, Wan Chai, and Victoria Harbour', lat: 22.2815, lon: 114.1640, mpp: 4.5 },
+  { id: 'singapore', name: 'Singapore', about: 'Marina Bay and the Singapore River', lat: 1.2850, lon: 103.8560, mpp: 4.5 },
+  { id: 'sydney', name: 'Sydney', about: 'Sydney Harbour and the Opera House', lat: -33.8600, lon: 151.2110, mpp: 5.5 },
 ];
 
 const REGION = [1300, 400];
@@ -258,6 +270,14 @@ function fillLayer(layer, p) {
   if (layer === 'landcover') return ['wood', 'grass', 'wetland'].includes(p.class) ? 'greens' : null;
   if (layer === 'landuse') return ['pitch', 'track', 'cemetery', 'playground'].includes(p.class) ? 'greens' : null;
   return null;
+}
+
+// Whole meters. Outlines of buildings that are also mapped as parts are
+// marked, so the 3D view draws the parts alone.
+function buildingHeight(p) {
+  const top = Math.max(0, Math.min(1000, Math.round(p.render_height || 0)));
+  const bottom = Math.max(0, Math.min(top, Math.round(p.render_min_height || 0)));
+  return { top, bottom, hide: !!p.hide_3d };
 }
 
 /* Geometry */
@@ -664,7 +684,10 @@ async function build(city, template) {
             const clipped = clipRing(ring, ...fillBox);
             if (area > 0) {
               polygon = clipped ? [clipped] : null;
-              if (polygon) fills[target].push(polygon);
+              if (polygon) {
+                if (target === 'buildings') polygon.height = buildingHeight(feature.props);
+                fills[target].push(polygon);
+              }
             } else if (polygon && clipped) polygon.push(clipped);
           }
         } else if (feature.type === 2) {
@@ -692,6 +715,7 @@ async function build(city, template) {
         .filter((ring) => ring.length >= 6 && Math.abs(ringArea(ring)) > 0);
       if (!rings.length || ringArea(rings[0]) <= 0) continue;
       if (name === 'buildings' && ringArea(rings[0]) < minBuilding) continue;
+      rings.height = polygon.height;
       kept.push(rings);
     }
     kept.sort((a, b) => hilbertOf(a[0], bounds) - hilbertOf(b[0], bounds));
@@ -702,6 +726,16 @@ async function build(city, template) {
       for (const ring of rings) enc.points(ring);
     }
     out.layers[name] = { type: 'fill', count: kept.length, data: enc.text };
+    // One number per building: the height times four, plus 1 when a bottom
+    // height follows and 2 when the 3D view leaves it out.
+    if (name === 'buildings') {
+      const heights = encoder();
+      for (const { height: h } of kept) {
+        heights.count(h.top * 4 + (h.bottom ? 1 : 0) + (h.hide ? 2 : 0));
+        if (h.bottom) heights.count(h.bottom);
+      }
+      out.layers[name].heights = heights.text;
+    }
     stats.push(`${name} ${kept.length}`);
   }
 
@@ -725,6 +759,9 @@ async function build(city, template) {
   const json = JSON.stringify({
     name: city.name,
     about: city.about,
+    lat: city.lat,
+    lon: city.lon,
+    zoom: ZOOM,
     // Meters per unit, CSS pixels per unit at the starting zoom, the area
     // covered, the starting center, and the grid the fills were cut on.
     unit: +unitM.toFixed(5),

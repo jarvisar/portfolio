@@ -427,7 +427,7 @@ p {
 .cover {
   position: relative;
   overflow: hidden;
-  height: 250px;
+  height: 300px;
   border: 1px solid var(--border);
   border-radius: 4px;
   background: #ece6d8;
@@ -461,6 +461,10 @@ p {
 .cover-caption a {
   color: #fff;
   text-decoration: underline;
+}
+
+.cover-caption .short {
+  display: none;
 }
 
 /* The picture shows until map.js has drawn the map, and without JavaScript */
@@ -551,6 +555,60 @@ p {
   top: 8px;
   right: 8px;
   gap: 6px;
+}
+
+.map-tour.map-btn {
+  border: 1px solid var(--btn-border);
+  border-radius: 4px;
+  box-shadow:
+    inset 0 1px 0 var(--bar-highlight),
+    0 1px 3px rgb(0 0 0 / 0.3);
+}
+
+.map-tour .pause,
+.map-tour.playing .play {
+  display: none;
+}
+
+.map-tour.playing .pause {
+  display: block;
+}
+
+/* A print's title block, in the colors of the style shown */
+.map-title {
+  display: none;
+  position: absolute;
+  right: 8px;
+  bottom: 34px;
+  padding: 6px 11px 7px;
+  border: 1px solid var(--ink, #3a3a3a);
+  background: var(--paper, #f5f0e6);
+  box-shadow:
+    inset 0 0 0 2px var(--paper, #f5f0e6),
+    inset 0 0 0 3px var(--ink, #3a3a3a),
+    0 1px 3px rgb(0 0 0 / 0.3);
+  color: var(--ink, #3a3a3a);
+  text-align: right;
+  pointer-events: none;
+  transition: color 0.3s, background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.map-ready .map-title {
+  display: block;
+}
+
+.map-title .name {
+  display: block;
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.map-title .coords {
+  display: block;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
 }
 
 .map-select {
@@ -1865,6 +1923,10 @@ a.row:hover .name {
     bottom: 72px;
   }
 
+  .map-title {
+    bottom: 98px;
+  }
+
   .map-ready .map-scale {
     display: none;
   }
@@ -1966,7 +2028,7 @@ a.row:hover .name {
   }
 
   .cover {
-    height: 170px;
+    height: 210px;
     border-width: 0 0 1px;
     border-radius: 0;
     box-shadow: none;
@@ -1974,6 +2036,15 @@ a.row:hover .name {
 
   .cover-caption {
     bottom: 48px;
+  }
+
+  .cover-caption .long,
+  .map-ready .map-title {
+    display: none;
+  }
+
+  .cover-caption .short {
+    display: inline;
   }
 
   .sidebar {
