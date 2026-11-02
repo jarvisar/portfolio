@@ -118,6 +118,9 @@
           <li>Undo and redo for area and settings changes, a searchable settings sidebar, and share links.</li>
           <li>Installable as a web app.</li>
           </ul>
+          <h2>Accounts &amp; Tiers</h2>
+          <p>Every tool works without an account, and the Free tier downloads models up to 256 mm with any change made in the editor. Maker, Pro, and Commercial add routes, text, drawn shapes, multi-plate export, LiDAR outside the free areas, and a license to sell prints, as a one-time purchase with lifetime access. They launch through a <a href="https://makerworld.com/crowdfunding/413-city-model-3d-map-generator">MakerWorld crowdfunding campaign</a> that runs from November 10 to December 10, 2026.</p>
+          <p>The account API is a Cloudflare Worker with a D1 database. It stores only an email address, the sign-in method, and the tier, since models are built in the browser and never reach a server. Sign-in is a code sent by email or Google, with no passwords, and backers redeem the code from their pledge once to have their tier in every browser. A separate admin page behind Cloudflare Access handles accounts, the backer list, and redeem codes, and shows error reports and how many models are generated and downloaded.</p>
         </div>
       </section>
       <aside>
@@ -128,13 +131,15 @@
           <div><dt>Category</dt><dd>Web app</dd></div>
           <div><dt>Output</dt><dd>Bambu Studio project, 3MF, STL, glTF</dd></div>
           <div><dt>Data</dt><dd>Overture Maps, OpenStreetMap, public elevation and LiDAR</dd></div>
+          <div><dt>Tiers</dt><dd>Free, Maker, Pro, and Commercial</dd></div>
+          <div><dt>Campaign</dt><dd><a href="https://makerworld.com/crowdfunding/413-city-model-3d-map-generator">MakerWorld</a>, Nov.&nbsp;10 - Dec.&nbsp;10, 2026</dd></div>
           <div><dt>Website</dt><dd><a href="https://citymodel.jarvisar.com/">citymodel.jarvisar.com</a></dd></div>
           <div><dt>Source</dt><dd>Private repository</dd></div>
           </dl>
         </section>
         <section class="box">
           <h2 class="bar">Built With</h2>
-          <div class="body"><ul class="labels"><li class="label">TypeScript</li><li class="label">React</li><li class="label">Three.js</li><li class="label">MapLibre GL</li><li class="label">Vite</li><li class="label">Vitest</li><li class="label">Cloudflare</li></ul></div>
+          <div class="body"><ul class="labels"><li class="label">TypeScript</li><li class="label">React</li><li class="label">Three.js</li><li class="label">MapLibre GL</li><li class="label">Vite</li><li class="label">Vitest</li><li class="label">Cloudflare Workers</li><li class="label">D1</li></ul></div>
         </section>
       </aside>
     </div>
