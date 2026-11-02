@@ -19,7 +19,7 @@ The map is drawn on a canvas from vector data in `assets/maps/`, one file per ci
 
 Pen plot draws the map one pen at a time, Birch plywood engraves it a row at a time, and City model builds it up a layer at a time. Reset view plays these again.
 
-Until the map is moved or a city or style is picked, it plays a tour of other cities and styles, set by `TOUR` in `assets/js/map.js`. The tour waits while keyboard focus is on the map and while the map is mostly off screen. It doesn't start on its own when the system is set to reduce motion or Data Saver is on. The button next to the City menu pauses and plays it.
+Until the map is moved or a city or style is picked, it plays a tour of other cities and styles in a shuffled order, set by `TOUR`, `PLATE`, and `REST` in `assets/js/map.js`. The tour waits while keyboard focus is on the map and while the map is mostly off screen. It doesn't start on its own when the system is set to reduce motion or Data Saver is on. The button next to the City menu pauses and plays it.
 
 The data is OpenStreetMap, from OpenFreeMap's vector tiles, the same source SVGmap uses. To rebuild it or add a city, edit the list at the top of `tools/build-maps.mjs`, run it with Node 22 or later, and add the city to the City menu in `index.html`:
 

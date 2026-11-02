@@ -81,7 +81,8 @@
   const LAYERS = 14;
 
   /* Tour: other cities and styles, one after another, until the map is used.
-     `dark` replaces a light paper style in dark mode. */
+     `dark` replaces a light paper style in dark mode. The first plate stays
+     first, since its city loads with the page, and the rest are shuffled. */
 
   const TOUR = [
     { city: 'cincinnati' },
@@ -113,7 +114,10 @@
     { city: 'san-francisco', style: 'midnight' },
     { city: 'auckland', style: 'riso', dark: 'blueprint' }
   ];
-  const DWELL = 3500;
+  // Each plate stays up for PLATE ms, entrance included, and at least REST ms
+  // after its entrance ends.
+  const PLATE = 4000;
+  const REST = 1500;
 
   /* Data */
 
@@ -1071,7 +1075,7 @@
       y: 0,
       along: 0,
       started: null,
-      duration: reducedMotion.matches ? 0 : Math.min(5000, 2500 + strokes.length / 12)
+      duration: reducedMotion.matches ? 0 : Math.min(4000, 2500 + strokes.length / 12)
     };
     if (!faded) snapshot(350);
     if (fade) fade.start = performance.now();
@@ -1715,7 +1719,32 @@
      screen, and until each entrance is done. Hovering doesn't hold it, since
      the pointer often rests on the banner when the page loads. */
 
-  const tour = { on: false, at: 0, shown: 0, last: 0, timer: 0, holds: new Set() };
+  const tour = { on: false, at: 0, shown: 0, rest: 0, fetched: -1, last: 0, timer: 0, holds: new Set() };
+
+  function plateStyle(plate) {
+    return (darkScheme.matches && plate.dark) || plate.style || schemeStyle();
+  }
+
+  // Keeps the same style from showing twice in a row, including from the
+  // last plate back to the first.
+  function shuffleTour() {
+    const rest = TOUR.slice(1);
+    for (let attempt = 0; attempt < 2000; attempt++) {
+      for (let i = rest.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const swap = rest[i];
+        rest[i] = rest[j];
+        rest[j] = swap;
+      }
+      const order = [TOUR[0]].concat(rest);
+      if (order.every(function (plate, i) {
+        return plateStyle(plate) !== plateStyle(order[(i + 1) % order.length]);
+      })) {
+        TOUR.splice(1, rest.length, ...rest);
+        return;
+      }
+    }
+  }
 
   function setTourButton() {
     if (!tourButton) return;
@@ -1745,19 +1774,32 @@
     const now = performance.now();
     const elapsed = now - tour.last;
     tour.last = now;
-    if (tour.holds.size || !state.map || wanted !== state.map.id || plot || build || fade || motion || pointers.size) return;
+    if (tour.holds.size || !state.map || wanted !== state.map.id || pointers.size) return;
     tour.shown += elapsed;
-    const next = TOUR[(tour.at + 1) % TOUR.length];
-    // Fetched ahead, while nothing is moving.
-    if (tour.shown > DWELL - 2500) load(next.city);
-    if (tour.shown >= DWELL) nextPlate();
+    if (plot || build || fade || motion) {
+      tour.rest = 0;
+      return;
+    }
+    tour.rest += elapsed;
+    // Fetched while nothing is moving, since decoding a city can stall an
+    // entrance. The plate after next is fetched too, so each city has a whole
+    // plate to arrive.
+    if (tour.fetched !== tour.at) {
+      tour.fetched = tour.at;
+      const after = TOUR[(tour.at + 2) % TOUR.length].city;
+      load(TOUR[(tour.at + 1) % TOUR.length].city).then(function () {
+        if (tour.on) load(after);
+      }, function () {});
+    }
+    if (tour.shown >= PLATE && tour.rest >= REST) nextPlate();
   }
 
   function nextPlate() {
     tour.at = (tour.at + 1) % TOUR.length;
     tour.shown = 0;
+    tour.rest = 0;
     const plate = TOUR[tour.at];
-    setCity(plate.city, (darkScheme.matches && plate.dark) || plate.style || schemeStyle());
+    setCity(plate.city, plateStyle(plate));
   }
 
   function hold(reason, on) {
@@ -1805,5 +1847,6 @@
   setTourButton();
   setCity(citySelect.value);
   const saveData = navigator.connection && navigator.connection.saveData;
+  shuffleTour();
   if (!reducedMotion.matches && !saveData) startTour();
 })();
