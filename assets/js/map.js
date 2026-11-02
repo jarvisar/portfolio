@@ -115,7 +115,8 @@
     { city: 'auckland', style: 'riso', dark: 'blueprint' }
   ];
   // Each plate stays up for PLATE ms, entrance included, and at least REST ms
-  // after its entrance ends.
+  // after its entrance ends. The map the page opens on stays up for a third
+  // of PLATE.
   const PLATE = 4000;
   const REST = 1500;
 
@@ -1719,7 +1720,7 @@
      screen, and until each entrance is done. Hovering doesn't hold it, since
      the pointer often rests on the banner when the page loads. */
 
-  const tour = { on: false, at: 0, shown: 0, rest: 0, fetched: -1, last: 0, timer: 0, holds: new Set() };
+  const tour = { on: false, opening: true, at: 0, shown: 0, rest: 0, fetched: -1, last: 0, timer: 0, holds: new Set() };
 
   function plateStyle(plate) {
     return (darkScheme.matches && plate.dark) || plate.style || schemeStyle();
@@ -1791,10 +1792,11 @@
         if (tour.on) load(after);
       }, function () {});
     }
-    if (tour.shown >= PLATE && tour.rest >= REST) nextPlate();
+    if (tour.opening ? tour.shown >= PLATE / 3 : tour.shown >= PLATE && tour.rest >= REST) nextPlate();
   }
 
   function nextPlate() {
+    tour.opening = false;
     tour.at = (tour.at + 1) % TOUR.length;
     tour.shown = 0;
     tour.rest = 0;
