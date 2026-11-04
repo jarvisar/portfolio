@@ -82,38 +82,41 @@
 
   /* Tour: other cities and styles, one after another, until the map is used.
      `dark` replaces a light paper style in dark mode. The first plate stays
-     first, since its city loads with the page, and the rest are shuffled. */
+     first, since its city loads with the page. `lead` marks the best plates
+     for each kind in OPENING, which come next in that order, one of each. */
 
   const TOUR = [
     { city: 'cincinnati' },
-    { city: 'manhattan', style: 'model' },
-    { city: 'amsterdam', style: 'riso', dark: 'noir' },
-    { city: 'paris', style: 'plotter' },
-    { city: 'barcelona', style: 'nolli', dark: 'midnight' },
-    { city: 'hong-kong', style: 'model' },
-    { city: 'washington', style: 'laser' },
-    { city: 'venice', style: 'terracotta', dark: 'blueprint' },
+    { city: 'manhattan', style: 'model', lead: true },
+    { city: 'amsterdam', style: 'riso', dark: 'noir', lead: true },
+    { city: 'paris', style: 'plotter', lead: true },
+    { city: 'barcelona', style: 'nolli', dark: 'midnight', lead: true },
+    { city: 'hong-kong', style: 'model', lead: true },
+    { city: 'washington', style: 'laser', lead: true },
+    { city: 'venice', style: 'terracotta', dark: 'blueprint', lead: true },
     { city: 'rio', style: 'classic', dark: 'midnight' },
     { city: 'toronto', style: 'model' },
     { city: 'quebec', style: 'plotter' },
     { city: 'pittsburgh', style: 'blueprint' },
     { city: 'new-orleans', style: 'nolli', dark: 'noir' },
     { city: 'melbourne', style: 'model' },
-    { city: 'naarden', style: 'plotter' },
+    { city: 'naarden', style: 'plotter', lead: true },
     { city: 'bangkok', style: 'blueprint' },
     { city: 'istanbul', style: 'nolli', dark: 'noir' },
-    { city: 'shanghai', style: 'model' },
-    { city: 'london', style: 'blueprint' },
+    { city: 'shanghai', style: 'model', lead: true },
+    { city: 'london', style: 'blueprint', lead: true },
     { city: 'cartagena', style: 'terracotta', dark: 'midnight' },
     { city: 'kyoto', style: 'laser' },
-    { city: 'chicago', style: 'model' },
+    { city: 'chicago', style: 'model', lead: true },
     { city: 'sydney', style: 'classic', dark: 'midnight' },
-    { city: 'monaco', style: 'laser' },
+    { city: 'monaco', style: 'laser', lead: true },
     { city: 'tokyo', style: 'minimal', dark: 'noir' },
-    { city: 'dubai', style: 'model' },
+    { city: 'dubai', style: 'model', lead: true },
     { city: 'san-francisco', style: 'midnight' },
     { city: 'auckland', style: 'riso', dark: 'blueprint' }
   ];
+  // The machines first, since their entrances show the most.
+  const OPENING = ['model', 'plotter', 'print', 'laser'];
   // Each plate stays up for PLATE ms, entrance included, and at least REST ms
   // after its entrance ends. The map the page opens on stays up for a third
   // of PLATE.
@@ -1726,22 +1729,62 @@
     return (darkScheme.matches && plate.dark) || plate.style || schemeStyle();
   }
 
-  // Keeps the same style from showing twice in a row, including from the
-  // last plate back to the first.
+  function plateKind(plate) {
+    const style = STYLES[plate.style] || {};
+    return style.model ? 'model' : style.plot ? 'plotter' : style.laser ? 'laser' : 'print';
+  }
+
+  function shuffle(list) {
+    for (let i = list.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const swap = list[i];
+      list[i] = list[j];
+      list[j] = swap;
+    }
+    return list;
+  }
+
+  // After the opening, each machine plate follows a print plate, so the
+  // entrances are spread out. The same style never shows twice in a row,
+  // including from the last plate back to the first.
   function shuffleTour() {
-    const rest = TOUR.slice(1);
+    const kinds = { model: [], plotter: [], laser: [], print: [] };
+    TOUR.slice(1).forEach(function (plate) {
+      kinds[plateKind(plate)].push(plate);
+    });
+    const opening = [];
+    OPENING.forEach(function (kind) {
+      // Not the opening map's style again, as Barcelona would be in dark mode.
+      const leads = kinds[kind].filter(function (plate) {
+        return plate.lead && plateStyle(plate) !== plateStyle(TOUR[0]);
+      });
+      if (!leads.length) return;
+      const pick = leads[Math.floor(Math.random() * leads.length)];
+      kinds[kind].splice(kinds[kind].indexOf(pick), 1);
+      opening.push(pick);
+    });
+    const machines = kinds.model.concat(kinds.plotter, kinds.laser);
+    const prints = kinds.print;
     for (let attempt = 0; attempt < 2000; attempt++) {
-      for (let i = rest.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const swap = rest[i];
-        rest[i] = rest[j];
-        rest[j] = swap;
-      }
-      const order = [TOUR[0]].concat(rest);
+      shuffle(machines);
+      shuffle(prints);
+      const after = shuffle(prints.map(function (plate, i) {
+        return i;
+      })).slice(0, machines.length).sort(function (a, b) {
+        return a - b;
+      });
+      const rest = [];
+      let m = 0;
+      prints.forEach(function (plate, i) {
+        rest.push(plate);
+        if (after[m] === i) rest.push(machines[m++]);
+      });
+      while (m < machines.length) rest.push(machines[m++]);
+      const order = [TOUR[0]].concat(opening, rest);
       if (order.every(function (plate, i) {
         return plateStyle(plate) !== plateStyle(order[(i + 1) % order.length]);
-      })) {
-        TOUR.splice(1, rest.length, ...rest);
+      }) || attempt === 1999) {
+        TOUR.splice(0, TOUR.length, ...order);
         return;
       }
     }
