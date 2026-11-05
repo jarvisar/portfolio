@@ -110,12 +110,20 @@
           <p>City Model turns any area of the map into a multicolor 3D printable model, sized for FDM printing with a 0.4 mm nozzle. It builds terrain, water, parks, roads, buildings, and trees from Overture Maps and public elevation data, and exports a Bambu Studio project with one filament per color.</p>
           <p>Where a public LiDAR survey covers the area, buildings can be measured from it, or the whole model can be built from the survey alone as one solid. The app reads surveys from more than 50 sources in North America, Europe, South America, and Japan. Models can be rectangles, circles, or hexagons, can include GPX routes and racetrack laps in their own color, and can be colored by height or with one of sixteen themes. Models larger than the print bed are split into plates. An editor in the 3D view changes buildings, roads, and land cover, and adds text and pins.</p>
           <h2>Background</h2>
-          <p>City Model is the web version of my 3D Map Creator Blender add-on, with the same generation rules ported to TypeScript, so there is nothing to install. The add-on came out of the <a href="../#maps">Jarvizar miniature maps</a> I design by hand.</p>
+          <p>City Model is the web version of my 3D Map Creator Blender add-on, with the same generation rules ported to TypeScript, so there is nothing to install. The add-on is written in Python, with a separate Python environment that downloads Overture Maps data and reads LiDAR with laspy, pyproj, and shapely. It came out of the <a href="../#maps">Jarvizar miniature maps</a> I design by hand.</p>
+          <h2>How It Works</h2>
+          <ul>
+          <li>Everything runs in the browser. The model is generated in a Web Worker and never reaches a server.</li>
+          <li>Overture Maps data is read directly from its GeoParquet files on S3 with HTTP range requests. The release's STAC index and each file's footer narrow it down to the row groups that cover the area, and geometry is only downloaded for the rows inside it.</li>
+          <li>Elevation comes from Mapterhorn's terrain tiles (Copernicus GLO-30 and national models). Every layer is projected from WGS84 into one local east-north-up frame and samples the same height grid.</li>
+          <li>LiDAR comes from more than 50 publishers, including USGS 3DEP, NOAA Digital Coast, NRCan, and IGN, as EPT, COPC, Esri I3S, or LAS and LAZ files. Point clouds are decoded with laz-rs in a pool of Web Workers and reprojected with proj4js. LiDAR only models use grids of up to 64 million cells. Missing coverage and obvious errors are reported to the publishers.</li>
+          <li>Every part is a closed solid, so slicers don't have to repair it.</li>
+          <li>Tests run in Vitest, with Playwright scripts for the app and a fuzzer for the editor. Turning a feature off must leave the exported files byte-for-byte the same.</li>
+          </ul>
           <h2>Details</h2>
           <ul>
           <li>Search for a place, pick a preset, or drag the box on the map, then generate the model and check it in the 3D view before downloading.</li>
           <li>Exports Bambu Studio and PrusaSlicer projects, 3MF with colors, STL, and glTF for rendering in Blender.</li>
-          <li>Decodes LAZ and COPC point clouds in the browser, in parallel Web Workers.</li>
           <li>Undo and redo for area and settings changes, a searchable settings sidebar, and share links.</li>
           <li>Installable as a web app.</li>
           </ul>
@@ -140,7 +148,7 @@
         </section>
         <section class="box">
           <h2 class="bar">Built With</h2>
-          <div class="body"><ul class="labels"><li class="label">TypeScript</li><li class="label">React</li><li class="label">Three.js</li><li class="label">MapLibre GL</li><li class="label">Web Workers</li><li class="label">Vite</li><li class="label">Vitest</li><li class="label">Cloudflare Workers</li><li class="label">D1</li></ul></div>
+          <div class="body"><ul class="labels"><li class="label">TypeScript</li><li class="label">React</li><li class="label">Three.js</li><li class="label">MapLibre GL</li><li class="label">Web Workers</li><li class="label">Vite</li><li class="label">Vitest</li><li class="label">Playwright</li><li class="label">Cloudflare Workers</li><li class="label">D1</li></ul></div>
         </section>
       </aside>
     </div>

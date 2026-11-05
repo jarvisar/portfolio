@@ -278,7 +278,8 @@
           <div class="body">
             <p class="lead">I'm a software developer in Cincinnati. At London Computer Systems I work on Net Dial Tone, a VoIP phone platform, across the Angular front end, the Node.js and C# .NET services, and the Asterisk call flows underneath them.</p>
             <p>Before that I built ERP and CRM integrations at Martin &amp; Associates during my co-op years at the University of Cincinnati, where I earned a B.S. in Computer Science in 2023.</p>
-            <p>Outside of work I run <a href="projects/citymodel.html">City Model</a>, a web app with free and paid tiers that turns any area of the map into a multicolor 3D printable model. It grew out of the miniature maps I design as <a href="#maps">Jarvizar</a>. I also make <a href="projects/svgmap.html">SVGmap</a>, for laser engraving and pen plotters, and Three.js games including <a href="projects/citydriver.html">Citydriver 2</a> and <a href="projects/coastline.html">Coastline</a>.</p>
+            <p>Outside of work I run <a href="projects/citymodel.html">City Model</a>, a web app with free and paid tiers that turns any area of the map into a multicolor 3D printable model. It grew out of the miniature maps I design as <a href="#maps">Jarvizar</a>. I also make <a href="projects/svgmap.html">SVGmap</a>, for laser engraving and pen plotters. Both apps build their maps in the browser from OpenStreetMap, Overture Maps, and elevation data, and City Model also reads LiDAR from USGS, NOAA, and other public surveys.</p>
+            <p>Other projects include Three.js games such as <a href="projects/citydriver.html">Citydriver 2</a> and <a href="projects/coastline.html">Coastline</a>.</p>
           </div>
         </section>
 
@@ -298,13 +299,14 @@
                 </div>
                 <p class="org">London Computer Systems, Mason, OH</p>
                 <ul>
-                  <li>Develop and maintain Net Dial Tone (NDT), a hosted VoIP phone platform that integrates with Rent Manager, built with Asterisk, OpenSIPS, Node.js/TypeScript, C# .NET, Angular, and Kubernetes.</li>
+                  <li>Develop and maintain Net Dial Tone (NDT), a hosted VoIP phone platform that integrates with Rent Manager, built with Asterisk, OpenSIPS, Node.js/TypeScript, C# .NET, Angular, MySQL, and Kubernetes.</li>
+                  <li>Created and own the interactive call flow visualizer that customers and support staff use to review call flows before saving them and to trace misrouted calls.</li>
+                  <li>Built server-side call delivery for NDT's Android and iOS apps, ringing all of a user's devices, stopping ringing on the other devices when one answers, keeping call state in sync, and handling weak connections.</li>
                   <li>Designed and developed a configurable state machine for building complex Asterisk ARI call flows and dialplans.</li>
-                  <li>Built customer and admin portal features for call routing, queues, voicemail, and other phone system settings, including interactive visualizations of complex call flows.</li>
                   <li>Added backend API endpoints and business logic, real-time WebSocket messaging, and integration and unit tests.</li>
                 </ul>
                 <ul class="labels" aria-label="Technologies">
-                  <li class="label">Angular</li><li class="label">TypeScript</li><li class="label">Node.js</li><li class="label">C#&nbsp;.NET</li><li class="label">Asterisk ARI/AMI</li><li class="label">OpenSIPS</li><li class="label">WebSockets</li><li class="label">Kubernetes</li>
+                  <li class="label">Angular</li><li class="label">TypeScript</li><li class="label">Node.js</li><li class="label">C#&nbsp;.NET</li><li class="label">MySQL</li><li class="label">Asterisk ARI/AMI</li><li class="label">OpenSIPS</li><li class="label">elkjs</li><li class="label">WebSockets</li><li class="label">Kubernetes</li>
                 </ul>
               </div>
             </li>
@@ -317,14 +319,16 @@
                 </div>
                 <p class="org">Jarvizar, Cincinnati, OH</p>
                 <ul>
-                  <li>Design and publish 3D printable <a href="#maps">miniature maps</a> with more than 30,000 followers and 175,000 downloads, mostly on MakerWorld.</li>
-                  <li>Built <a href="projects/citymodel.html">City Model</a>, a TypeScript, React, and Three.js web app that turns any area of the map into a multicolor 3D printable model, with terrain, buildings, roads, and water from Overture Maps.</li>
-                  <li>Added LiDAR support for more than 50 public survey sources, decoding LAZ point clouds in parallel Web Workers to measure buildings or build the whole model from the scan.</li>
+                  <li>Built <a href="projects/citymodel.html">City Model</a>, a TypeScript, React, and Three.js web app that turns any area of the map into a multicolor 3D printable model, with terrain, buildings, roads, and water from Overture Maps and public elevation data.</li>
+                  <li>Integrated LiDAR from more than 50 public sources, including USGS 3DEP, NOAA, NRCan, and IGN, decoding EPT, COPC, I3S, and LAZ point clouds in Web Workers to measure buildings or build the whole model from the scan, and reported coverage gaps and errors to the publishers.</li>
+                  <li>Loaded Overture's GeoParquet data directly from S3 with HTTP range requests, downloading only the row groups that cover the area, and projected every layer from WGS84 into a shared local east-north-up frame.</li>
+                  <li>Built <a href="projects/svgmap.html">SVGmap</a>, which turns OpenStreetMap vector tiles into SVG maps for laser engravers, pen plotters, and print.</li>
+                  <li>Design and publish 3D printable <a href="#maps">miniature maps</a> with more than 31,000 followers and 180,000 downloads, mostly on MakerWorld. Featured creator on Thingiverse, with three models featured on MakerWorld.</li>
                   <li>Developed accounts and paid tiers on Cloudflare Workers and D1 with email and Google sign-in, backer redeem codes, and an admin dashboard.</li>
                   <li>Paid tiers launch with a <a href="https://makerworld.com/crowdfunding/413-city-model-3d-map-generator">MakerWorld crowdfunding campaign</a>, Nov.&nbsp;10 - Dec.&nbsp;10, 2026.</li>
                 </ul>
                 <ul class="labels" aria-label="Technologies">
-                  <li class="label">TypeScript</li><li class="label">React</li><li class="label">Three.js</li><li class="label">Web Workers</li><li class="label">LiDAR</li><li class="label">Cloudflare&nbsp;Workers</li><li class="label">D1</li><li class="label">Blender</li><li class="label">QGIS</li>
+                  <li class="label">TypeScript</li><li class="label">React</li><li class="label">Three.js</li><li class="label">MapLibre&nbsp;GL</li><li class="label">Web Workers</li><li class="label">LiDAR</li><li class="label">GeoParquet</li><li class="label">Cloudflare&nbsp;Workers</li><li class="label">D1</li><li class="label">Blender</li><li class="label">QGIS</li>
                 </ul>
               </div>
             </li>
@@ -382,12 +386,13 @@
           </div>
           <table class="spec">
             <tr><th scope="row">Languages</th><td>TypeScript, JavaScript, C#, Python, SQL, C, GLSL, HTML/CSS</td></tr>
-            <tr><th scope="row">Front End</th><td>Angular, React, Three.js, WebXR, D3.js, MapLibre, Web Workers, Vite, Electron</td></tr>
-            <tr><th scope="row">Back End</th><td>Node.js, .NET, REST APIs, WebSockets, Express, Flask, SQLite</td></tr>
+            <tr><th scope="row">Front End</th><td>Angular, React, Three.js, WebXR, D3.js, elkjs, Web Workers, Vite, Electron</td></tr>
+            <tr><th scope="row">Mapping &amp; GIS</th><td>MapLibre GL, Leaflet, QGIS, OpenStreetMap, Overture Maps, GeoParquet, vector tiles, GeoJSON, LiDAR (LAZ, COPC, EPT), proj4js, pyproj, shapely</td></tr>
+            <tr><th scope="row">Back End</th><td>Node.js, .NET, REST APIs, WebSockets, Express, Flask, MySQL, SQLite</td></tr>
             <tr><th scope="row">Telephony</th><td>Asterisk ARI/AMI, OpenSIPS, call routing, dialplans</td></tr>
             <tr><th scope="row">Infrastructure</th><td>Docker, Kubernetes, Rancher, Helm, CI/CD, Cloudflare Workers, D1</td></tr>
-            <tr><th scope="row">Testing</th><td>Integration and unit tests, Vitest, Playwright, QA</td></tr>
-            <tr><th scope="row">3D &amp; Mapping</th><td>Blender (Python add-ons), QGIS, SolidWorks, Inkscape, OpenStreetMap, Overture Maps, LiDAR</td></tr>
+            <tr><th scope="row">Testing</th><td>Integration and unit tests, Vitest, Playwright, QA, accessibility (A11Y Project checklist, WCAG)</td></tr>
+            <tr><th scope="row">3D &amp; Design</th><td>Blender (Python add-ons), SolidWorks, Inkscape</td></tr>
             <tr><th scope="row">Fabrication</th><td>3D printing, laser engraving, pen plotting</td></tr>
           </table>
         </section>
@@ -472,7 +477,7 @@
                 <img src="assets/img/icons/orrery.png" width="40" height="40" alt="">
                 <span class="text">
                   <span class="name">Solar System Viewer</span>
-                  <span class="desc">3D model of the solar system with a flight mode and star systems from the NASA Exoplanet Archive.</span>
+                  <span class="desc">3D model of the solar system with a flight mode, VR, and star systems from the NASA Exoplanet Archive.</span>
                 </span>
                 <span class="meta"><span>Three.js</span> <span>2023 - 2025</span></span>
               </a>
@@ -581,7 +586,7 @@
             <span class="aside"><a href="https://makerworld.com/en/@jarvizar">Jarvizar on MakerWorld</a></span>
           </div>
           <div class="body">
-            <p class="lead">I design 3D printable miniature maps and publish them as Jarvizar. They have more than 30,000 followers and 175,000 downloads on <a href="https://makerworld.com/en/@jarvizar">MakerWorld</a>, <a href="https://www.printables.com/@jarvizar">Printables</a>, and <a href="https://www.thingiverse.com/Jarvizar/">Thingiverse</a>.</p>
+            <p class="lead">I design 3D printable miniature maps and publish them as Jarvizar. They have more than 31,000 followers and 180,000 downloads on <a href="https://makerworld.com/en/@jarvizar">MakerWorld</a>, <a href="https://www.printables.com/@jarvizar">Printables</a>, and <a href="https://www.thingiverse.com/Jarvizar/">Thingiverse</a>.</p>
             <p>Modeling each map by hand takes a long time, so I automated it:</p>
             <ol class="steps">
               <li><b>Jarvizar Models</b><span class="when">Since 2023</span><span>Each map modeled by hand in QGIS, Blender, and SolidWorks</span></li>

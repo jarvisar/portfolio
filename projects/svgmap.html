@@ -117,6 +117,13 @@
           <li><b>Plotter:</b> filled areas are hatched, each pen is on its own layer, and strokes are ordered to cut down pen-up travel.</li>
           <li><b>Print:</b> color themes, place names, and elevation lines.</li>
           </ul>
+          <h2>How It Works</h2>
+          <ul>
+          <li>The SVG is built in a Web Worker from OpenFreeMap's OpenStreetMap vector tiles.</li>
+          <li>Buildings, sidewalks, and golf course details that the tiles leave out are read from Overture Maps' GeoParquet files, with the same reader as <a href="citymodel.html">City Model</a>.</li>
+          <li>Elevation lines come from Mapterhorn's terrain tiles, sampled every 0.2 mm on the piece.</li>
+          <li>Each push to the main branch is linted, tested, built, and deployed to Cloudflare with GitHub Actions.</li>
+          </ul>
           <h2>Background</h2>
           <p>SVGmap replaces laserSVG, my earlier Blender add-on for laser engraving maps. The map at the top of the <a href="../">main page</a> is a Print export of Cincinnati with the Classic and Midnight themes.</p>
         </div>
@@ -135,7 +142,7 @@
         </section>
         <section class="box">
           <h2 class="bar">Built With</h2>
-          <div class="body"><ul class="labels"><li class="label">TypeScript</li><li class="label">React</li><li class="label">MapLibre GL</li><li class="label">Web Workers</li><li class="label">Vite</li><li class="label">Vitest</li></ul></div>
+          <div class="body"><ul class="labels"><li class="label">TypeScript</li><li class="label">React</li><li class="label">MapLibre GL</li><li class="label">Web Workers</li><li class="label">Vite</li><li class="label">Vitest</li><li class="label">GitHub Actions</li></ul></div>
         </section>
       </aside>
     </div>
