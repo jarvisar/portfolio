@@ -1321,7 +1321,8 @@ a.row:hover .name {
   background: linear-gradient(var(--btn-hover-1), var(--btn-hover-2));
 }
 
-.seg button[aria-selected='true'] {
+.seg button[aria-selected='true'],
+.seg button[aria-pressed='true'] {
   background: linear-gradient(var(--primary-2), var(--primary-1));
   box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.3);
   color: #fff;
@@ -1376,25 +1377,52 @@ a.row:hover .name {
   background: var(--panel-2);
 }
 
-.gallery span {
+.gallery .label {
+  display: block;
+  padding: 4px 3px 1px;
+  line-height: 1.35;
+}
+
+.gallery .name,
+.gallery .src {
   display: block;
   overflow: hidden;
-  padding: 4px 3px 1px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.gallery.collapsed li:nth-child(n + 9) {
+.gallery .src {
+  color: var(--text-3);
+  font-size: 11px;
+}
+
+/* The first photo takes two rows and two columns; its image fills whatever height those rows have. */
+.gallery .feature {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.gallery .feature a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gallery .feature img {
+  flex: 1 1 auto;
+  height: 0;
+  min-height: 0;
+  aspect-ratio: auto;
+}
+
+.gallery li[hidden],
+.gallery li.over {
   display: none;
 }
 
 .more {
   margin: 12px 0 0;
   text-align: center;
-}
-
-.tab-panel[hidden] {
-  display: none;
 }
 
 .panel-note {
@@ -1991,11 +2019,6 @@ a.row:hover .name {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  /* Three full rows while collapsed */
-  .gallery.collapsed li:nth-child(9) {
-    display: block;
-  }
-
   .contact {
     display: block;
   }
@@ -2131,6 +2154,25 @@ a.row:hover .name {
     gap: 8px;
   }
 
+  /* Two columns leave no photos beside the feature to set its height. */
+  .gallery .feature {
+    grid-row: auto;
+  }
+
+  .gallery .feature img {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .seg {
+    display: flex;
+  }
+
+  .seg button {
+    flex: 1 1 auto;
+    padding: 0 8px;
+  }
+
   .steps {
     display: block;
     filter: none;
@@ -2164,10 +2206,6 @@ a.row:hover .name {
 
   .row .meta span + span::before {
     content: ', ';
-  }
-
-  .gallery.collapsed li:nth-child(9) {
-    display: none;
   }
 
   .crumbs {

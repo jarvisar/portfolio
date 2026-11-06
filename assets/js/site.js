@@ -71,56 +71,69 @@
     updateCurrent();
   }
 
-  /* Tabs */
+  /* Photo gallery: filter buttons, and three rows until expanded */
 
-  document.querySelectorAll('[role="tablist"]').forEach(function (list) {
-    const tabs = Array.from(list.querySelectorAll('[role="tab"]'));
+  document.querySelectorAll('.photos').forEach(function (section) {
+    const gallery = section.querySelector('.gallery');
+    const items = Array.from(gallery.children);
+    const filters = Array.from(section.querySelectorAll('[data-filter]'));
+    const notes = Array.from(section.querySelectorAll('[data-note]'));
+    let current = 'all';
+    let expanded = false;
 
-    function select(tab, focus) {
-      tabs.forEach(function (other) {
-        const selected = other === tab;
-        other.setAttribute('aria-selected', String(selected));
-        other.tabIndex = selected ? 0 : -1;
-        document.getElementById(other.getAttribute('aria-controls')).hidden = !selected;
-      });
-      if (focus) tab.focus();
-    }
-
-    tabs.forEach(function (tab, index) {
-      tab.addEventListener('click', function () { select(tab, false); });
-      tab.addEventListener('keydown', function (event) {
-        let next = null;
-        if (event.key === 'ArrowRight') next = tabs[(index + 1) % tabs.length];
-        if (event.key === 'ArrowLeft') next = tabs[(index - 1 + tabs.length) % tabs.length];
-        if (event.key === 'Home') next = tabs[0];
-        if (event.key === 'End') next = tabs[tabs.length - 1];
-        if (next) {
-          event.preventDefault();
-          select(next, true);
-        }
-      });
-    });
-  });
-
-  /* Long galleries show two rows until expanded */
-
-  document.querySelectorAll('.gallery').forEach(function (gallery) {
-    const count = gallery.children.length;
-    if (count <= 12) return;
-    gallery.classList.add('collapsed');
     const wrap = document.createElement('p');
     wrap.className = 'more';
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'btn';
-    button.textContent = 'Show all ' + count + ' photos';
     wrap.appendChild(button);
     gallery.after(wrap);
-    button.addEventListener('click', function () {
-      gallery.classList.remove('collapsed');
-      wrap.remove();
-      gallery.children[8].querySelector('a').focus();
+
+    function shown() {
+      return items.filter(function (item) {
+        return current === 'all' || item.dataset.set === current;
+      });
+    }
+
+    // 12 cells fill whole rows at 4, 3, and 2 columns. The feature photo takes four of them.
+    function limitFor(list) {
+      return list.length && list[0].classList.contains('feature') ? 9 : 12;
+    }
+
+    function update() {
+      const list = shown();
+      const limit = limitFor(list);
+      const collapse = !expanded && list.length > limit;
+      items.forEach(function (item) {
+        const n = list.indexOf(item);
+        item.hidden = n < 0;
+        item.classList.toggle('over', collapse && n >= limit);
+      });
+      button.textContent = 'Show all ' + list.length + ' photos';
+      wrap.hidden = !collapse;
+    }
+
+    filters.forEach(function (filter) {
+      filter.addEventListener('click', function () {
+        current = filter.dataset.filter;
+        filters.forEach(function (other) {
+          other.setAttribute('aria-pressed', String(other === filter));
+        });
+        notes.forEach(function (note) {
+          note.hidden = note.dataset.note !== current;
+        });
+        update();
+      });
     });
+
+    button.addEventListener('click', function () {
+      const list = shown();
+      expanded = true;
+      update();
+      list[limitFor(list)].querySelector('a').focus();
+    });
+
+    update();
   });
 
   /* Lightbox */
@@ -255,7 +268,9 @@
     const link = event.target.closest('a[data-gallery]');
     if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
     event.preventDefault();
-    const group = Array.from(document.querySelectorAll('a[data-gallery="' + link.dataset.gallery + '"]'));
+    const group = Array.from(document.querySelectorAll('a[data-gallery="' + link.dataset.gallery + '"]')).filter(function (a) {
+      return !a.closest('[hidden]');
+    });
     open(group.map(itemFrom), group.indexOf(link));
   });
 
