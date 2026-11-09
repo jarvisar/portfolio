@@ -48,9 +48,15 @@
         { layers: ['paths', 'service', 'streets', 'major'], color: '#24272B', width: 0.7 }
       ]
     },
-    // Engraved and scored into birch plywood. The colors multiply the wood,
-    // so the grain shows through the burn.
-    laser: { paper: '#E9D3AF', laser: true, greens: '#EDE3D2', water: '#7E5E44', buildings: '#D2B898', roads: '#5A3B26', paths: '#8E6E52', rail: '#6E4C34' },
+    // Engraved and scored into SVGmap's laser materials. The colors multiply
+    // the material, so the grain shows through the burn. Slate and acrylic
+    // mark light, so theirs are screened instead.
+    birch: { paper: '#E9D3AF', laser: true, grain: birchGrain, greens: '#EDE3D2', water: '#7E5E44', buildings: '#D2B898', roads: '#5A3B26', paths: '#8E6E52', rail: '#6E4C34' },
+    walnut: { paper: '#76513A', laser: true, grain: walnutGrain, ink: '#180D07', greens: '#CDCBC8', water: '#4D443A', buildings: '#97928D', roads: '#342A1F', paths: '#5D564D', rail: '#40372D' },
+    cork: { paper: '#C19869', laser: true, grain: corkGrain, ink: '#362112', greens: '#E0DDDB', water: '#62544A', buildings: '#B0A9A5', roads: '#443428', paths: '#71655C', rail: '#524338' },
+    leather: { paper: '#815432', laser: true, grain: leatherGrain, ink: '#1C0F07', greens: '#CDCBC9', water: '#4D433C', buildings: '#98928E', roads: '#342921', paths: '#5E554E', rail: '#41362E' },
+    slate: { paper: '#3E4246', laser: true, grain: slateGrain, frost: frostGrain, blend: 'screen', ink: '#D9DCDE', greens: '#1D1E1E', water: '#666869', buildings: '#464748', roads: '#CACDCF', paths: '#8C8E8F', rail: '#ABAEAF' },
+    acrylic: { paper: '#151515', laser: true, grain: acrylicGrain, frost: frostGrain, blend: 'screen', ink: '#E6E6E6', greens: '#202020', water: '#676767', buildings: '#444444', roads: '#E0E0E0', paths: '#9B9B9B', rail: '#BFBFBF' },
     // A City Model print: white PLA on a blue water plate, with the tallest
     // buildings in orange. `shore` is the side of the land plate.
     model: {
@@ -83,17 +89,17 @@
   /* Tour: other cities and styles, one after another, until the map is used.
      `dark` replaces a light paper style in dark mode. The first plate stays
      first, since its city loads with the page. `lead` marks the best plates
-     for each kind in OPENING, which come next in that order, one of each. */
+     for each entry in OPENING, which come next in that order, one of each. */
 
   const TOUR = [
     { city: 'cincinnati' },
     { city: 'manhattan', style: 'model', lead: true },
-    { city: 'amsterdam', style: 'riso', dark: 'noir', lead: true },
+    { city: 'amsterdam', style: 'riso', dark: 'noir' },
     { city: 'paris', style: 'plotter', lead: true },
-    { city: 'barcelona', style: 'nolli', dark: 'midnight', lead: true },
+    { city: 'barcelona', style: 'nolli', dark: 'midnight' },
     { city: 'hong-kong', style: 'model', lead: true },
-    { city: 'washington', style: 'laser', lead: true },
-    { city: 'venice', style: 'terracotta', dark: 'blueprint', lead: true },
+    { city: 'washington', style: 'birch' },
+    { city: 'venice', style: 'terracotta', dark: 'blueprint' },
     { city: 'rio', style: 'classic', dark: 'midnight' },
     { city: 'toronto', style: 'model' },
     { city: 'quebec', style: 'plotter' },
@@ -104,19 +110,30 @@
     { city: 'bangkok', style: 'blueprint' },
     { city: 'istanbul', style: 'nolli', dark: 'noir' },
     { city: 'shanghai', style: 'model', lead: true },
-    { city: 'london', style: 'blueprint', lead: true },
+    { city: 'london', style: 'blueprint' },
     { city: 'cartagena', style: 'terracotta', dark: 'midnight' },
-    { city: 'kyoto', style: 'laser' },
+    { city: 'kyoto', style: 'birch' },
     { city: 'chicago', style: 'model', lead: true },
     { city: 'sydney', style: 'classic', dark: 'midnight' },
-    { city: 'monaco', style: 'laser', lead: true },
+    { city: 'monaco', style: 'birch' },
     { city: 'tokyo', style: 'minimal', dark: 'noir' },
     { city: 'dubai', style: 'model', lead: true },
     { city: 'san-francisco', style: 'midnight' },
-    { city: 'auckland', style: 'riso', dark: 'blueprint' }
+    { city: 'auckland', style: 'riso', dark: 'blueprint' },
+    { city: 'savannah', style: 'walnut' },
+    { city: 'miami', style: 'riso', dark: 'midnight' },
+    { city: 'portland', style: 'cork' },
+    { city: 'boston', style: 'leather' },
+    { city: 'perth', style: 'terracotta', dark: 'noir' },
+    { city: 'vancouver', style: 'slate' },
+    { city: 'singapore', style: 'acrylic', lead: true },
+    { city: 'brisbane', style: 'acrylic', lead: true },
+    { city: 'ottawa', style: 'acrylic', lead: true },
+    { city: 'montreal', style: 'classic', dark: 'midnight' }
   ];
-  // The machines first, since their entrances show the most.
-  const OPENING = ['model', 'plotter', 'print', 'laser'];
+  // The machines first, since their entrances show the most. Each entry is a
+  // kind of plate (model, plotter, laser, or print) or a single style.
+  const OPENING = ['model', 'plotter', 'acrylic'];
   // Each plate stays up for PLATE ms, entrance included, and at least REST ms
   // after its entrance ends. The map the page opens on stays up for a third
   // of PLATE.
@@ -384,15 +401,22 @@
     }
 
     if (style.laser) {
-      c.fillStyle = woodPattern(map, scale);
+      c.fillStyle = materialPattern(style.grain, map, scale);
       c.fillRect(box[0], box[1], box[2] - box[0], box[3] - box[1]);
-      c.globalCompositeOperation = 'multiply';
+      c.globalCompositeOperation = style.blend || 'multiply';
     }
     fillLayer(c, map.layers.greens, style.greens, box);
     fillLayer(c, map.layers.water, style.water, box);
     drawLines(c, map, style, px, unit, reach, true);
     fillLayer(c, map.layers.buildings, style.buildings, box);
     drawLines(c, map, style, px, unit, reach, false);
+    // The burn roughens a light mark. Multiplied over the dark surface, the
+    // same grain barely shows.
+    if (style.frost) {
+      c.globalCompositeOperation = 'multiply';
+      c.fillStyle = materialPattern(style.frost, map, scale);
+      c.fillRect(box[0], box[1], box[2] - box[0], box[3] - box[1]);
+    }
     c.globalCompositeOperation = 'source-over';
   }
 
@@ -405,72 +429,234 @@
     }
   }
 
-  /* Birch grain: rings warped by noise that repeats every 512 pixels, so the
-     texture tiles. It is laid out in map units, so it lines up across tiles
-     and moves with the map. */
+  /* Laser materials. Each texture is made from noise that repeats every GRAIN
+     pixels, so it tiles. It is laid out in map units, so it lines up across
+     tiles and moves with the map. */
 
-  let wood = null;
+  const GRAIN = 512;
+  const textures = new Map();
 
-  function woodTexture() {
-    if (wood) return wood;
-    const size = 512;
-    let seed = 7;
-    function random() {
-      seed = (seed * 16807) % 2147483647;
-      return seed / 2147483647;
-    }
-    function lattice(n) {
-      const v = new Float32Array(n * n);
-      for (let i = 0; i < v.length; i++) v[i] = random();
-      return function (x, y) {
-        const fx = (x / size) * n;
-        const fy = (y / size) * n;
-        const x0 = Math.floor(fx);
-        const y0 = Math.floor(fy);
-        const tx = fx - x0;
-        const ty = fy - y0;
-        const sx = tx * tx * (3 - 2 * tx);
-        const sy = ty * ty * (3 - 2 * ty);
-        const at = function (i, j) {
-          return v[((j % n) + n) % n * n + ((i % n) + n) % n];
-        };
-        const a = at(x0, y0) + (at(x0 + 1, y0) - at(x0, y0)) * sx;
-        const b = at(x0, y0 + 1) + (at(x0 + 1, y0 + 1) - at(x0, y0 + 1)) * sx;
-        return a + (b - a) * sy;
-      };
-    }
-    const broad = lattice(4);
-    const fine = lattice(16);
-    const speck = lattice(128);
-    const canvas2 = document.createElement('canvas');
-    canvas2.width = size;
-    canvas2.height = size;
-    const c = canvas2.getContext('2d');
-    const image = c.createImageData(size, size);
+  function texture(grain) {
+    let surface = textures.get(grain);
+    if (surface) return surface;
+    surface = document.createElement('canvas');
+    surface.width = GRAIN;
+    surface.height = GRAIN;
+    const c = surface.getContext('2d');
+    const image = c.createImageData(GRAIN, GRAIN);
     const d = image.data;
-    for (let y = 0; y < size; y++) {
-      for (let x = 0; x < size; x++) {
-        const warp = broad(x, y) * 1.6 + fine(x, y) * 0.35;
-        const ring = 0.5 + 0.5 * Math.sin(2 * Math.PI * (y / size * 14 + warp));
-        const line = Math.pow(ring, 6);
-        const shade = 1 - line * 0.13 - broad(y, x) * 0.05 - speck(x, y) * 0.04;
-        const k = 4 * (y * size + x);
-        d[k] = 243 * shade;
-        d[k + 1] = 224 * shade;
-        d[k + 2] = 191 * shade;
+    const rgb = [0, 0, 0];
+    const pixel = grain();
+    for (let y = 0; y < GRAIN; y++) {
+      for (let x = 0; x < GRAIN; x++) {
+        pixel(x, y, rgb);
+        const k = 4 * (y * GRAIN + x);
+        d[k] = rgb[0];
+        d[k + 1] = rgb[1];
+        d[k + 2] = rgb[2];
         d[k + 3] = 255;
       }
     }
     c.putImageData(image, 0, 0);
-    wood = canvas2;
-    return wood;
+    textures.set(grain, surface);
+    return surface;
   }
 
-  function woodPattern(map, scale) {
-    const pattern = ctx.createPattern(woodTexture(), 'repeat');
+  // Value noise and cell noise from one seeded generator.
+  function noise(seed) {
+    function random() {
+      seed = (seed * 16807) % 2147483647;
+      return seed / 2147483647;
+    }
+    return {
+      // Random values on an nx by ny grid, blended smoothly.
+      lattice: function (nx, ny) {
+        ny = ny || nx;
+        const v = new Float32Array(nx * ny);
+        for (let i = 0; i < v.length; i++) v[i] = random();
+        return function (x, y) {
+          const fx = (x / GRAIN) * nx;
+          const fy = (y / GRAIN) * ny;
+          const x0 = Math.floor(fx);
+          const y0 = Math.floor(fy);
+          const tx = fx - x0;
+          const ty = fy - y0;
+          const sx = tx * tx * (3 - 2 * tx);
+          const sy = ty * ty * (3 - 2 * ty);
+          const at = function (i, j) {
+            return v[((j % ny) + ny) % ny * nx + ((i % nx) + nx) % nx];
+          };
+          const a = at(x0, y0) + (at(x0 + 1, y0) - at(x0, y0)) * sx;
+          const b = at(x0, y0 + 1) + (at(x0 + 1, y0 + 1) - at(x0, y0 + 1)) * sx;
+          return a + (b - a) * sy;
+        };
+      },
+      // A random point in each cell of an n by n grid. Gives the distances to
+      // the nearest and next nearest points, in cells, and a random value for
+      // the nearest one. The result is reused between calls.
+      cells: function (n) {
+        const px = new Float32Array(n * n);
+        const py = new Float32Array(n * n);
+        const pv = new Float32Array(n * n);
+        for (let i = 0; i < n * n; i++) {
+          px[i] = random();
+          py[i] = random();
+          pv[i] = random();
+        }
+        const hit = { near: 0, next: 0, value: 0 };
+        return function (x, y) {
+          const fx = (x / GRAIN) * n;
+          const fy = (y / GRAIN) * n;
+          const cx = Math.floor(fx);
+          const cy = Math.floor(fy);
+          let near = Infinity;
+          let next = Infinity;
+          for (let j = cy - 1; j <= cy + 1; j++) {
+            for (let i = cx - 1; i <= cx + 1; i++) {
+              const k = ((j % n) + n) % n * n + ((i % n) + n) % n;
+              const dx = i + px[k] - fx;
+              const dy = j + py[k] - fy;
+              const dd = dx * dx + dy * dy;
+              if (dd < near) {
+                next = near;
+                near = dd;
+                hit.value = pv[k];
+              } else if (dd < next) next = dd;
+            }
+          }
+          hit.near = Math.sqrt(near);
+          hit.next = Math.sqrt(next);
+          return hit;
+        };
+      }
+    };
+  }
+
+  // Rings warped by noise.
+  function birchGrain() {
+    const n = noise(7);
+    const broad = n.lattice(4);
+    const fine = n.lattice(16);
+    const speck = n.lattice(128);
+    return function (x, y, rgb) {
+      const warp = broad(x, y) * 1.6 + fine(x, y) * 0.35;
+      const ring = 0.5 + 0.5 * Math.sin(2 * Math.PI * (y / GRAIN * 14 + warp));
+      const line = Math.pow(ring, 6);
+      const shade = 1 - line * 0.13 - broad(y, x) * 0.05 - speck(x, y) * 0.04;
+      rgb[0] = 243 * shade;
+      rgb[1] = 224 * shade;
+      rgb[2] = 191 * shade;
+    };
+  }
+
+  // Tighter, darker rings, with pores drawn out along the grain.
+  function walnutGrain() {
+    const n = noise(11);
+    const broad = n.lattice(3);
+    const fine = n.lattice(12);
+    const figure = n.lattice(6);
+    const pores = n.lattice(24, 320);
+    const speck = n.lattice(128);
+    return function (x, y, rgb) {
+      const warp = broad(x, y) * 2.4 + fine(x, y) * 0.45;
+      const ring = 0.5 + 0.5 * Math.sin(2 * Math.PI * (y / GRAIN * 24 + warp));
+      const dark = Math.pow(ring, 3) * 0.55 + figure(x, y) * 0.45;
+      const pore = Math.max(0, pores(x, y) - 0.7) * 2.2;
+      const shade = 1 - pore * 0.5 - speck(x, y) * 0.05;
+      rgb[0] = (132 - 34 * dark) * shade;
+      rgb[1] = (91 - 25 * dark) * shade;
+      rgb[2] = (65 - 18 * dark) * shade;
+    };
+  }
+
+  // Granules of two sizes in different tones, with gaps and pits between them.
+  function corkGrain() {
+    const n = noise(23);
+    const big = n.cells(64);
+    const small = n.cells(150);
+    const blot = n.lattice(8);
+    const pits = n.lattice(256);
+    return function (x, y, rgb) {
+      const a = big(x, y);
+      const b = small(x, y);
+      const tone = 0.45 * a.value + 0.4 * b.value + 0.15 * blot(x, y);
+      const gap = Math.max(0, 1 - (a.next - a.near) / 0.15) * 0.6 + Math.max(0, 1 - (b.next - b.near) / 0.12) * 0.3;
+      const pit = Math.max(0, pits(x, y) - 0.78) * 3;
+      const shade = 0.82 + 0.38 * tone - gap * 0.25 - pit * 0.5;
+      rgb[0] = 201 * shade;
+      rgb[1] = 162 * shade * (0.95 + 0.05 * tone);
+      rgb[2] = 115 * shade * (0.9 + 0.1 * tone);
+    };
+  }
+
+  // Pebbled grain: small domes with creases between them, over soft folds.
+  function leatherGrain() {
+    const n = noise(31);
+    const pebble = n.cells(128);
+    const fold = n.lattice(5);
+    const mottle = n.lattice(18);
+    const speck = n.lattice(160);
+    return function (x, y, rgb) {
+      const p = pebble(x, y);
+      const edge = Math.min(1, (p.next - p.near) / 0.3);
+      const crease = 1 - edge * edge * (3 - 2 * edge);
+      const dome = Math.max(0, 1 - p.near / 0.7);
+      const shade = 0.95 + 0.06 * dome - 0.14 * crease + (fold(x, y) - 0.5) * 0.14 + (mottle(x, y) - 0.5) * 0.08 - speck(x, y) * 0.03;
+      rgb[0] = 141 * shade;
+      rgb[1] = 92 * shade;
+      rgb[2] = 55 * shade;
+    };
+  }
+
+  // Mottled stone with faint cleavage lines and grit.
+  function slateGrain() {
+    const n = noise(43);
+    const broad = n.lattice(3);
+    const mid = n.lattice(10);
+    const fine = n.lattice(64);
+    const grit = n.lattice(256);
+    return function (x, y, rgb) {
+      const band = Math.sin(2 * Math.PI * ((x + 3 * y) / GRAIN * 3 + broad(x, y) * 1.5));
+      const shade = 1 + (broad(y, x) - 0.5) * 0.14 + (mid(x, y) - 0.5) * 0.1 + band * 0.025 + (fine(x, y) - 0.5) * 0.08 + (grit(x, y) - 0.5) * 0.12;
+      const tint = mid(y, x) - 0.5;
+      rgb[0] = (62 - tint * 4) * shade;
+      rgb[1] = 66 * shade;
+      rgb[2] = (70 + tint * 5) * shade;
+    };
+  }
+
+  // Gloss black, with soft reflections.
+  function acrylicGrain() {
+    const n = noise(59);
+    const broad = n.lattice(2);
+    const soft = n.lattice(5);
+    return function (x, y, rgb) {
+      const shade = 21 + (broad(x, y) - 0.5) * 10 + (soft(x, y) - 0.5) * 4;
+      rgb[0] = shade;
+      rgb[1] = shade;
+      rgb[2] = shade + 1;
+    };
+  }
+
+  // Fine grit, nearly white, for the frosted look of a light mark.
+  function frostGrain() {
+    const n = noise(67);
+    const grit = n.lattice(256);
+    const fine = n.lattice(128);
+    const blot = n.lattice(24);
+    return function (x, y, rgb) {
+      const shade = 255 * (0.8 + 0.12 * grit(x, y) + 0.05 * fine(x, y) + 0.03 * blot(x, y));
+      rgb[0] = shade;
+      rgb[1] = shade;
+      rgb[2] = shade;
+    };
+  }
+
+  function materialPattern(grain, map, scale) {
+    const pattern = ctx.createPattern(texture(grain), 'repeat');
     // About 640 CSS pixels to the repeat at the starting zoom, growing slower than the map.
     const css = 640 * Math.pow(scale / map.scale, 0.5);
-    const k = css / 512 / scale;
+    const k = css / GRAIN / scale;
     if (pattern.setTransform && window.DOMMatrix) pattern.setTransform(new DOMMatrix([k, 0, 0, k, 0, 0]));
     return pattern;
   }
@@ -1753,14 +1939,15 @@
       kinds[plateKind(plate)].push(plate);
     });
     const opening = [];
-    OPENING.forEach(function (kind) {
-      // Not the opening map's style again, as Barcelona would be in dark mode.
-      const leads = kinds[kind].filter(function (plate) {
-        return plate.lead && plateStyle(plate) !== plateStyle(TOUR[0]);
+    OPENING.forEach(function (want) {
+      // Not the opening map's style again, as a print plate's dark style could be.
+      const leads = [].concat(kinds.model, kinds.plotter, kinds.laser, kinds.print).filter(function (plate) {
+        return plate.lead && (plateKind(plate) === want || plate.style === want) && plateStyle(plate) !== plateStyle(TOUR[0]);
       });
       if (!leads.length) return;
       const pick = leads[Math.floor(Math.random() * leads.length)];
-      kinds[kind].splice(kinds[kind].indexOf(pick), 1);
+      const kind = kinds[plateKind(pick)];
+      kind.splice(kind.indexOf(pick), 1);
       opening.push(pick);
     });
     const machines = kinds.model.concat(kinds.plotter, kinds.laser);
@@ -1825,11 +2012,14 @@
       return;
     }
     tour.rest += elapsed;
-    // Fetched while nothing is moving, since decoding a city can stall an
-    // entrance. The plate after next is fetched too, so each city has a whole
-    // plate to arrive.
+    // Fetched while nothing is moving, since decoding a city or making a
+    // material's texture can stall an entrance. The plate after next is
+    // fetched too, so each city has a whole plate to arrive.
     if (tour.fetched !== tour.at) {
       tour.fetched = tour.at;
+      const style = STYLES[plateStyle(TOUR[(tour.at + 1) % TOUR.length])];
+      if (style.grain) texture(style.grain);
+      if (style.frost) texture(style.frost);
       const after = TOUR[(tour.at + 2) % TOUR.length].city;
       load(TOUR[(tour.at + 1) % TOUR.length].city).then(function () {
         if (tour.on) load(after);
